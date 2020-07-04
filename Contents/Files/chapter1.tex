@@ -1,20 +1,65 @@
 \subsection*{Exemplo 1}
 
-Como motivação apresentada, consideramos duas equações que representam a variação do peso da parte vegetativa e reprodutiva, respectivamente. Nesse caso, o controle é a fração da fotossíntese destinada para a parte vegetativa. Nosso objetivo, nesse caso, é maximixar: 
-\begin{equation*}
-F(x,u,t) := \int_0^T \ln(x_2(t))dt, s.a. 
-\end{equation*} 
-\begin{equation*}
-\begin{cases}
-x_1'(t) = u(t)x_1(t) \\
-x_2'(t) = (1 - u(t))x_2(t) \\
-0 \leq u(t) \leq 1
-\end{cases}    
-\end{equation*}
+Apresenta-se inicialmente uma motivação que considera duas equações, uma
+representa a variação do peso da parte vegetativa, enquanto a outra representa
+o peso da parte reprodutiva. O crescimento das plantas é modelado pelo modelo
+de \hl{Colen}. Nesse caso, o controle é a fração da fotossíntese destinada
+para a parte vegetativa. Queremos maximizar o crescimento da parte
+reprodutiva, que garante o mantimento da espécie. 
 
-Desta maneira, em um sistema de controle há variáveis de estado, funções de controle, que afetam a dinâmica do sistema, e o funcional objetivo, que funciona como o cálculo do lucro. 
+Dado que $x(t)$ representa a parte vegetativa e $y(t)$ a parte reprodutiva no
+tempo $t$, nosso objetivo será definido, então, maximizar o seguinte
+funcional segundo a função $u(t)$ que representa a fração de fotossíntese para
+o crescimento vegetativo: 
 
-\subsection{Definições Importantes}
+\begin{equation}
+    F(x,u,t) := \int_0^T \ln(y(t))dt, 
+\end{equation}
+
+onde $T$ é o limite superior do intervalo de tempo considerado e tal que o modelo é um sistema de equações diferenciais e as seguintes
+restrições: 
+\begin{equation}
+    \begin{cases}
+    x'(t) = u(t)x(t) \\
+    y'(t) = (1 - u(t))y(t) \\
+    0 \leq u(t) \leq 1 \\
+    x(0) > 0, \\
+    y(0) \geq 0
+    \end{cases}    
+\end{equation}
+
+Chamamos um problema como esse de \textbf{problema de controle ótimo}. Podemos
+obter uma série de conslusões ao variar os valores de $T$ e como a planta se
+comporta ao longo do tempo. 
+
+Assim, em um sistema de equações diferenciais ordinárias, equações
+diferenciais parciais, equações discretas ou equações diferenciais
+estocásticas, entre outros, podemos adicionar uma variável de controle, onde,
+a partir dela, podemos maximizar um objetivo. 
+
+Desta maneira, em um sistema de controle há variáveis de estado, funções de
+controle, que afetam a dinâmica do sistema, e o funcional objetivo, que
+funciona como o cálculo do lucro. Nesse texto, o principal objetivo são
+sistemas com equações diferenciais ordinárias. 
+
+O objetivo dessa área de estudo, dentre outros, é a tomada de decições a
+partir de um sistema. Existem diversos exemplos: quantas pessoas devemos
+vacinar para garantir um custo mínimo e minimizar número de infectados;
+quantas pessoas devem ser colocadas em quarentena para garantir que a infecção
+se espalhe em menos pessoas; quanto remédio deve ser ingerido para minimizar a
+carga viral em um corpo; ccomo influenciar um sistema caótico para que ele
+deixe de ser caótico; entre outros. 
+
+Em um problemas como esse, encontramos: 
+\begin{enumerate}
+    \item variáveis de \textbf{estado}: descrevem a dinâmica do sistema. 
+    \item variáveis de \textbf{controle}: conduzem o estado dada uma ação. 
+    \item \textbf{funcional}: mapa entre um conjunto de funções ao
+    conjunto dos números reais. Esse funcional tem um objetivo, como ser
+    maximizado ou minimizado.  
+\end{enumerate}
+
+\section{Preliminares}
 \begin{enumerate}
     \item \textbf{Continuidade por partes:} Se uma função é contínua em cada ponto em que é definida, exceto em uma quantidade finita e é igual a seu limite à esquerda ou à direita me cada ponto (não permite pontos deslocados). 
     \item \textbf{Diferenciável por partes:} Função contínua que é diferenciável em cada ponto que é definida, exceto uma finidade.

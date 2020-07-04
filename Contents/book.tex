@@ -1,0 +1,59 @@
+\documentclass[a4paper, 11pt, oneside]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath,amsthm,amssymb, mathtools,commath}
+\usepackage{color, soul}
+
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+
+\graphicspath{ {images/} }
+
+\newcommand{\e}{\epsilon}
+\newcommand{\la}{\lambda}
+
+
+\begin{document}
+
+\input{Files/title.tex}
+
+\tableofcontents
+
+\chapter{Problemas Básicos de Controle Ótimo}
+\label{ch:1}
+\rule{\textwidth}{1pt}
+\input{Files/chapter1.tex}
+
+\chapter{Existência e Outras Propriedades}
+\input{Files/chapter2.tex}
+
+\chapter{Condições finais}
+\input{Files/chapter3.tex}
+
+\chapter{Método Backward/Foward}
+\input{Files/chapter4.tex}
+
+\chapter{Laboratórios}
+\input{Files/labs567.tex}
+
+\chapter{Controles Limitados}
+\input{Files/chapter8.tex}
+
+\chapter{Laboratórios}
+\input{Files/lab910.tex}
+
+\chapter{Optimal Control of Several Variables}
+\input{Files/chapter12.tex}
+
+\chapter{Linear Dependence on the Control}
+\input{Files/chapter17.tex}
+
+\bibliographystyle{plain}
+\bibliography{book}
+
+
+\end{document}
