@@ -1,0 +1,1 @@
+Repository with contents of the book: Optimal Control Applied to Biological Models by Suzanne Lenhart and Jorn T. Workman. I developed the laboratories in Jupyter Notebook framework, please use it as you wish.
