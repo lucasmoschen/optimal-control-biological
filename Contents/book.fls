@@ -180,8 +180,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm2074.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx2074.tfm
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter1.tex
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter1.tex
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1440.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1095.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx1200.tfm
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter2.tex
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter2.tex
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter3.tex
@@ -204,6 +205,7 @@ INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/bo
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.out
 INPUT /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.out
 INPUT /usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc
+INPUT /usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb

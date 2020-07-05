@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.29)  4 JUL 2020 14:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.4.29)  5 JUL 2020 17:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -285,31 +285,39 @@ Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 \SOUL@ulht=\dimen162
 ) (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2020/02/11 v2.0o Standard LaTeX package
-) (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
+)
+\c@theorem=\count271
+\c@proposition=\count272
+\c@corollary=\count273
+\c@lemma=\count274
+\c@definition=\count275
+\c@exercise=\count276
+\c@example=\count277
+ (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count271
+\l__kernel_color_stack_int=\count278
 \l__pdf_internal_box=\box47
 ) (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.aux)
 \openout1 = `book.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
-LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 30.
+LaTeX Font Info:    ... okay on input line 30.
 \AtBeginShipoutBox=\box48
-Package hyperref Info: Link coloring OFF on input line 20.
+Package hyperref Info: Link coloring OFF on input line 30.
  (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
  (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
@@ -317,27 +325,27 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 ) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count272
+\c@section@level=\count279
 )
-LaTeX Info: Redefining \ref on input line 20.
-LaTeX Info: Redefining \pageref on input line 20.
-LaTeX Info: Redefining \nameref on input line 20.
+LaTeX Info: Redefining \ref on input line 30.
+LaTeX Info: Redefining \pageref on input line 30.
+LaTeX Info: Redefining \nameref on input line 30.
  (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.out) (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.out)
 \@outlinefile=\write3
 \openout3 = `book.out'.
 
  (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count273
+\scratchcounter=\count280
 \scratchdimen=\dimen163
 \scratchbox=\box49
-\nofMPsegments=\count274
-\nofMParguments=\count275
+\nofMPsegments=\count281
+\nofMParguments=\count282
 \everyMPshowfont=\toks34
-\MPscratchCnt=\count276
+\MPscratchCnt=\count283
 \MPscratchDim=\dimen164
-\MPnumerator=\count277
-\makeMPintoPDFobject=\count278
+\MPnumerator=\count284
+\makeMPintoPDFobject=\count285
 \everyMPtoPDFconversion=\toks35
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
@@ -358,7 +366,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.30 ...luções Numéricas}{18}{subsection.8.0.4}
+l.30 ...es Isoperimétricos}{19}{subsection.8.0.3}
                                                   % [1
 
 ])
@@ -369,12 +377,12 @@ l.30 ...luções Numéricas}{18}{subsection.8.0.4}
 Cap\'{\i }tulo 1.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter1.tex [3
 
-] [4] [5]
-Overfull \hbox (15.24829pt too wide) in paragraph at lines 106--107
+] [4] [5] [6]
+Overfull \hbox (15.24829pt too wide) in paragraph at lines 205--206
 \T1/cmr/m/n/10.95 Nesse efeito, con-si-de-ra-mos um va-lor m�-nimo. O cres-ci-mento $\OML/cmm/m/it/10.95 x[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 ) = \OML/cmm/m/it/10.95 rx\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 t\OT1/cmr/m/n/10.95 )([] \OMS/cmsy/m/n/10.95 ^^@
  []
 
-) [6]
+) [7]
 Cap\'{\i }tulo 2.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter2.tex
 Overfull \hbox (6.54526pt too wide) in paragraph at lines 3--4
@@ -390,16 +398,16 @@ Overfull \hbox (24.46387pt too wide) in paragraph at lines 22--23
 \T1/cmr/m/n/10.95 Considere o fun-ci-o-nal $\OML/cmm/m/it/10.95 V\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]; t[]\OT1/cmr/m/n/10.95 )$ \T1/cmr/m/n/10.95 a ser ma-xi-mi-zado. Es-ta-be-le-ce-mos que $[]\OT1/cmr/m/n/10.95 (\OML/cmm/m/it/10.95 x[]; t[]\OT1/cmr/m/n/10.95 ) =
  []
 
-[7
+[8
 
-]) [8]
+]) [9]
 Cap\'{\i }tulo 3.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter3.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 1.
 
-) [9
+) [10
 
 ]
 Cap\'{\i }tulo 4.
@@ -408,16 +416,16 @@ Cap\'{\i }tulo 4.
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 2.
 
-[10
+[11
 
-]) [11]
+]) [12]
 Cap\'{\i }tulo 5.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/labs567.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 1.
 
-) [12
+) [13
 
 ]
 Cap\'{\i }tulo 6.
@@ -426,18 +434,18 @@ Cap\'{\i }tulo 6.
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 3.
 
-[13
+[14
 
-]) [14]
+]) [15]
 Cap\'{\i }tulo 7.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/lab910.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 1.
 
-[15
+[16
 
-]) [16]
+]) [17]
 Cap\'{\i }tulo 8.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter12.tex
 Overfull \hbox (6.00217pt too wide) in paragraph at lines 11--13
@@ -448,47 +456,47 @@ Overfull \hbox (6.00217pt too wide) in paragraph at lines 11--13
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 24.
 
-[17
+[18
 
-]) [18]
+]) [19]
 Cap\'{\i }tulo 9.
 (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/Files/chapter17.tex
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 4.
 
-[19
+[20
 
-]) (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.bbl [20]
+]) (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.bbl [21]
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 59.
- [21
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 69.
+ [22
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 59.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 69.
  (/home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 59.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 59.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 69.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 69.
 Package rerunfilecheck Info: File `book.out' has not changed.
-(rerunfilecheck)             Checksum: FAEBD8319EE1B348C87C835285480C43;2364.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 59.
+(rerunfilecheck)             Checksum: 871E7EB1BF940946835AE83AEFC9241A;2468.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 69.
  ) 
 Here is how much of TeX's memory you used:
- 8251 strings out of 481239
- 122390 string characters out of 5920377
- 397184 words of memory out of 5000000
- 23233 multiletter control sequences out of 15000+600000
- 547313 words of font info for 56 fonts, out of 8000000 for 9000
+ 8314 strings out of 481239
+ 123074 string characters out of 5920377
+ 398254 words of memory out of 5000000
+ 23291 multiletter control sequences out of 15000+600000
+ 547654 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,9n,31p,954b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb>
-Output written on /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.pdf (22 pages, 354992 bytes).
+ 34i,22n,31p,733b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfrm1728.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfsl1095.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1095.pfb>
+Output written on /home/lucasmoschen/Documents/GitHub/Optimal_Control_Biological/Contents/book.pdf (23 pages, 362340 bytes).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
- 345 compressed objects within 4 object streams
- 79 named destinations out of 1000 (max. 500000)
- 257 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 411 PDF objects out of 1000 (max. 8388607)
+ 360 compressed objects within 4 object streams
+ 83 named destinations out of 1000 (max. 500000)
+ 265 words of extra memory for PDF output out of 10000 (max. 10000000)
 

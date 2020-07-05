@@ -1,24 +1,25 @@
-\subsection*{Exemplo 1}
+\section{Introdução}
 
-Apresenta-se inicialmente uma motivação que considera duas equações, uma
-representa a variação do peso da parte vegetativa, enquanto a outra representa
-o peso da parte reprodutiva. O crescimento das plantas é modelado pelo modelo
-de \hl{Colen}. Nesse caso, o controle é a fração da fotossíntese destinada
-para a parte vegetativa. Queremos maximizar o crescimento da parte
-reprodutiva, que garante o mantimento da espécie. 
+\begin{example}
+    Apresenta-se inicialmente uma motivação que considera duas equações, uma
+    representa a variação do peso da parte vegetativa, enquanto a outra representa
+    o peso da parte reprodutiva. O crescimento das plantas é modelado pelo modelo
+    de \hl{Colen}. Nesse caso, o controle é a fração da fotossíntese destinada
+    para a parte vegetativa. Queremos maximizar o crescimento da parte
+    reprodutiva, que garante o mantimento da espécie. 
 
-Dado que $x(t)$ representa a parte vegetativa e $y(t)$ a parte reprodutiva no
-tempo $t$, nosso objetivo será definido, então, maximizar o seguinte
-funcional segundo a função $u(t)$ que representa a fração de fotossíntese para
-o crescimento vegetativo: 
+    Dado que $x(t)$ representa a parte vegetativa e $y(t)$ a parte reprodutiva no
+    tempo $t$, nosso objetivo será definido, então, maximizar o seguinte
+    funcional segundo a função $u(t)$ que representa a fração de fotossíntese para
+    o crescimento vegetativo: 
 
-\begin{equation}
+    \begin{equation}
     F(x,u,t) := \int_0^T \ln(y(t))dt, 
-\end{equation}
+    \end{equation}
 
-onde $T$ é o limite superior do intervalo de tempo considerado e tal que o modelo é um sistema de equações diferenciais e as seguintes
-restrições: 
-\begin{equation}
+    onde $T$ é o limite superior do intervalo de tempo considerado e tal que o modelo é um sistema de equações diferenciais e as seguintes
+    restrições: 
+    \begin{equation}
     \begin{cases}
     x'(t) = u(t)x(t) \\
     y'(t) = (1 - u(t))y(t) \\
@@ -26,7 +27,10 @@ restrições:
     x(0) > 0, \\
     y(0) \geq 0
     \end{cases}    
-\end{equation}
+    \end{equation}
+\end{example}
+
+\hl{Motivacoes: destacar mais motivacoes e esclarecer mais possiveis significados.}
 
 Chamamos um problema como esse de \textbf{problema de controle ótimo}. Podemos
 obter uma série de conslusões ao variar os valores de $T$ e como a planta se
@@ -60,40 +64,135 @@ Em um problemas como esse, encontramos:
 \end{enumerate}
 
 \section{Preliminares}
+
+Alguns conceitos básicos de análise: 
+
 \begin{enumerate}
-    \item \textbf{Continuidade por partes:} Se uma função é contínua em cada ponto em que é definida, exceto em uma quantidade finita e é igual a seu limite à esquerda ou à direita me cada ponto (não permite pontos deslocados). 
-    \item \textbf{Diferenciável por partes:} Função contínua que é diferenciável em cada ponto que é definida, exceto uma finidade.
-    \item \textbf{Côncava: } Se $\forall 0 \leq \alpha \leq 1$ e $\forall a \leq t_1,t_2 \leq b$, $\alpha k(t_1) + (1 - \alpha)k(t_2) \leq k(\alpha t_1 + (1 - \alpha)t_2)$.
-    \item \textbf{Lipschitz: } $|k(t_1) - k(t_2)| \leq c|t_1 - t_2|$.
-    \item \textbf{Teorema do Valor Médio}
-    \item \textbf{Teorema da Convergência Dominante: } Considere uma sequência $\{f_n\}$ dominada por uma função Lebesgue integrável $g$. Suponha que sequência converge ponto a ponto para uma função $f$. Então $f$ é integrável e $\lim_{n \to \infty} \int_S f_n d\mu = \int_S f d\mu$.
+    \item \label{parts-continue} \textbf{Continuidade por partes:} Função contínua em cada
+    ponto em que é definida, exceto em uma quantidade finita de pontos, e igual a
+    seu limite à esquerda ou à direita em cada ponto (não permite pontos
+    isolados). 
+    \item \textbf{Diferenciável por partes:} Função contínua que é
+    diferenciável em cada ponto em que é definida, exceto em uma quantidade
+    finita de pontos. Além disso, sua derivada é contínua sempre que definida. 
+    \item \textbf{Côncava: } Função $k(\dot)$, tal que se $\forall 0 \leq
+    \alpha \leq 1$ e para qualquer $a \leq t_1,t_2 \leq b$, $\alpha k(t_1) + (1 -
+    \alpha)k(t_2) \leq k(\alpha t_1 + (1 - \alpha)t_2)$. A definição é
+    equivalente para funções de duas ou mais variáveis.
+    \item \textbf{Lipschitz: } Função $k$ em que existe $c$ constante tal que
+    $|k(t_1) - k(t_2)| \leq c|t_1 - t_2|$, para todos os pontos do domínio de
+    $k$. 
+    \item \textbf{Teorema do Valor Médio:} Seja $k$ contínua em $[a,b]$ e
+    diferenciável em $(a,b)$. Então existe $x_0 \in (a,b)$ tal qe=ue $k(b) -
+    k(a) = k'(x_0)(b - a)$. 
+    \item \textbf{Teorema da Convergência Dominante: } Considere uma sequência
+    $\{f_n\}$ dominada por uma função Lebesgue integrável $g$. Suponha que
+    essa sequência converge ponto a ponto para uma função $f$. Então $f$ é
+    integrável e $\lim_{n \to \infty} \int_S f_n d\mu = \int_S f d\mu$.
 \end{enumerate}
 
-\subsection*{Exercício 1}
-Se $k: I \to \mathbb{R}$ é diferenciável por partes em um intervalo limitado, $k$ é Lipschitz. 
+\begin{exercise}
+    Se $k: I \to \mathbb{R}$ é diferenciável por partes em um intervalo$I$ limitado, $k$ é Lipschitz. 
+\end{exercise}
 
-\textbf{Prova:} Seja $P = \{p_0, ..., p_n\}$ pontos em que $k$ não é diferenciável. Pelo teorema do valor médio, $\forall i, \exists x_i^0 $, tal que $k(p_i) - k(p_{i-1}) = k'(x_i^0)(p_i - p_{i-1})$. Como $k'$ é contínua em cada intervalo $[p_{i-1},p_i]$, basta tomar o valor máximo da derivada nesse intervalo. Depois disso, basta tomar o maior valor entre todas as derivadas e a desigualdade de Lipschitz é satisfeita. 
+\section{Condições necessárias para o problema básico} 
 
-\subsection{Problema} 
-
-Considere $x'(t) = g(t,x(t),u(t)) \to u(t) \mapsto x(u)$. Queremos, então, dado um funcional $ J(u) := \int_{t_0}^{t_1} (f(t,x(t),u(t))dt, x(t_0) = x_0$, maximizá-lo.  $u(t)$ é contínua por partes. 
-
-\textbf{Função Adjunta:} proposta similar aos multiplicadores de Lagrange. $\lambda : [t_0,t_1] \to \mathbb{R}$ é diferenciável por partes e deve satisfazer algumas condições. 
-
-Para isso, assumimos a existência $u^*$ e $x^*$. Nesse caso, $J(u) \leq J(u^*) < \infty$. Tome $u^{\epsilon} = u^{*}(t) + \epsilon h(t), x^{\epsilon}(t_0) = x_0 \implies \lim_{\epsilon\to 0} u^{\epsilon} = u^{*}$. $x^{\epsilon}$ é o estado associado ao controle. Como a função $g$ é continuamente diferenciável, $x^{\epsilon} \to x^{*}$. Assim, a sua derivada em $\epsilon = 0$ existe. Utilizo, pelo TFC, que $\int_{t_0}^{t_1} \frac{d}{dt}(\lambda (t)x^{\epsilon}(t))dt = \lambda(t_1)x^{\epsilon}(t_1) - \lambda(t_0)x^{\epsilon}(t_0)$. Desta maneira, utilizo que $J(u^{\epsilon}) = \int_{t_0}^{t_1} f(t,x^{\epsilon}(t),u^{\epsilon}(t))dt - \lambda(t_1)x^{\epsilon}(t_1) + \lambda(t_0)x^{\epsilon}(t_0)$. Sabemos que $lim_{\epsilon \to 0} \frac{J(u^{\epsilon}) - J(u^{*})}{\epsilon} = 0$, pois $J(u^*)$ é máximo. Desta maneira, 
-\begin{align} \label{eq1}
-0 = \frac{d}{d\epsilon} J(u^{\epsilon})_{\e = 0} = \int_{t_0}^{t_1} [(f_x + \lambda(t)g_x & + \\ 
- + \lambda '(t))\frac{\partial x^{\e}}{\partial\e}(t)_{\e = 0} + (f_u + \lambda(t)g_u)h(t)]dt - \lambda(t_1)\frac{\partial x^{\e}}{\e}(t_1)_{\e = 0}
-\end{align}
-
-Note que isso pode ser feito pelo Teorema da Convergência Dominante, pois podemos mover o limite (derivada) para dentro da integral (intervalo compacto e integrando é diferenciável po partes).  Para que ocorra a igualdade citada acima, definimos $H(t,x,u,\lambda) := f(t,x,u) + \lambda g(t,x,u)$ e:
+Considete $u(t)$ uma variável de controle e $x(t)$ vari´avel de estado que
+satisfaz 
 \begin{equation}
-\begin{cases}
-    \frac{\partial H}{\partial u}_{u = u^{*}} = 0 \\
-    \frac{\partial H}{\partial x}_{x = x^*} = - \lambda ' \\
-    \frac{\partial H}{\partial \lambda} = x' \\
-    \lambda(t_1) = 0 
-\end{cases}    
+    \label{initial-system}
+    x'(t) = g(t,x(t),u(t)). 
+\end{equation}
+
+Podemos ver a relação entre essas variáveis
+como $u(t) \mapsto x = x(u)$.  O problema básico do controle ótimo é encontrar
+uma função de controle contínua por partes \ref{parts-continue} $u(t)$ que
+maximize um dado funcional objetivo 
+
+\begin{equation}
+    \label{objetivo}
+    J(u) := \int_{t_0}^{t_1} (f(t,x(t),u(t))dt    
+\end{equation}
+
+Nos problemas encontrados nesse texto, $f$ e $g$ são sempre continuamente
+diferenciáveis. Para isso, se $u^{*}(t)$ e $x^*(t)$ associado a a $u$ são
+argumentos ótimos, podemos extrair condições necessárias para o problema. No
+capítulo \hl{enunciar capitulo}, são discutidas as codições suficientes. 
+
+\textbf{Função Adjunta:} proposta similar aos multiplicadores de Lagrange para
+o cálculo multivariado. $\lambda : [t_0,t_1] \to \mathbb{R}$ é diferenciável
+por partes e deve satisfazer algumas condições. 
+
+Para isso, assumimos a existência $u^*$ e $x^*$. Nesse caso, $J(u) \leq J(u^*)
+< \infty$, para todo controle $u$. Seja $h(t)$ uma função contínua por partes
+e $\e \in \mathbb{R}$.  Então: 
+\begin{equation}
+    u^{\e}(t) = u^*(t) + \e h(t), u^{\e} \mapsto x^{\e}, 
+\end{equation}
+tal que $x^{\e}$ satisfaz \ref{initial-system} sempre que $u^{\e}$ é contínua. Consideramos $x^{\e}(t_0) = x_0$.
+
+Para todo $t$, quando $\e \to 0$, temos que $u^{\e}(t) \to u^*(t)$. Além disso, 
+\begin{equation*}
+    \frac{\partial u^{\e}(t)}{\partial \e}\bigg\rvert_{\e = 0} = h(t).
+\end{equation*}
+Como a função $g$ é continuamente diferenciável, também ocorre que
+\begin{equation*}
+    \begin{split}
+        x^{\e}(t) \to x^*(t)~e \\
+        \frac{\partial}{\partial \e}x^{\e}(t)\bigg\rvert_{\e = 0}
+    \end{split}
+\end{equation*}
+
+existe. Seja $\la(t)$ a função adjunta. Pelo teorema fundamental do Cálculo, 
+\begin{equation*}
+    \int_{t_0}^{t_1} \frac{d}{dt}[\la(t)x^{\e}(t)]dt = \la(t_1)x^{\e}(t_1) - \la(t_0)x^{\e}(t_0),
+\end{equation*}
+
+e, portanto, exceto em uma finidade de pontos,
+
+\begin{equation*}
+    \begin{split}
+        J(u^{\e}) &= \int_{t_0}^{t_1} [f(t,x^{\e}(t), u^{\e}(t)) + \frac{d}{dt}(\la(t)x^{\e}(t))]dt \\
+        &+ \la(t_0)x_0 - \la(t_1)x^{\e}(t_1) \\
+        &= \int_{t_0}^{t_1} [f(t, x^{\e}(t), u^{\e}(t)) + \la '(t)x^{\e}(t) + \la(t)\overbrace{g(t,x^{\e}(t), u^{\e}(t))}^{(x^{\e})'(t)}] dt \\
+        &+ \la(t_0)x_0 - \la(t_1)x^{\e}(t_1).
+    \end{split}
+\end{equation*}
+
+Sabemos que 
+\begin{equation*}
+    0 = \frac{d}{d\e} J(u^{\e})\bigg\rvert_{\e = 0} = \lim_{\e \to 0} \frac{J(u^{\e}) - J(u^{*})}{\e}, 
+\end{equation*}
+
+pois $J(u^*)$ é máximo. Desta maneira, pelo Teorema da Convergência Dominada, 
+
+\begin{equation*}
+    \label{eq1}
+    \begin{split}
+        0 &= \frac{d}{d\epsilon} J(u^{\epsilon})\bigg\rvert_{\e = 0} \\ 
+        &= \int_{t_0}^{t_1} [(f_x + \la(t)g_x + \la '(t))\frac{\partial x^{\e}}{\partial\e}(t)\bigg\rvert_{\e = 0} + (f_u + \la(t)g_u)h(t)]dt \\
+        &- \la(t_1)\frac{\partial x^{\e}}{\e}(t_1)\bigg\rvert_{\e = 0}.       
+    \end{split}
+\end{equation*}
+
+Para garantir que ocorra a igualdade citada acima, definimos 
+
+\begin{definition}[Hamiltoniano]
+    \label{hamiltonian}
+    \begin{equation*}
+        H(t,x,u,\la) = f(t,x,u) + \la g(t, x,u)
+    \end{equation*}
+\end{definition}
+
+Estamos maximizando $H$ com respeito a $u$ em $u^*$ e, então: 
+
+\begin{equation}
+    \begin{cases}
+        \frac{\partial H}{\partial u}_{u = u^{*}} = f_u + \la g_u = 0 \\
+        \frac{\partial H}{\partial x}_{x = x^*} = - \la ' = -(f_x + \la g_x) \\
+        \frac{\partial H}{\partial \la} = x' \\
+        \la(t_1) = 0 
+    \end{cases}    
 \end{equation}
 
 \subsection{Princípio Máximo de Pontryagin}
