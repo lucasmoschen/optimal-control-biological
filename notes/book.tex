@@ -8,6 +8,11 @@
 \usepackage[portuguese]{babel}
 \usepackage{amsmath,amsthm,amssymb, mathtools,commath}
 \usepackage{color, soul}
+\usepackage{tikz}
+
+\usepackage{natbib}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}}
 
 \usepackage[T1]{fontenc} % Output font encoding for international characters
 
@@ -16,14 +21,14 @@
 \newcommand{\e}{\epsilon}
 \newcommand{\la}{\lambda}
 
-\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{proposition}{Proposição}[chapter]
 \newtheorem{corollary}{Corolário}[chapter]
 \newtheorem{lemma}{Lema}[chapter]
 \newtheorem*{remark}{Observação}
 \theoremstyle{definition}
 \newtheorem{definition}{Definição}[chapter]
-\newtheorem{exercise}{Exercício}[chapter]
+\newtheorem{exercise}{Exercício}[section]
 \newtheorem{example}{Exemplo}[section]
 
 
@@ -39,6 +44,8 @@
 \input{files/chapter1.tex}
 
 \chapter{Existência e Outras Propriedades}
+\label{ch:2}
+\rule{\textwidth}{1pt}
 \input{files/chapter2.tex}
 
 \chapter{Condições finais}
@@ -62,7 +69,6 @@
 \chapter{Linear Dependence on the Control}
 \input{files/chapter17.tex}
 
-\bibliographystyle{plain}
 \bibliography{book}
 
 

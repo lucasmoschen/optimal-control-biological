@@ -1,0 +1,8 @@
+\begin{tikzpicture}[xscale=0.04,yscale=0.08,domain=0.125:220,samples=400]
+    \draw[->] (-5,0) -- (205,0) node[below] {$x$};
+    \draw[->] (0,-5) -- (0,45) node[left] {$\dfrac{1}{x}\dfrac{dx}{dt}$};
+    \draw (50,1) -- (50,-1) node[below] {$x_{min}$};
+    \draw (150,1) -- (150,-1) node[below] {$x_{max}$};
+    \clip (50,0) rectangle (150,50);
+    \draw[blue] plot (\x,{120*(\x/50 - 1)*(1 - \x/150)});
+\end{tikzpicture}
