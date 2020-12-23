@@ -1,25 +1,28 @@
 \documentclass[a4paper, 11pt, oneside]{book}
 
+\usepackage[portuguese]{babel}
 \usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc} % Output font encoding for international characters
+
 \usepackage{url}
 \usepackage{hyperref}
 \usepackage{enumerate}
 \usepackage{graphicx}
-\usepackage[portuguese]{babel}
 \usepackage{amsmath,amsthm,amssymb, mathtools,commath}
-\usepackage{color, soul}
+\usepackage{cancel}
+\usepackage{xcolor, soul}
 \usepackage{tikz}
+
 
 \usepackage{natbib}
 \bibliographystyle{abbrvnat}
 \setcitestyle{authoryear,open={(},close={)}}
 
-\usepackage[T1]{fontenc} % Output font encoding for international characters
-
 \graphicspath{ {images/} }
 
 \newcommand{\e}{\epsilon}
 \newcommand{\la}{\lambda}
+\renewcommand{\CancelColor}{\color{red}}
 
 \newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{proposition}{Proposição}[chapter]

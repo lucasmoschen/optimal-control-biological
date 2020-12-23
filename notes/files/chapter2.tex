@@ -1,39 +1,157 @@
-\textbf{Observação:} Se o funcional objetivo tiver valor mais ou menos infinito, dizemos que o problema não tem solução. Como assumimos a existência da solução, podemos obter um funcional que tem valor infinito, algo que não desejamos. 
+Após desenvolver as condições necessárias para resolver o problema de controle
+ótimo inicial, alguns problemas podem surgir. Como assumimos a existência de
+controle ótimo, podemos encontrar uma função de controle pelas condições mesmo
+quando não haja. Também pode ser obtido um funcional que tem valor infinito, algo que não
+desejado. Portanto, se o funcional objetivo tiver valor mais ou menos
+infinito, o problema não tem solução. 
 
-\textbf{Teorema:} $J(u) := \int_{t_0}^{t_1} f(t,x(t),u(t))dt, s.a~x'(t) = g(t,x(t),u(t)), x(t_0) = x_0$. Ainda, $f, g \in C^1$ nos três argumentos e côncavos em $x$ e $u$. Sob as condições apresentadas anteriormente, adicionadas a $\la(t) \geq 0$, então para todo $u$, $J(u^*) \geq J(u)$. A demonstração é basicamente mostrar que a diferença é maior do que $0$.
+\section{Existência e Unicidade}
 
-\textbf{Teorema 2:} Seja $u \in L([t_0,t_1];\mathbb{R})$, $f$ é convexa em $u$ existem constantes $C_4$ e $C_1$,$C_2$,$C_3$ $>0$ e $\beta > 1$, tal que:
-\begin{equation*}
-    \begin{cases}
-        g(t,x,u) = \alpha (t,x) + \beta (t,x)u \\
-        |g(t,x,u)| \leq C_1(1 + |x| + |u|) \\
-        |g(t,x_1,u) - g(t,x,u)| \leq C_2|x_1 - x|(1 + |u|) \\
-        f(t,x,u) \geq C_3|u|^{\beta} - C_4
-    \end{cases}
-\end{equation*}
-Então $J(u^*)$ é maximizador do funcional. Em problemas de minimização, $g$ seria côncava e a desigualdade de $f$ é revertida. 
+\begin{theorem}
+    Seja $$J(u) := \int_{t_0}^{t_1} f(t,x(t),u(t))dt$$ 
+    $$\text{sujeito a } x'(t) = g(t,x(t),u(t)), x(t_0) = x_0.$$ 
+    Suponha que $f(t,x,u)$ e $g(t,x,u)$ sejam continuamente diferenciáveis nos
+    três argumentos e côncavos no segundo e terceiro argumentos. Suponha que
+    $u^*$ é um controle, com estado associado a $x^*$, a $\la$ uma função
+    diferenciável por partes, tal que $t_0 \le t \le t_1$: 
+    \begin{subequations}
+        \label{eq:conditions}
+        \begin{align}
+            f_u + \la g_u &= 0, \label{rel1} \\
+            \la ' &= - (f_x + \la g_x),  \label{rel2} \\ 
+            \la(t_1) &= 0, \label{rel3} \\
+            \la(t) &\ge 0. \label{rel4}
+        \end{align}
+    \end{subequations}
+    Então, para todos os controles $u$, $J(u^*) \ge J(u)$. 
+\end{theorem}
 
-Agora, temos que extender as condições necessárias para Lebesgue. 
+\begin{proof}
+    Seja $u$ um controle qualquer. Assim, usando a concavidade de $f$,
+    \begin{equation}
+        \label{eq:first-result}
+        \begin{split}
+            J(u^*) - J(u) &= \int_{t_0}^{t_1} f(t, x^*, u^*) - f(t,x,u) dt \\
+            &\ge \int_{t_0}^{t_1} (x^{*}(t) - x(t))f_x(t, x^*, u^*) \\ 
+            &~~+ (u^*(t) - u(t))f_u(t, x^*, u^*)dt
+        \end{split}
+    \end{equation}
+    Aplicando \refeq{rel1} e \refeq{rel2} ao último termo de
+    \refeq{eq:first-result}, ele será 
+    \begin{equation*}
+        \begin{split}
+            \int_{t_0}^{t_1} &(x^{*}(t) - x(t))(-\la(t)g_x(t,x^*, u^*) - \la '(t)) \\ 
+            &+ (u^*(t) - u(t))(-\la(t)g_u(t,x^*, u^*))dt.
+        \end{split}
+    \end{equation*}
+    Integrando por partes, com $\la(t_1) = 0$ e $x(t_0) = x^*(t_0)$, vemos que
+    \begin{equation*}
+        \begin{split}
+            \int_{t_0}^{t_1} -\la '(t)(x^*(t) - x(t))dt &= -\cancel{(x^*(t) - x(t))\la(t)\bigg\rvert_{t_0}^{t_1}} \\ 
+            &~~~~+ \int_{t_0}^{t_1}\la(t)(x^*(t) - x(t))'dt \\
+            &= \int_{t_0}^{t_1}\la(t)(g(t,x^*(t),u^*(t)) - g(t,x(t),u(t)))dt
+        \end{split}
+    \end{equation*}
+    Substituindo e usando tanto a concavidade de $g$ quanto \refeq{rel4},
+    \begin{equation*}
+        \begin{split}
+            J(u^*) - J(u) \ge \int_{t_0}^{t_1} &\la(t)[g(t, x^*, u^*) - g(t,x,u) - \\
+            &(x^* - x)g_x(t,x^*, u^*) - (u^* - u)g_u(t, x^*, u^*)]dt \\
+            \ge 0 ~~~~&
+        \end{split}
+    \end{equation*}
+\end{proof}
 
-\textbf{Unicidade:} Implica diretamente da unicidade das soluções do sistema de otimização (intervalos de tempo curto). A volta não é sempre verdadeira.  
+Falta garantir que $J(u^*)$ seja finito. Para isso, algumas restrições sobre
+$f$ e/ou $g$ são necessárias. O próximo teorema é um exemplo sobre isso. 
 
-\subsection{Interpretação da Adjunta}
+\begin{theorem}
+    Seja $u \in L([t_0,t_1];\mathbb{R})$, $f$ é convexa em $u$, e existam
+    constantes $C_4$ e $C_1$,$C_2$,$C_3 >0$ e $\beta > 1$, tal que, $\forall t
+    \in [t_0, t_1], x, x_1, u \in \mathbb{R}$. 
+    \begin{equation*}
+        \begin{cases}
+            g(t,x,u) = \alpha (t,x) + \beta (t,x)u \\
+            |g(t,x,u)| \leq C_1(1 + |x| + |u|) \\
+            |g(t,x_1,u) - g(t,x,u)| \leq C_2|x_1 - x|(1 + |u|) \\
+            f(t,x,u) \geq C_3|u|^{\beta} - C_4
+        \end{cases}
+    \end{equation*}
+    Então existe um controle ótimo $u^*$ maximizando $J(u)$ com $J(u^*)$
+    finito. 
+\end{theorem}
 
-Considere o funcional $V(x_0, t_0)$ a ser maximizado. Estabelecemos que $\frac{\partial V}{\partial x}(x_0, t_0) = \lim_{\e \to 0} \frac{V(x_0 + \e, t_0) - V(x_0,t_0)}{\e} = \la(t_0)$. Podemos relacionar, então, a função adjunta à variação marginal da função custo/lucro com respeito ao estado. É o valor adicional associado com um incremento adicional da variável de estado. Podemos aproximar: 
+Em problemas de minimização, $g$ seria côncava e a desigualdade de $f$ é
+revertida. Podemos extender as condições necessárias para funções de controle
+Lebesgue integráveis, mas isso não é feito aqui. Alguns resultados de
+existência de controle ótimo podem ser encontrados em \cite{filippov1962}. 
+
+\textbf{Unicidade:} Unicidade de soluções do sistema de otimalidade implica unicidade
+do controle ótimo, se existir. Em geral, podemos provar a unicidade de
+soluções do sistema de otimalidade em intervalos de tempo curtos. A volta nem
+sempre é verdadeira, isto é, unicidade do controle ótimo não garante a
+unicidade do sistema. 
+
+Os exemplos e laboratórios satisfazem as condições de existência e unicidade
+para intervalos de tempo pequenos. Portanto, resolver através das condições
+necessárias já se torna suficiente. 
+
+\section{Interpretação da Adjunta}
+
+Defina 
+$$
+V(x_0, t_0) := \max_u \int_{t_0}^{t_1} f(t,x(t), u(t)) dt
+$$
+$$
+\text{sujeito a } x'(t) = g(t,x,u), x(t_0) = x_0.
+$$
+Estabelecemos que 
+$$\frac{\partial V}{\partial x}(x_0, t_0) = \lim_{\e \to 0} \frac{V(x_0 + \e,
+t_0) - V(x_0,t_0)}{\e} = \la(t_0).$$
+
+Podemos relacionar, então, a função adjunta à variação marginal da função
+custo/lucro com respeito ao estado. É o valor adicional associado com um 
+incremento adicional da variável de estado. Na verdade, essa aproximação é
+válida para todo tempo $t$ \cite[136-139]{kamien2012dynamic}. Podemos aproximar: 
 
 \begin{equation*}
     V(x_0 + \e,t_0) \approx V(x_0,t_0) + \e\la(t_0). 
 \end{equation*}
-Se $\e = 1$, podemos ver que ao adicionar um unidade de valor, $\la(t_0)$ é o valor objetivo adicional. 
+Se $\e = 1$, podemos ver que ao adicionar um unidade à condição inicial,
+$\la(t_0)$ será adicionado ao lucro resultante. 
 
-\subsection{Princípio da Otimalidade}
+\section{Princípio da Otimalidade}
 
-\textbf{Teorema 3:} Considere $u^*$ o controle ótimo associado ao estado $x^*$ para o problema de já citado. Se $\hat{t}, t_1 < \hat{t} < t_1$, então as funções restritas ao intervalo $[\hat{t},t_1]$ formam uma solução ótima para o problema com tempo inicial $\hat{t}$. Além disso, será único, desde que $u^*$ seja. A demonstração ocorre por contradição. Note que nada pode ser dito sobre o intervalo $[t_0, \hat{t}]$, pois existem contra-exemplos. 
+É um resultado importante sobre otimizar um sistema sobre um subintervalo do
+intervalo original e, em particular, como o controle ótimo nesse subintervalo
+se relaciona com o controle no intervalo inteiro. 
 
-\textbf{Teorema 4:} $H(t,x,u,\la)$ é contínua por partes e contínua Lipschitz em relação ao tempo no caminho ótimo.
+\begin{theorem}
+    Considere $u^*$ o controle ótimo associado ao estado $x^*$ para o problema
+    de controle já citado. Seja $\hat{t} \in (t_0, t_1)$ fixo. Então as
+    funções restritas ao intervalo $[\hat{t},t_1]$ formam uma solução ótima para o problema com
+    tempo inicial $\hat{t}$. Além disso ela é única, desde que $u^*$ seja. 
+\end{theorem}
 
-\textbf{Função Autônoma:} Quando não existe dependência do tempo nas funções $f$ e $g$. 
+A demonstração ocorre por contradição. Note que nada pode ser dito sobre o
+intervalo $[t_0, \hat{t}]$, pois podemos construir contra-exemplos. 
 
-\textbf{Teorema 5:} Se um problema de controle ótimo é autônomo, então o Hamiltoniano é uma função que não depende do tempo. Note que se $M(t) := H(x^*(t),u^*(t), \la(t))$ é Lipschitz continua, sabemos que $M$ é diferenciável em quase toda parte com respeito à medida de Lebesgue. A partir disso, e utilizando o princípio máximo, vemos que $M'(t) = 0$ em quase toda parte. Como $M$ é contínua, ela é constante. 
+\section{Os Problemas Autônomo e Hamiltoniano}
 
-\textbf{Princípio Máximo: } O máximo de uma função é encontrado em uma das bordas. 
+\begin{theorem}
+    O Hamiltoniano é uma função contínua Lipschitz do tempo $t$ no caminho
+    ótimo. 
+\end{theorem}
+
+\begin{definition}[Autônomo]
+    Se um problema de controle ótimo não tem dependência explícita do tempo,
+    ele é dito autônomo. Isso significa que $f$ e $g$, em nossa notação, são
+    funções apenas de $x$ e $u$. 
+\end{definition}
+
+\begin{theorem}
+    Se um problema de controle ótimo é autônomo, então o Hamiltoniano é uma
+    função constante do tempo ao longo da solução ótima. 
+\end{theorem}
+
+\section{Exemplos}
