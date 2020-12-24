@@ -1,26 +1,186 @@
-\subsection{Termo Payoff}
+\section{Termos Payoff}
 
+Em muitos problemas, também queremos maximizar o valor de uma função em um
+determinado ponto no tempo, como, por exemplo, no final do intervalo. Assim, o
+problema é do tipo: 
 
-Muitas vezes, também queremos maximizar o valor de uma função em um determinado tempo, em especial no final do intervalo. Nesse caso, o problema se torna:
 \begin{equation*}
-    \begin{cases}
-    \max_u [\phi(x(t_1)) + \int_{t_0}^{t_1} f(t, x(t),u(t))dt] \\
+    \max_u \left[\phi(x(t_1)) + \int_{t_0}^{t_1} f(t, x(t),u(t))dt\right] 
+\end{equation*}
+\begin{equation*}
     x' = g(t,x(t),u(t)), x(t_0) = x_0
-    \end{cases}
 \end{equation*}
 
-A função $\phi$ é conhecida como termo payoff. A única mudança na obtenção das condições necessárias é na condição do tempo final. Obtemos que $\la(t_1) = \phi '(x^*(t_1))$. (Mais uma vez, precisamos fazer com que $\lim_{\e \to 0} \frac{J(u^{\e}) - J(u^*)}{\e} = 0$
+O termo $\phi(x(t_1))$ é conhecido como termo \textit{payoff}. Assim o
+funcional objetivo se torna 
+$$
+J(u) = \int_{t_0}^{t_1} f(t,x(t),u(t))dt + \phi(x(t_1))
+$$
+A única mudança em relação ao cálculos do Capítulo \ref{ch:1} é a condição de transversalidade. 
+$$\la(t_1) = \phi '(x^*(t_1)).$$ 
 
-\subsection{Estados com Pontos Finais Fixados}
+\section{Estados com Pontos Finais Fixos}
 
-\textbf{Obs.:} O funcional objetivo ser imaterial significa que não depende da condição final do estado. 
+Considere o problema  
+$$
+\max_u \int_{t_0}^{t_1} f(t,x(t), u(t)) dt + \phi(x(t_0)) 
+$$
+$$
+\text{sujeito a  }x'(t) = g(t,x(t),u(t)), x(t_1) = x_1
+$$
 
-Podemos deixar $x(t_0)$ livre e $x(t_1) = x_1$ fixado. Essa caso é similar com
-o anterior, com a mudança de que $\la(t_0) = - \phi '(x(t_0))$. Isso sugere
-que exista uma dualidade entre as condições de estado e adjunta.
+Diferente do problema que estávamos estudando, fixamos o estado no ponto
+final. Entretanto, o argumento utilizado no Capítulo \ref{ch:1} pode ser
+replicado aqui. As condições necessárias serão as mesmas, exceto pela
+condição de transversalidade. Especificamente, 
+$$
+\la(t_0) = \phi '(x(t_0))
+$$
+Isso sugere que exista uma dualidade entre as condições de fronteira do estado
+e da adjunta. A maximização é sobre os controles \textit{admissíveis}, no
+sentido que respeite todas as restrições definidas. 
 
-Também podemos fixar os pontos inicial e final de estado. Notamos que estamos considerando a maximização sobre o conjunto de controles admissíveis, que respeitem as condições, inclusive sobre a variável de estado. 
+Também podemos fixar os pontos inicial e final de estado. Notamos que estamos
+considerando a maximização sobre o conjunto de controles admissíveis, que
+respeitem as condições, inclusive sobre a variável de estado. Porém, nesse
+caso, uma mudança nas condições necessárias é realizada no seguinte teorema. 
 
-\textbf{Teorema 1:} Se $u^*(t)$ e $x^*(t)$ são ótimos para o problema com pontos inicial e final fixados, então existe uma função $\la(t)$ diferenciável por partes e uma contante $\la_0$ igual a $0$ ou $1$, onde $H = \la_0f(t,x(t),u(t)) + \la(t)g(t,x(t),u(t))$ e $\la '(t) = - H_x$. 
+\begin{theorem}
+    Se $u^*(t)$ e $x^*(t)$ são ótimos para o problema com pontos inicial e
+    final fixados, então existe uma função $\la(t)$ diferenciável por partes e
+    uma contante $\la_0$ igual a $0$ ou $1$, tal que 
+    $$
+    H(t,x^*(t),u(t),\la(t)) \le H(t,x^*(t),u^*(t), \la(t))
+    $$
+    para todos os controles admissíveis $u$ no tempo $t$ e o Hamiltoniano é 
+    $$H = \la_0f(t,x(t),u(t)) + \la(t)g(t,x(t),u(t))$$ e
+    $$\la '(t) = - \dfrac{\partial H(t,x^*(t), u^*(t))}{\partial x}.$$ 
+\end{theorem}
 
-A diferença é que a função adjunta não tem restrições. A demonstração utiliza uma técnica diferente da utilizada até então. A constante ajusta para problemas degenerados ou problema tem funcional objetivo imaterial.
+A diferença das condições apresentadas no capítulo \ref{ch:1} é que a função adjunta não tem restrições. A demonstração utiliza
+uma técnica diferente da utilizada até então \cite[147-153]{kamien2012dynamic}. A constante $\la_0$ ajusta para
+problemas degenerados ou problemas onde o funcional objetivo é imaterial.
+
+\begin{definition}
+    O funcional objetivo ser imaterial significa que não depende da condição final do estado. 
+\end{definition}
+
+\section{Exemplos}
+
+\begin{example}
+    \begin{equation*}
+        \min_u \frac{1}{2}\int_0^1 u(t)^2 dt + 5x(1)^2 
+    \end{equation*}
+    \begin{equation*}
+        \text{sujeito a  }x'(t) = x(t) + u(t), x(0) = 1
+    \end{equation*}
+\end{example}
+
+Observe que nesse exemplo estamos lidando com o termo \textit{payoff}
+$5x(1)^2$, onde $\phi(x) = 5x^2$. Nesse caso
+$$
+H = \frac{1}{2}u^2 + \la(x + u)
+$$
+A condição de otimalidade, 
+$$
+0 = H_u = u^* + \la \implies u^*(t) = - \la(t)
+$$
+A equação adjunta, 
+$$
+\la '(t) = - H_x = - \la \implies \la(t) = Ce^{-t}
+$$
+A condição de transversalidade é 
+$$
+\la(1) = \phi '(x(1)) = 10x(1)
+$$
+Sabemos que $u^*(t) = -Ce^{-t}$. Usando a equação do estado, 
+$$
+x' = x - Ce^{-t} \implies x^{*}(t) = \frac{C}{2}e^{-t} + De^t
+$$
+Agora, utilizando as condições de fronteira,  
+$$
+\la(1) = Ce^{-1} = 10x^*(1) = 10\left(\frac{C}{2}e^{-1} + De\right)
+$$
+$$
+x(0) = \frac{C}{2} + D = 1 \implies D = 1 - \frac{C}{2}
+$$
+Obtemos a equação
+$$
+e^{-1} = 5e^{-1} + 10e\frac{D}{C} \implies -\frac{4}{10}e^{-2} = \frac{D}{C} \implies 1 - \frac{C}{2} = -\frac{2}{5}Ce^{-2}
+$$
+Assim 
+$$
+C = \frac{1}{\frac{1}{2} - \frac{2}{5} e^{-2}} = \frac{10}{5 - 4e^{-2}} \implies D = 1 - \frac{5}{5 - 4e^{-2}} = \frac{-4e^{-2}}{5 - 4e^{-2}}
+$$
+Concluímos, portanto, que 
+$$
+u^{*}(t) = - \frac{10}{5 - 4e^{-2}}e^{-t} \text{ e }
+x^{*}(t) = \frac{5}{5 - 4e^{-2}}e^{-t} - \frac{4e^{-2}}{5 - 4e^{-2}}e^t
+$$
+
+\begin{example}
+    \begin{equation*}
+        \min_u \int_0^1 u(t) dt
+    \end{equation*}
+    \begin{equation*}
+        \text{sujeito a   }x'(t) = u(t)^2, x(0) = 0, x(1) = 0
+    \end{equation*}
+\end{example}
+
+Observe que $x(t) = \int_0^t u(s)^2 ds$ e, como $x(1) = 0$, temos que $u
+\equiv 0$ é o único controle admissível. Portanto ele será o único controle
+ótimo. Agora, vamos examinar as condições necessárias, para fazer o
+\textit{sanity check}. 
+$$
+H = \la_0 u + u^2 \la 
+$$
+Assim 
+$$
+0 = H_u = \la_0 + 2u \la \implies u^*(t) = -\frac{\la_0}{2\la(t)}
+$$
+Pela equação adjunta, $H_x = 0 \implies \la \equiv C$, para alguma constante
+$C$. Isto é, $u^*(t) = -\la_0/2C$. Usando a equação do estado, obtemos que 
+$$
+x^*(t) = \la_0^2 \frac{t}{4C^2} + D
+$$
+tal que $D = 0$ e $\frac{\la_0^2}{4C^2} = 0 \implies \la_0 = 0$. Checamos
+então que o Teorema é satisfeito com $\la_0 = 0$ e $u^* \equiv 0$, como já era
+esperado. 
+
+\begin{example}
+    Seja $x(t)$ o número de célular de tumor no tempo $t$ com crescimento
+    exponencial $\alpha$ e $u(t)$ a concentração de drogas. Queremos minimizar
+    o número de células tumorais ao final do tratamento e os efeitos negativos
+    acumulados do tratamento no corpo. Assim, o problema é resumido em 
+    $$
+    \min_u x(T) + \int_0^T u(t)^2 dt
+    $$
+    $$
+    \text{sujeito a  }x'(t) = \alpha x(t) - u(t), x(0) = x_0 > 0
+    $$
+\end{example}
+
+Esse é um simples modelo, não realístico, com objetivo ilustrativo apenas. O
+termo \textit{payoff} é $X(T)$ e, portanto, $\phi(x) = x$. Podemos calcular as
+condições necessárias. 
+$$
+H = u^2 + \la(\alpha x - u)
+$$
+$$
+0 = H_u = 2u - \la \implies u^* = \frac{\la}{2}
+$$
+$$
+\la ' = \dfrac{\partial H}{\partial x} = - \alpha \la \implies \la(t) = Ce^{-\alpha t}
+$$
+$$
+\la(T) = \phi '(x(T)) = 1 \implies \la(t) = e^{\alpha(T - t)}
+$$
+Portanto o controle ótimo é $$u^{*}(t) = \frac{1}{2}e^{\alpha(T - t)},$$
+Observando a equação do estado, temos que 
+$$
+x' - x = - \frac{1}{2}e^{\alpha(T - t)} \implies x^*(t) = x_0 e^{\alpha t} + e^{\alpha T}\frac{e^{-\alpha t} - e^{\alpha t}}{4\alpha}
+$$
+Com esse método, podemos obter a quantidade de droga a ser utilizada a cada
+tempo $t$ e também saberemos a quantidade de células cancerosas. Todavia é
+importante notar que esse é um modelo simplificado que não leva em
+consideração diversos fatores importantes ao processo. 
