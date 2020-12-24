@@ -86,6 +86,8 @@ revertida. Podemos extender as condições necessárias para funções de contro
 Lebesgue integráveis, mas isso não é feito aqui. Alguns resultados de
 existência de controle ótimo podem ser encontrados em \cite{filippov1962}. 
 
+\Space
+
 \textbf{Unicidade:} Unicidade de soluções do sistema de otimalidade implica unicidade
 do controle ótimo, se existir. Em geral, podemos provar a unicidade de
 soluções do sistema de otimalidade em intervalos de tempo curtos. A volta nem
@@ -128,13 +130,50 @@ se relaciona com o controle no intervalo inteiro.
 
 \begin{theorem}
     Considere $u^*$ o controle ótimo associado ao estado $x^*$ para o problema
-    de controle já citado. Seja $\hat{t} \in (t_0, t_1)$ fixo. Então as
-    funções restritas ao intervalo $[\hat{t},t_1]$ formam uma solução ótima para o problema com
-    tempo inicial $\hat{t}$. Além disso ela é única, desde que $u^*$ seja. 
+    $$
+    \max_u J(u) = \max_u \int_{t_0}^{t_1} f(t, x(t), u(t)) dt 
+    $$
+    $$
+    \text{sujeito a  }x'(t) = g(t, x(t), u(t)), x(t_0) = x_0.
+    $$
+    Seja $\hat{t} \in (t_0, t_1)$ fixo. Então as
+    funções $\hat{u}^*$ e $\hat{x}^*$ restritas ao intervalo $[\hat{t},t_1]$ 
+    formam uma solução ótima para o problema 
+    $$
+    \max_u \hat{J}(u) = \max_u \int_{t_0}^{t_1} f(t, x(t), u(t)) dt 
+    $$
+    $$
+    \text{sujeito a  }x'(t) = g(t, x(t), u(t)), x(\hat{t}) = x^*(\hat{t}).
+    $$
+    Além disso, se $u^*$ é controle ótimo único, então
+    $\hat{u}^*$ é também. 
 \end{theorem}
 
-A demonstração ocorre por contradição. Note que nada pode ser dito sobre o
-intervalo $[t_0, \hat{t}]$, pois podemos construir contra-exemplos. 
+\begin{proof}
+    Esta prova se dá por contradição. Suponha que $\hat{u}^*$ não seja ótimo,
+    isto é, exista uma função de controle $\hat{u}_1$ no intervalo $[\hat{t},
+    t_1]$ tal que $\hat{J}(\hat{u}_1) > \hat{J}(\hat{u}^*)$. Defina 
+    $$u_1(t) = 
+    \begin{cases}
+        u^*(t), &t \in [t_0, \hat{t}] \\
+        \hat{u}_1(t), &t \in [\hat{t}, t_1]
+    \end{cases}
+    $$
+    Seja $x_1$ o estado associado a $u_1$. Assim 
+    \begin{equation*}
+        \begin{split}
+            J(u_1) - J(u^*) &= \left(\int_{t_0}^{\hat{t}} f(t,x_1,u_1)dt +
+            \hat{J}(\hat{u}_1)\right) - \left(\int_{t_0}^{\hat{t}} f(t,x^*,u^*)dt +
+            \hat{J}(\hat{u}^*)\right) \\
+            &= \hat{J}(\hat{u}_1) - \hat{J}(\hat{u}^*) > 0 
+        \end{split}        
+    \end{equation*}
+    Isso contradiz a hipótese inicial de que $u^*$ é controle ótimo. 
+\end{proof}
+
+\begin{remark}
+    Note que nada pode ser dito sobre o intervalo $[t_0, \hat{t}]$, pois podemos construir contra-exemplos. 
+\end{remark}
 
 \section{Os Problemas Autônomo e Hamiltoniano}
 
@@ -155,3 +194,58 @@ intervalo $[t_0, \hat{t}]$, pois podemos construir contra-exemplos.
 \end{theorem}
 
 \section{Exemplos}
+
+\begin{example}
+    Queremos resolver o problema 
+    $$
+    \min_u \int_{t_0}^{t_1} x(t) + \frac{1}{2}u(t)^2 dt
+    $$
+    $$  
+    \text{sujeito a  }x'(t) = x(t) + u(t), x(0) = \frac{1}{2}e^2 - 1
+    $$
+    no intervalo $[0,2]$ e, posteriormente, no intervalo $[1,2]$.
+\end{example}
+
+Observe inicialmente que $f$ e $g$ são continuamente diferenciáveis e convexos no segundo 
+e terceiro argumentos, dado que o problema é de minimização. Vamos então conferir as condições 
+necessárias e, então, saberemos que $J(u^*) \le J(u)$ para toda função de controle $u$, pelo 
+teorema de existência. 
+
+\Space
+
+O Hamiltoniano é 
+$$
+H = x + \frac{1}{2}u^2 + x \la + u \la
+$$
+A equação adjunta é dada por 
+$$
+\la ' = - H_x = -1 - \la, \la(2) = 0 \implies \la(t) = e^{2-t} -1 \ge 0,
+$$
+A condição de otimalidade é dada por 
+$$
+H_u = u + \la = 0 \implies u^*(t) = -\la(t) = 1 - e^{2-t} 
+$$
+E, portanto 
+$$
+x'(t) - x(t) = 1 - e^{2-t} \implies x(t) = Ce^t + \frac{1}{2}e^{2-t} - 1
+$$
+Usando a condição inicial 
+$$
+\frac{1}{2}e^2 - 1 = C + \frac{1}{2}e^{2} - 1 \implies x^*(t) =  \frac{1}{2}e^{2-t} - 1   
+$$
+
+Considerando o intervalo em $[1,2]$, vemos que $\hat{u}^* = u^*$ em $[1,2]$. Se fôssemos resolver 
+fazendo as contas, veja que todos os passos poderiam ser repetidos, com exceção de que $x(1) = \frac{1}{2}e - 1$, 
+o que não mudaria a solução. 
+
+\begin{example}
+    Considere o problema acima, mas no intervalo $[0,1]$. 
+\end{example}
+
+O Hamiltoniano é o mesmo e $u^*(t) = -\la(t)$. Mas a condição de transversalidade é diferente: 
+$\la(1) = 0 \implies \la(t) = e^{1-t} - 1 \text{ e } u^{*}(t) = 1 - e^{1-t}$. 
+Ao usarmos a equação do estado, obteremos que 
+$$
+x^*(t) = \frac{1}{2}e^{1-t} - 1 + \frac{1}{2}(e^2 - e)e^t
+$$
+Note que a solução é diferente da anterior restrita a $[0,1]$. 
