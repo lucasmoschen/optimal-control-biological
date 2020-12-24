@@ -1,23 +1,70 @@
-Queremos agora resolver os problemas de controle ótimo numericalmente. A equação $\frac{\partial H}{\partial u} = 0$ deve ser satisfeita em $u^*$ e pode ser de ajuda para encontrar $u$ em função de $x$ e $\la$. A partir disso, podemos utilizar um método como Runge-Kutta para resolver o sistema ótimo. Ele vai encontrar o controle ótimo se esse existir. 
-\subsection{Algoritmo}
+Queremos agora resolver os problemas de controle ótimo até agora apresentados
+numericamente, de forma que a solução seja uma aproximação a função $u^*$.
+Para isso tomamos uma partição $\{t_0 = b_1, b_2, ..., b_{N+1} = t_1\}$,
+usualmente com pontos igualmente espaçados, tal que a aproximação será dara
+por $u_i \approx u(b_i)$. Sabemos que a solução deve satisfazer as condições
+necessárias apresentadas no capítulo \ref{ch:1}. 
+
+Em geral, a equação $\frac{\partial H}{\partial u} = 0$ pode ser manipulada
+para encontrarmos $u$ em função de $x$ e de $\la$, para então termos a
+expressão de $u^*$. A partir disso, podemos utilizar um método como
+Runge-Kutta para resolver o sistema ótimo. Ele vai encontrar o controle ótimo
+se esse existir. 
+
+\section{Algoritmo}
+
+O método apresentado a seguir é bem intuitivo e é conhecido como
+\textit{Forward-Backward Sweep}. Seja $\vec{x} = (x_1,...,x_{N+1})$ e
+$\vec{\la} = (\la_1, ..., \la_{N+1})$ vetores que aproximação nos pontos da
+partição as funções estado e adjunta. \hl{Informa\c{c}\~oes sobre converg\^encia e
+estabilidade podem ser encontradas em} \cite{wolfgang1978}. 
+
 \begin{enumerate}
-    \item Chute inicial para $\Vec{u}$, sendo cada coordenada de $u$ um valor no tempo discreto. 
-    \item Resolva $x$ Foward utilizando a condição inicial e utilizando sua equação diferencial.
-    \item Use a condição final de $\lambda$ e resolva Backward de acordo com sua equação diferencial.
-    \item Atualize o vetor de controle. 
-    \item Convergência. 
+    \item Chute inicial para $\vec{u}$. 
+    \item Usando a condição inicial $x(t_0)$ e os valores de $\vec{u}$,
+    encontre $\vec{x}$ passo a frente através da equação diferencial. 
+    \item Usando a condição de transversalidade $\la(t_1) = 0$ e os valores
+    $\vec{u}$ e $\vec{x}$, resolva $\vec{\la}$ para trás de acordo com a
+    equação adjunta. 
+    \item Atualize o vetor de controle com os novos valores de $\vec{x}$ e
+    $\vec{\la}$ através da equação $H_u = 0$. 
+    \item Confira a convergência. Se dois passos subjacentes não estão
+    suficientemente próximos, repita a partir do segundo passo. 
 \end{enumerate}
 
-É interessante utilizar uma combinação convexa entre o valor do controle anterior e o valor atual para acelerar a convergência.
+Frequentemente é necessário usar uma combinação convexa \footnote{\textbf{Combinação Convexa:} Combinação linear de pontos, tal que os
+coeficientes são não negativos e somam $1$.} entre dois controles
+sequenciais para acelerar a convergência do algoritmo. Para os passos 2 e 3, o
+método de Runge-Kutta é suficiente. 
 
-\textbf{Combinação Convexa:}    Combinação Linear de pontos, cuja soma dos coeficientes é positiva e a soma é $1$.  
+Muitos tipos de teste de convergência existem. Frequentemente, considerar 
+$$
+||\vec{u} - \text{old }\vec{u}||_1 = \sum_{i=1}^{N+1} |u_i - \text{old }u_i| < \e   
+$$
+Nesse texto, usaremos o erro relativo com tolerância $\e$,
+$$
+\frac{||\vec{u} - \text{old }\vec{u}||_1}{||\vec{u}||_1} \le \e 
+$$
+Ou, de outra forma, queremos que 
+$$
+\e ||\vec{u}|| - ||\vec{u} - \text{old }\vec{u}|| \ge 0
+$$
+Vamos fazer esse requerimento para todas as variáveis, não apenas para o
+controle. 
 
-O erro no algoritmo é em geral o relativo e ele deve ser menor do que uma tolerância aceitável. A condição que obtemos é que $\delta \norm{\Vec{u}} - \norm{\Vec{u} - \Vec{oldu}} \geq 0$
+Ao longo do texto esse algoritmo será utilizado 
 
-\subsection{Runge-Kutta}
+\hl{Especificar o c\'odigo utilizado, a linguagem e a organiza\c{c}\~ao dos
+notebooks. Aqui ou no in\'icio do texto.}
+
+\section{Runge-Kutta}
+
+O método pode ser resumido pelas seguintes equações, dado um passo $h$. 
+\begin{equation*}
+    x(t + h) \approx x(t) + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4) 
+\end{equation*}
 \begin{equation*}
     \begin{cases}
-    x(t + h) \approx x(t) + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4) \\
     k1 = f(t,x(t)) \\
     k2 = f(t + \frac{h}{2},x(t) + \frac{h}{2}k_1) \\
     k3 = f(t + \frac{h}{2},x(t) + \frac{h}{2}k_2) \\
