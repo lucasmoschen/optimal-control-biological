@@ -1,0 +1,61 @@
+Procura-se nesse texto estudar o livro de \cite{lenhart2007} que estuda os
+problemas de controle ótimo. O texto terá a mesma estrutura do livro e servirá
+de guia em português de estudos sobre o tema. 
+
+\section{Motivação}
+    Apresenta-se inicialmente um problema motivador que considera duas equações: uma
+    representa a variação do peso da parte vegetativa, enquanto a outra representa
+    o peso da parte reprodutiva. O crescimento das plantas é modelado pelo modelo
+    de \cite{cohen1971299}. Nesse caso, o \textit{controle} sobre o sistema é a fração
+    da fotossíntese destinada para a parte vegetativa. Queremos \textit{maximizar} o 
+    crescimento da parte reprodutiva, que garante o mantimento da espécie. 
+
+    Sejam $x(t)$ a parte vegetativa e $y(t)$ a parte reprodutiva no
+    tempo $t$. Nosso objetivo será maximizar o funcional \refeq{funcional-maximize}
+    segundo a função $u(t)$ que representa a fração de fotossíntese para
+    o crescimento vegetativo: 
+
+    \begin{equation}
+        \label{funcional-maximize}
+        F(x,u,t) := \int_0^T \ln(y(t))dt, 
+    \end{equation}
+
+    onde $T$ é o limite superior do intervalo de tempo considerado e tal que o
+    modelo é um sistema de equações diferenciais com restrições: 
+    \begin{align*}
+        x'(t) &= u(t)x(t) \\
+        y'(t) &= (1 - u(t))y(t) \\
+        0 \leq &u(t) \leq 1 \\
+        x(0) &> 0, \\
+        y(0) &\geq 0
+    \end{align*}    
+
+Um problema como esse é chamado de \textbf{problema de controle ótimo}, pois
+queremos encontrar uma função $u$, denominada controle, ótima, segundo um
+funcional objetivo. Nesse exemplo, podemos tirar conclusões interessantes
+sobre o sistema, como, por exemplo, como a planta distribui seu fotossintato.
+Outros problemas interessantes que surgem tem aplicações bem mundanas: qual a
+porcentagem da população deveria ser vacinada em uma epidemia, a fim de que se
+minimize o número de infectados e o custo de implementação? Qual a quantidade
+de remédio deve ser ministrado para que se minimize a carga viral e a
+quantidade administrada de remédio? Nesse caso a carga viral e a quantidade de
+remédio formariam o sistema.  
+Em um problemas como esse, encontramos: 
+\begin{enumerate}
+    \item variáveis de \textbf{estado}: descrevem a dinâmica do sistema. 
+    \item variáveis de \textbf{controle}: conduzem o estado segundo uma ação. 
+    \item \textbf{funcional} \footnote{Funcional: Mapa entre um conjunto de funções ao
+    conjunto dos números reais} \textbf{objetivo}: Procuramos a função de
+    controle de forma que esse funcional seja minimizado (ou maximizado). Ele
+    representa o custo (ou ganho) ao se tomar uma atitude no sistema. 
+\end{enumerate}
+
+\section{Estrutura}
+
+O texto-fonte apresenta diversos laboratórios que são replicados aqui em
+formato de Notebook e escritos em Python. Existe uma indicação de leitura dos
+Notebooks: 
+
+\begin{itemize}
+    \item Laboratórios 1 a 3: Após capítulo 4
+\end{itemize}
