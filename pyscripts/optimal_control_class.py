@@ -25,21 +25,21 @@ class OptimalControl:
 
         self.coef_u = conv_comb_u
 
-    def forward(self,t,x,u,h): 
+    def forward(self,t,x,u,params,h): 
         '''A função realiza o processo forward que integra a equação de x' = g
         g: função (t,x,u) 
         u: controle do último passo. vetor de tamanho N + 1
         h: passo a ser dado pelo método de Runge-Kutta 
         '''
         for i in range(len(t)-1):
-            k1 = self.dx(i,x[i],u[i])
-            k2 = self.dx(i+h/2,x[i] + 0.5*h*k1, 0.5*(u[i] + u[i+1]))
-            k3 = self.dx(i+h/2,x[i] + 0.5*h*k2, 0.5*(u[i] + u[i+1]))
-            k4 = self.dx(i+h,x[i] + h*k3, u[i+1])
+            k1 = self.dx(i,x[i],u[i], params)
+            k2 = self.dx(i+h/2,x[i] + 0.5*h*k1, 0.5*(u[i] + u[i+1]), params)
+            k3 = self.dx(i+h/2,x[i] + 0.5*h*k2, 0.5*(u[i] + u[i+1]), params)
+            k4 = self.dx(i+h,x[i] + h*k3, u[i+1], params)
             x[i+1] = x[i] + (h/6)*(k1 + 2*k2 + 2*k3 + k4)
         return x 
 
-    def backward(self, t, x, u, lambda_, h): 
+    def backward(self, t, x, u, lambda_, params,h): 
         '''A função realiza o processo backward que integra a equação de lambda' = -H_x
         dadj: função (t,x,u) com a derivada de lambda. 
         x: estado calculado. Vetor de tamanho N + 1.
@@ -48,15 +48,15 @@ class OptimalControl:
         h: passo a ser dado pelo método de Runge-Kutta. 
         '''
         for i in range(len(t)-1,0,-1):
-            k1 = self.dadj(i,x[i],u[i],lambda_[i])
-            k2 = self.dadj(i-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k1)
-            k3 = self.dadj(i-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k2)
-            k4 = self.dadj(i-h,x[i-1], u[i-1], lambda_[i] - h*k3)
+            k1 = self.dadj(i,x[i],u[i],lambda_[i], params)
+            k2 = self.dadj(i-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k1, params)
+            k3 = self.dadj(i-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k2, params)
+            k4 = self.dadj(i-h,x[i-1], u[i-1], lambda_[i] - h*k3, params)
             lambda_[i-1] = lambda_[i] - (h/6)*(k1 + 2*k2 + 2*k3 + k4)
         return lambda_
 
 
-    def solve(self, x0, T, params, h = 1e-4, tol = 1e-4): 
+    def solve(self, x0, T, params, h = 1e-3, tol = 1e-4): 
         '''
         Retorna o controle ótimo, o estado associado e a função adjunta. 
         x0: valor inicial do estado 
@@ -81,11 +81,11 @@ class OptimalControl:
             x_old = x.copy()
             lambda_old = lambda_.copy()
 
-            x = self.forward(t,x,u,h)
-            lambda_ = self.backward(t,x,u,lambda_,h)
+            x = self.forward(t, x, u, params, h)
+            lambda_ = self.backward(t, x, u, lambda_, params, h)
 
             # Update u 
-            u = self.coef_u*self.update_u(x,lambda_) + (1 - self.coef_u)*u
+            u = self.coef_u*self.update_u(t, x, lambda_, params) + (1 - self.coef_u)*u
 
             cond1 = tol*sum(abs(u)) - sum(abs(u_old - u))
             cond2 = tol*sum(abs(x)) - sum(abs(x_old - x))
@@ -99,7 +99,7 @@ class OptimalControl:
         '''Função simples desenvolvida para plot. '''
         variables = {'Estado': x, 'Controle Ótimo': u, 'Função Adjunta': lambda_}
 
-        fig, ax = plt.subplots(3,1,figsize = (15,15))
+        _, ax = plt.subplots(3,1,figsize = (15,15)) 
 
         for i, key in enumerate(variables):
             ax[i].plot(t,variables[key])
