@@ -7,13 +7,16 @@ import sympy as sp
 
 class OptimalControl:
     
-    def __init__(self,diff_state, diff_lambda, update_u, h_u = False, conv_comb_u = 0.5):
-        '''Resolve o problema de controle ótimo simples. 
+    def __init__(self, diff_state, diff_lambda, update_u, diff_phi = lambda x,par: 0, 
+                 h_u = False, conv_comb_u = 0.5):
+        '''Resolve o problema de controle ótimo simples, com condição inicial
+           do estado e termo payoff. 
            - diff_state: função com argumentos (t,x,u,params) que representa a
            derivada do estado x. 
            - diff_lambda: função com argumentos (t,x,u,lambda, params) que representa a
            derivada da função adjunta lambda.
            - update_u: função que atualiza u através de H_u = 0 
+           - diff_phi: função que determina a condição de transversalidade. 
            - h_u: Valor booleano. Se verdadeiro, resolve a equação H_u = 0 de
              forma implícita. 
            - conv_comb_u: valor da combinação convexa para atualização de u
@@ -21,8 +24,8 @@ class OptimalControl:
         self.dx = diff_state 
         self.dadj = diff_lambda 
         self.update_u = update_u
-        self.h_u = h_u
-
+        # Lida com a condição de transversalidade. 
+        self.dphi = diff_phi
         self.coef_u = conv_comb_u
 
     def forward(self,t,x,u,params,h): 
@@ -82,6 +85,8 @@ class OptimalControl:
             lambda_old = lambda_.copy()
 
             x = self.forward(t, x, u, params, h)
+            # Condição de transversalidade.
+            lambda_[-1] = self.dphi(x, params)
             lambda_ = self.backward(t, x, u, lambda_, params, h)
 
             # Update u 
