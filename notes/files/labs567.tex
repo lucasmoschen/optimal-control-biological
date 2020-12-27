@@ -1,23 +1,24 @@
-\section{Laboratório 2}
+Nesse capítulo serão realizados os laboratórios 1, 2 e 3. Os laboratórios
+tratam de aplicações simplificadas de situações reais que envolvem conceitos
+de biologia. Eles são auto-contidos se a teoria dos capítulos
+anteriores for conhecida. 
 
-Aplicação em Biologia. Dada uma população com capacidade máxima (carrying capacity), queremos reduzí-la. Nesse caso, o controle é quantidade adicionada no tempo $t$. Assim, o problema se reduz a:
-\begin{equation}
-    \begin{cases}
-    \min_u \int_0^T (Ax(t)^2 + u(t)^2) dt \\
-    s.a.~~ x'(t) = r(M - x(t)) - u(t)x(t), x(0) = x_0
-    \end{cases}
-\end{equation}
+\begin{enumerate}[label=\textbf{Lab \arabic*:}]
+    \item Exemplo Introdutório
+    
+    Algoritmo em Python explicado a cada passo e exemplo do problema de
+    controle ótimo simples desenvolvido. 
 
-\section{Laboratório 3}
+    \item Mofo e Fungicida 
+    
+    Modelo simplificado do crescimento de um mofo contra a ação de um
+    fungicida, que serve de controle para o aumento do mofo, que é um efeito
+    indesejado. 
 
-Aplicação sobre Bactéria. Nesse laboratório, o tópico pe sobre o crescimento de uma bactéria quando um nutriente químico é utilizado para acelerar a reprodução. Nosso problema, então:
-\begin{equation}
-    \begin{cases}
-    \max_u Cx(1) - \int_0^1 u(t)^2 dt \\
-    s.a.~~ x'(t) = rx(t) + Au(t)x(t) - Bu(t)^2e^{-x(t)}, \\
-    x(0) = x_0, A, B, C \geq 0
-    \end{cases}
-\end{equation}
-
-Como $\la(t) > 0 \forall t$, podemos obter a caracterização do controle como comumente fazemos.
-
+    \item Bacteria 
+    
+    Uma bacteria tem seu crescimento acelerado por um químico, mas
+    simultaneamente é criado um subproduto tóxico à bactéria. Queremos que no
+    final do experimento, tenhamos o máximo de bactéria, mas sem usar muito
+    químico. 
+\end{enumerate}

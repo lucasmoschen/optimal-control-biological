@@ -8,6 +8,7 @@ import sympy as sp
 class OptimalControl:
     
     def __init__(self, diff_state, diff_lambda, update_u, diff_phi = lambda x,par: 0, 
+                 bounds = (-np.inf, np.inf),
                  h_u = False, conv_comb_u = 0.5):
         '''Resolve o problema de controle ótimo simples, com condição inicial
            do estado e termo payoff. 
@@ -16,7 +17,8 @@ class OptimalControl:
            - diff_lambda: função com argumentos (t,x,u,lambda, params) que representa a
            derivada da função adjunta lambda.
            - update_u: função que atualiza u através de H_u = 0 
-           - diff_phi: função que determina a condição de transversalidade. 
+           - diff_phi: função que determina a condição de transversalidade.
+           - bounds: limites sobre o controle.  
            - h_u: Valor booleano. Se verdadeiro, resolve a equação H_u = 0 de
              forma implícita. 
            - conv_comb_u: valor da combinação convexa para atualização de u
@@ -25,6 +27,7 @@ class OptimalControl:
         self.dadj = diff_lambda 
         self.update_u = update_u
         # Lida com a condição de transversalidade. 
+        self.bounds = bounds
         self.dphi = diff_phi
         self.coef_u = conv_comb_u
 
@@ -72,7 +75,18 @@ class OptimalControl:
 
         N = int(np.round(T/h)) 
         t = np.linspace(0,T,N+1)
-        u = np.random.normal(scale=0.01, size=N+1)
+        
+        # Chute para condição inicial
+        u = np.random.beta(a=1000,b=1000, size=N+1)
+        if self.bounds[0] > -np.inf: 
+            if self.bounds[1] < np.inf: 
+                u = (self.bounds[1] - self.bounds[0])*u + self.bounds[0] 
+            else: 
+                u = u + self.bounds[0] 
+        else: 
+            if self.bounds[1] < np.inf: 
+                u = self.bounds[1]*u 
+
         x = np.zeros(N+1)
         lambda_ = np.zeros(N+1)
 
@@ -110,4 +124,3 @@ class OptimalControl:
             ax[i].plot(t,variables[key])
             ax[i].set_title(key, fontsize = 15)
             ax[i].grid(linestyle = '-', linewidth = 1, alpha = 0.5)
-
