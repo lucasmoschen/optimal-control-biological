@@ -202,18 +202,13 @@ Agora precisamos encontrar o valor de $k$. Para isso, precisamos utilizar as con
     $$
     x(t) = \frac{t^2}{4} - \frac{kt}{2} + c,
     $$
-    para alguma constante $c$. Pela continuidade de $x$, $c = \frac{k^2}{4}$, pois $x(k) = 0$. Por fim, $1 = x(4) = 4 - 2k + k^2/4$. A solução é portanto $k = 2 \text{ ou } 6$. Como $k < 4 \implies k = 2$.
+    para alguma constante $c$. Pela continuidade de $x$, $c = \frac{k^2}{4}$, pois $x(k) = 0$. Por fim, $1 = x(4) = 4 - 2k + k^2/4$. A solução é portanto $k = 2 \text{ ou } 6$. Como $k < 4 \implies k = 2$. Concluímos então que 
 \end{enumerate}
-
-Concluímos então que 
 $$
 u^*(t) = \begin{cases}
     0, &\text{ quando } 0 \le t < 2, \\ 
     \frac{t-2}{2} &\text{ quando } 2 \le t \le 4
-\end{cases}
-$$
-$$
-x^*(t) = \begin{cases}
+\end{cases} \text{ e } x^*(t) = \begin{cases}
     0, &\text{ quando } 0 \le t < 2, \\ 
     \frac{(t-2)^2}{4} &\text{ quando } 2 \le t \le 4
 \end{cases}
@@ -234,8 +229,8 @@ $$
 
 Em conclusão, para encontrar controle ótimo com restrição, devemos considerá-los nas contas. 
 
-\begin{figure}[!ht]
+\begin{figure}[!hb]
     \center
     \input{files/graphic_8.tex}
-    \caption{COntroles ótimo e com truncagem}
+    \caption{Controles ótimo e com truncagem}
 \end{figure}

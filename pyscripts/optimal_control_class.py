@@ -27,6 +27,8 @@ class OptimalControl:
         self.dadj = diff_lambda 
         self.update_u = update_u
         # Lida com a condição de transversalidade. 
+        if bounds[1] <= bounds[0]: 
+            raise('O intervalo deve ser (a,b), a < b')
         self.bounds = bounds
         self.dphi = diff_phi
         self.coef_u = conv_comb_u
@@ -62,7 +64,7 @@ class OptimalControl:
         return lambda_
 
 
-    def solve(self, x0, T, params, h = 1e-3, tol = 1e-4): 
+    def solve(self, x0, T, params, h = 1e-3, tol = 1e-4, bounds = None): 
         '''
         Retorna o controle ótimo, o estado associado e a função adjunta. 
         x0: valor inicial do estado 
@@ -71,6 +73,9 @@ class OptimalControl:
         h: passo no Runge-Kutta
         tol: tolerância para o erro relativo. 
         '''
+        if bounds: 
+            self.bounds = bounds
+
         condition = -1 
 
         N = int(np.round(T/h)) 
