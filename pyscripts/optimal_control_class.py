@@ -40,10 +40,10 @@ class OptimalControl:
         h: passo a ser dado pelo método de Runge-Kutta 
         '''
         for i in range(len(t)-1):
-            k1 = self.dx(i,x[i],u[i], params)
-            k2 = self.dx(i+h/2,x[i] + 0.5*h*k1, 0.5*(u[i] + u[i+1]), params)
-            k3 = self.dx(i+h/2,x[i] + 0.5*h*k2, 0.5*(u[i] + u[i+1]), params)
-            k4 = self.dx(i+h,x[i] + h*k3, u[i+1], params)
+            k1 = self.dx(t[i],x[i],u[i], params)
+            k2 = self.dx(t[i]+h/2,x[i] + 0.5*h*k1, 0.5*(u[i] + u[i+1]), params)
+            k3 = self.dx(t[i]+h/2,x[i] + 0.5*h*k2, 0.5*(u[i] + u[i+1]), params)
+            k4 = self.dx(t[i]+h,x[i] + h*k3, u[i+1], params)
             x[i+1] = x[i] + (h/6)*(k1 + 2*k2 + 2*k3 + k4)
         return x 
 
@@ -56,10 +56,10 @@ class OptimalControl:
         h: passo a ser dado pelo método de Runge-Kutta. 
         '''
         for i in range(len(t)-1,0,-1):
-            k1 = self.dadj(i,x[i],u[i],lambda_[i], params)
-            k2 = self.dadj(i-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k1, params)
-            k3 = self.dadj(i-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k2, params)
-            k4 = self.dadj(i-h,x[i-1], u[i-1], lambda_[i] - h*k3, params)
+            k1 = self.dadj(t[i],x[i],u[i],lambda_[i], params)
+            k2 = self.dadj(t[i]-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k1, params)
+            k3 = self.dadj(t[i]-h/2,0.5*(x[i] + x[i-1]), 0.5*(u[i] + u[i-1]),lambda_[i] - 0.5*h*k2, params)
+            k4 = self.dadj(t[i]-h,x[i-1], u[i-1], lambda_[i] - h*k3, params)
             lambda_[i-1] = lambda_[i] - (h/6)*(k1 + 2*k2 + 2*k3 + k4)
         return lambda_
 
@@ -129,3 +129,5 @@ class OptimalControl:
             ax[i].plot(t,variables[key])
             ax[i].set_title(key, fontsize = 15)
             ax[i].grid(linestyle = '-', linewidth = 1, alpha = 0.5)
+
+        return ax       
