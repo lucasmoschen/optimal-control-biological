@@ -1,48 +1,231 @@
-Agora o problema se resume a:
+Até agora nos preocupamos apenas com problemas com uma variável de estado e
+uma variável de controle. Nesse capítulo vamos estudar as condições
+necessárias para um problema com mais de uma variável de cada tipo. 
+
+\section{Condições Necessárias}
+
+Faremos uma extensão natural dos problemas desenvolvidos até então. Seja o
+problema com $n$ variáveis de estado, $m$ variáveis de controle e uma função
+\textit{payoff} $\phi$. 
 
 $$
 max_{u_1,...,u_m} \int_{t_0}^{t_1} f(t,x_1(t),...,x_n(t),u_1(t),...,u_m(t)) dt + \phi(x_1(t_1),...,x_n(t_1))
 $$
 $$
-subject~to~x_i'(t) = g_i(t,x_1(t),...,x_n(t),u_1(t),...,u_m(t))
+\text{sujeito a   }x_i'(t) = g_i(t,x_1(t),...,x_n(t),u_1(t),...,u_m(t))
 $$
 $$
-x_i(t_0) = x_{i0}~for~i=1,2,...,n
+x_i(t_0) = x_{i0} \text{ para }i=1,2,...,n
 $$
-onde as função $f$ e $g_i$ são continuamente diferenciáveis em cada variável. Podemos usar a expressão em forma de vetores. Considere $\Vec{\la}(t) = [\la_1(t),...,\la_n(t)]$ um vetor com funções diferenciáveis por partes. Definimos $H(t,\Vec{x},\Vec{u},\Vec{\la}) = f(t,\Vec{x},\Vec{u}) + \Vec{\la}(t)\cdot \Vec{g}(t,\Vec{x},\Vec{u})$. Se fizermos o mesmo processo anterior, vamos obter as condições:
+onde as função $f$ e $g_i$ são continuamente diferenciáveis em cada variável.
+Em notação vetorial, seja $\vec{x}(t), \vec{u}(t), \vec{g}(t,\vec{x},\vec{u})
+\text{ e } \vec{x_0}$ os vetores, respectivamente, do estado, do controle, das
+funções derivada do estado e da condição inicial. Podemos escrever o problema,
+portanto, como 
 $$
-x'_i(t) = \frac{\partial H}{\partial \la_i} = g_i(t,\Vec{x},\Vec(u)), x_i(0) = x_{i0}~for~i = 1,...n 
+max_{\vec{u}} \int_{t_0}^{t_1} f(t,\vec{x}(t),\vec{u}(t)) dt + \phi(\vec{x}(t_1))
 $$
 $$
-\la'_j(t) = - \frac{\partial H}{\partial x_j}, \la_j(t_1) = \phi_{x_j}(\Vec{x}(t_1))~for~j=1,...,n
+\text{sujeito a   }\vec{x}'(t) = \vec{g}(t,\vec{x}(t), \vec{u}(t)), \vec{x}(t_0) = \vec{x}_{0} 
 $$
-$$
-0 = \frac{\partial H}{\partial u_k}~at~u^*_k~for~k=1,...,m
-$$
-Outros ajustes vistos nos capítulos anteriores ocorrem de mesma forma no caso multivariado. Inclusive se os limites das variáveis de controle estiverem presentes, o que altera as condições, também. 
 
-\section{Problemas Linear Quadratic Regulator}
 
-Considere a equação diferencial do estado linear em $x$ e $u$ e o funcional objetivo na forma quadrática. 
+Seja $\vec{u}^*$ o vetor de funções controle ótimo e $\vec{x}^*$ o vetor de
+estados correspondente. Seja $\vec{\la}(t) = [\la_1(t),...,\la_n(t)]$ um vetor
+com funções diferenciáveis por partes, que serão as funções adjuntas. Defina o
+Hamiltoniano
+$$H(t,\vec{x},\vec{u},\vec{\la}) = f(t,\vec{x},\vec{u}) + \vec{\la}(t)\cdot
+\vec{g}(t,\vec{x},\vec{u}),$$
+
+onde $\cdot$ é o produto escalar de vetores. Pelo mesmo argumento apresentado
+no capítulo \ref{ch:1}, encontramos que $\vec{u}^*$ maximiza a função $\vec{u}
+\mapsto H(t, \vec{x}^*, \vec{u}, \vec{\lambda})$ e satisfaz 
+$$
+x'_i(t) = \frac{\partial H}{\partial \la_i} = g_i(t,\vec{x},\vec{u}), x_i(0) = x_{i0} \text{ para }i = 1,...n 
+$$
+$$
+\la'_j(t) = - \frac{\partial H}{\partial x_j}, \la_j(t_1) = \phi_{x_j}(\vec{x}(t_1)) \text{ para }j=1,...,n
+$$
+$$
+0 = \frac{\partial H}{\partial u_k} \text{ em }u^*_k \text{ para }k=1,...,m
+$$
+
+Modificações nesse problema repercutem no caso multivariado, com extensões
+similares. A dualidade entre $x_i$ e $\lambda_i \text{ para }i=1,...,n$ é
+ainda observada e quando impomos limites sobre os controles, para cada
+controle, as condições de otimalidade são idênticas ao caso unidimensional. 
+
+\begin{example}
+    \begin{gather*}
+        \min_u \int_0^1 x_2(t) + u(t)^2 dt \\
+        \text{sujeito a  }x_1'(t) = x_2(t), x_1(0) = 0, x_1(1) = 1, \\
+        x_2 '(t) = u(t), x_2(0) = 0, \\
+        a \le u(t) \le b
+    \end{gather*}
+\end{example}
+
+Sejam $\la_1$ e $\la_2$ variáveis adjuntas e defina 
+$$
+H = x_2 + u^2 + \la_1x_2 + \la_2 u
+$$
+As equações adjuntas são dadas por 
+\begin{align*}
+    &\la_1 '(t) = -\frac{\partial H}{\partial x_1} = 0 \implies \la_1(t) \equiv C \\
+    &\la_2 '(t) = -\frac{\partial H}{\partial x_2} = - 1 - \la_1 \implies \la_2(t) = -(1 + C)t + D,  \\ 
+    &\text{como } \la_2(1) = 0 \implies D = 1 + C \implies \la_2(t) = -(1 + C)(t-1)
+\end{align*}
+
+Usando as condições de otimalidade, obtemos 
+$$
+H_u = 2u + \la_2 
+$$
+\begin{gather*}
+    H_u > 0 \implies u^*(t) = a \implies -\frac{1}{2}\la_2 < a \\
+    H_u < 0 \implies u^*(t) = b \implies -\frac{1}{2}\la_2 > b \\
+    H_u = 0  \implies a \le u^*(t) =  -\frac{1}{2}\la_2(t) \le b 
+\end{gather*}
+
+Portanto, 
+
+$$
+u^*(t) = \begin{cases}
+    a &t < \frac{2}{1 + C} a + 1 \\
+    \frac{1 + C}{2}(t-1) &t \in \left[\frac{2}{1 + C} a + 1, \frac{2}{1 + C}b + 1\right] \\
+    b &t > \frac{2}{1 + C}b + 1
+\end{cases}
+$$
+
+Para encontrar o calor de $C$, algumas contas complicadas precisam ser feitas
+e não o são não no texto. Precisa-se integrar a equação $x_2 ' = u$,
+assegurando a continuidade de $x_2$ e considerando a sua condição inicial.
+Após integramos a equação $x_1 ' = x_2$ e usamos as condições de continuidade
+em $x_1$, inicial e final. 
+
+
+\section{Problemas de Regulador Linear Quadrático}
+
+Nessa seção será desenvolvido um caso especial de sistemas de controle ótimo,
+em que as equações diferenciais são lineares em $x$ e $u$ e o funcional
+objetivo é quadrático. Assim descrevemos o problema da seguinte forma: 
 $$
 J(u) := \frac{1}{2}[x^T(T)Mx(t) + \int_0^T x^T(t)Q(t)x(t) + u^TR(t)u(t) dt]
 $$
 $$
 x'(t) = A(t)x(t) + B(t)u(t)
 $$
-Onde $M, Q(t)$ são positivas semidefinidas e $R(t)$ é positiva definida para garantir invertibilidade. As três são simétricas. Observe que isso garante a diagonalização.
-Assim: $H = \frac{1}{2}x^TQx + \frac{1}{2}u^TRu + \la^T(Ax + Bu).$ 
 
-Deste modo $u^* = - R^{-1}B^T\la$ e $\la' = -Qx - A^T\la, \la(T) = Mx(T)$. Se supormos que $\la = Sx$, chegamos que $S'x + Sx' = -Qx - A^T\la$. Com as devidas transformações. Obtermos que $-S'x = Qx + A^TSx - SBR^{-1}B^TSx$, com $S(T) = M$. Isso nos mostra que equação matricial Ricatti, que $S(t)$ deve satisfazer. Basta resolver o problema. Por fim $u^* = -R^{-1}B^TSx$. Essa matriz é chamada de ganho. 
+onde $x \in \mathbb{R}n, u \in \mathbb{R}^m, A(t) \in \mathbb{R}^{n \times n}$
+e $B(t) \in \mathbb{R}^{n\times m}$. Além disso $M, Q(t)$ são positivas
+semidefinidas e $R(t)$ é positiva definida para garantir invertibilidade, para
+todo $t$ em $[0,T]$. As três matrizes são simétricas. Observe que isso garante a
+diagonalização. O Hamiltoniano é, portanto, 
+$$H = \frac{1}{2}x^TQx + \frac{1}{2}u^TRu + \la^T(Ax + Bu).$$
 
-\subsection{Equações Diferenciais de Ordem mais Alta}
-Quando temos uma equação diferencial de ordem mais alta, podemos definir um sistema com as derivadas, onde $x_1(t) = x(t), x_2(t) = x'(t), ..., x_{n+1}(t) = x^{(n)}(t)$. A partir disso, podemos resolver com o Princípio Máximo de Pontryagin. 
+Derivação de expressões matriciais é uma ferramenta poderosa, pois simplifica
+a notação, mas é importante que se conheça o processo. A simetria das matrizes
+é utilizada nesse passo. A equação de otimalidade é dada por 
+$$
+H_u = Ru + B^T\lambda = 0 \implies u^* = - R^{-1}B^T\la,
+$$
+enquanto a equação adjunta é dada por 
+$$
+\la' = -H_x = -Qx - A^T\la, \la(T) = Mx(T)
+$$
 
-\subsection{Limites Isoperimétricos}
+Para resolvermos esse problema, utilizaremos o método \textit{sweep}. Para
+isso, vamos encontrar uma matriz $S(t)$ de forma que $\la(t) = S(t)x(t)$.
+Assim 
+$$
+\la '(t) = S'(t)x(t) + S(t)(Ax + Bu) = -Qx -A^T(Sx)
+$$
+Obtemos, portanto, utilizando a condição de otimalidade, 
 
-Além dos limites inferior e superior que podemos colocar no controle, também podemos querer que o exista limites na integral do controle. Exemplo: Para medicar uma pessoa, podemos querer que a quantidade total de remédia seja um valor $B$. 
-Assim, a restrição é do tipo $\int_0^T u(t) dt = B$. De forma geral, podemos ter $\int_{t_0}^{t_1} h(t,x(t),u(t)) dt = B$, sendo $h$ continuamente diferenciável, como restrição. Desta maneira, não podemos usar o Princípio Máximo de Pontryagin. Para isso, introduzimos $z(t) = \int_{t_0}^t h(s,x(s),u(s))ds$. Desta maneira, nosso problema terá duas variáveis de estado. 
+\begin{equation*}
+    \begin{split}
+        -S'x &= Qx + A^TSx + SAx - SBR^{-1}B^TSx \\
+        &= (Q + A^TS + SA - SBR^{-1}B^TS)x
+    \end{split}
+\end{equation*}
 
-\subsection{Soluções Numéricas}
+Temos, portanto, a equação matricial de \textit{Ricatti}
+$$
+-S' = A^TS + SA - SBR^{-1}B^TS + Q, S(T) = M
+$$
 
-Agora, para cada controle, um valor inicial para o controle é dado. Depois as variáveis de estado são resolvidas simultaneamente. Por fim, as adjuntas. 
+Esse controle é um tipo de controle \textit{feedback}, pois é uma função
+linear do estado apenas. A matriz $R^{-1}B^TS$ é chamada e \textit{gain}. O
+interessante dessa solução é que eliminamos a necessidade da função adjunta. 
+
+\begin{example}
+    \begin{gather*}
+        \min_u \frac{1}{2}\int_0^T x(t)^2 + u(t)^2 dt \\
+        \text{sujeito a  }x'(t) = u(t), x(0) = x_0
+    \end{gather*}
+\end{example}
+
+Nesse caso $M = A = 0$ e $B = R = Q = 1$. Pela equação de Ricatti, 
+$$
+-S' = - S^2 + 1, S(T) = 0 \implies S(t) = \frac{1 - Ce^{2t}}{1 + Ce^{2t}},
+$$
+tal que $S(T) = \dfrac{1 - Ce^{2T}}{1 + Ce^{2t}} = 0 \implies C =
+e^{-2T}$, isto é, 
+$$
+S(t) = \frac{1 - e^{2(t-T)}}{1 + e^{2(t-T)}}
+$$
+
+Temos que $u^*(t) = - R^{-1}B^TSx = -Sx$ e $x'(t) = -Sx$, e 
+$$x^*(t) = x_0e^{-\int S dt}$$
+
+\hl{Exemplo carece de revis\~ao.}
+
+\section{Equações Diferenciais de Ordem mais Alta}
+
+Quando temos uma equação diferencial de ordem mais alta relacionada ao estado,
+podemos definir um sistema de equações diferenciais, de forma que $x_1(t) = x(t), x_2(t) = x'(t), ...,
+x_{n+1}(t) = x^{(n)}(t)$. A partir dessa transformação, podemos resolver o
+problem com o Princípio Máximo de Pontryagin. 
+
+\section{Restrições Isoperimétricas}
+
+Ao invés de tomar limites inferior e superior com relação ao controle, podemos
+restringir a integral sobre uma função do controle, assim, podemos ter o
+seguinte problema, sendo $f, g, h$ funções continuamente diferenciáveis nas
+três variáveis. 
+\begin{gather*}
+    \max_u \int_{t_0}^{t_1} f(t, x(t), u(t)) dt + \phi(x(t_1)) \\ 
+    \text{sujeito a  }x'(t) = g(t, x(t), u(t)), x(t_0) = x_0, \\
+    \int_{t_0}^{t_1} h(t, x(t), u(t)) dt = B, \\
+    a \le u(t) \le b
+\end{gather*}
+
+Esse tipo de restrição é conhecido como \textit{restrição isoperimétrica}. De
+fato não podemos lidar de forma direta com esse problema pelo Principio Máximo
+de Pontryagin. Entretanto, podemos introduzir uma segunda variável $z(t)$ tal
+que 
+$$
+z(t) = \int_{t_0}^t h(s,x(s),u(s))ds
+$$
+e, portanto, 
+\begin{gather*}
+    z'(t) = h(t,x(t),u(t)), \\
+    z(t_0) = 0, \\
+    z(t_1) = B
+\end{gather*}
+
+A partir disso, podemos resolver através do método estudado até então. 
+
+\begin{example}
+    \hl{Inserir exemplo.}
+\end{example}
+
+\section{Soluções Numéricas}
+
+O método para resolver esses sistemas numericamente é basicamente o mesmo.
+Primeiro, fazemos um chute inicial para cada controle. Depois resolvemos
+simultaneamente os estados para frente no tempo. Então resolvemos todas as
+adjuntas simultaneamente para trás no tempo. Cada controle é então atualizado
+segundo sua caracterização. Esse processo ocorre iterativamente até atingir
+convergência desejada. Usaremos o método Runge-Kutta para sistemas na
+integração. O método de Runge-Kutta vetorial precisa resolver $\vec{k}_1$
+inicialmente, ou seja, $k_1^i$ para cada estado $x_i$, para então resolver
+$\vec{k}_2$. 
