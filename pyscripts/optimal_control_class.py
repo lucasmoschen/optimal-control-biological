@@ -7,9 +7,8 @@ import sympy as sp
 
 class OptimalControl:
     
-    def __init__(self, diff_state, diff_lambda, update_u, diff_phi = lambda x,par: 0, 
-                 bounds = (-np.inf, np.inf),
-                 h_u = False, conv_comb_u = 0.5):
+    def __init__(self, diff_state, diff_lambda, update_u, conv_comb_u = 0.5, 
+                 n_controls = 1, n_states = 1, **kwargs):
         '''Resolve o problema de controle ótimo simples, com condição inicial
            do estado e termo payoff. 
            - diff_state: função com argumentos (t,x,u,params) que representa a
@@ -17,21 +16,26 @@ class OptimalControl:
            - diff_lambda: função com argumentos (t,x,u,lambda, params) que representa a
            derivada da função adjunta lambda.
            - update_u: função que atualiza u através de H_u = 0 
-           - diff_phi: função que determina a condição de transversalidade.
-           - bounds: limites sobre o controle.  
-           - h_u: Valor booleano. Se verdadeiro, resolve a equação H_u = 0 de
-             forma implícita. 
            - conv_comb_u: valor da combinação convexa para atualização de u
+           - n_controls: número de controles, 1 por padrão. 
+           - n_states: número de estados, 1 por padrão. 
+           - kwargs: parâmetros adicionais 
+                - diff_phi: função que determina a condição de transversalidade.
+                - bounds: limites sobre o controle.  
         '''
         self.dx = diff_state 
         self.dadj = diff_lambda 
         self.update_u = update_u
-        # Lida com a condição de transversalidade. 
-        if bounds[1] <= bounds[0]: 
-            raise('O intervalo deve ser (a,b), a < b')
-        self.bounds = bounds
-        self.dphi = diff_phi
         self.coef_u = conv_comb_u
+
+        self.n_states = n_states
+        self.n_controls = n_controls
+
+        self.dphi = kwargs.get('diff_phi', lambda x, par: np.zeros(shape = (1, n_states)))
+        self.bounds = kwargs.get('bounds', [(-np.inf, np.inf) for i in range(n_controls)]) 
+        for b in self.bounds: 
+            if b[0] >= b[1]: 
+                raise Exception('O formato dos bounds deve ser (a,b), a < b') 
 
     def forward(self,t,x,u,params,h): 
         '''A função realiza o processo forward que integra a equação de x' = g
@@ -75,6 +79,8 @@ class OptimalControl:
         '''
         if bounds: 
             self.bounds = bounds
+        if len(self.bounds) != self.n_controls: 
+            raise Exception('O número de controles deve concordar com o tamanho da lista dos bounds.')
 
         condition = -1 
 
@@ -82,18 +88,19 @@ class OptimalControl:
         t = np.linspace(0,T,N+1)
         
         # Chute para condição inicial
-        u = np.random.beta(a=1000,b=1000, size=N+1)
-        if self.bounds[0] > -np.inf: 
-            if self.bounds[1] < np.inf: 
-                u = (self.bounds[1] - self.bounds[0])*u + self.bounds[0] 
+        u = np.random.beta(a=1000,b=1000, size=(N+1, self.n_controls))
+        for k, b in enumerate(self.bounds):   
+            if b[0] > -np.inf: 
+                if b[1] < np.inf: 
+                    u[:,k] = (b[1] - b[0])*u[:,k] + b[0] 
+                else: 
+                    u[:,k] = u[:,k] + b[0] 
             else: 
-                u = u + self.bounds[0] 
-        else: 
-            if self.bounds[1] < np.inf: 
-                u = self.bounds[1]*u 
+                if b[1] < np.inf: 
+                    u[:,k] = b[1]*u[:,k] 
 
-        x = np.zeros(N+1)
-        lambda_ = np.zeros(N+1)
+        x = np.zeros(shape = (N+1, self.n_states))
+        lambda_ = np.zeros(shape = (N+1, self.n_states))
 
         x[0] = x0
 
@@ -109,11 +116,13 @@ class OptimalControl:
             lambda_ = self.backward(t, x, u, lambda_, params, h)
 
             # Update u 
-            u = self.coef_u*self.update_u(t, x, lambda_, params) + (1 - self.coef_u)*u
+            for i, _ in enumerate(t): 
+                tmp = self.update_u(t[i], x[i], lambda_[i], params)
+                u[i] = self.coef_u*tmp + (1 - self.coef_u)*u[i]
 
-            cond1 = tol*sum(abs(u)) - sum(abs(u_old - u))
-            cond2 = tol*sum(abs(x)) - sum(abs(x_old - x))
-            cond3 = tol*sum(abs(lambda_)) - sum(abs(lambda_old - lambda_))
+            cond1 = min(tol*np.sum(abs(u), axis=0) - np.sum(abs(u_old - u), axis=0))
+            cond2 = min(tol*np.sum(abs(x), axis=0) - np.sum(abs(x_old - x), axis=0))
+            cond3 = min(tol*np.sum(abs(lambda_), axis=0) - np.sum(abs(lambda_old - lambda_), axis=0))
 
             condition = min(cond1, cond2, cond3) 
 
@@ -121,13 +130,52 @@ class OptimalControl:
 
     def plotting(self,t,x,u,lambda_):
         '''Função simples desenvolvida para plot. '''
-        variables = {'Estado': x, 'Controle Ótimo': u, 'Função Adjunta': lambda_}
+        variables = {'x': x, 'u': u, 'lambda': lambda_}
+        names = {'x': 'Estado', 'u': 'Controle Ótimo', 'lambda': 'Função Adjunta'}
 
         _, ax = plt.subplots(3,1,figsize = (15,15)) 
 
         for i, key in enumerate(variables):
-            ax[i].plot(t,variables[key])
-            ax[i].set_title(key, fontsize = 15)
+            for k in range(np.shape(variables[key])[1]): 
+                ax[i].plot(t,variables[key][:,k], label = key + str(k))
+            ax[i].set_title(names[key], fontsize = 15)
             ax[i].grid(linestyle = '-', linewidth = 1, alpha = 0.5)
 
         return ax       
+        
+if __name__ == "__main__":
+
+    parameters = {'a': None, 'b': None, 'c': None, 'd': None, 'e': None, 'g': None, 'A': None}
+
+    diff_state = lambda t, x, u, par: np.array([
+        par['b']*sum(x) - (par['d'] + par['c']*x[2] + u)*x[0], 
+        par['c']*x[0]*x[2] - (par['e'] + par['d'])*x[1],
+        par['e']*x[1] - (par['g'] + par['a'] + par['d'])*x[2],
+        par['g']*x[2] - par['d']*x[3] + u*x[0]
+    ])
+
+    diff_lambda = lambda t, x, u, lambda_, par: np.array([
+        -lambda_[0]*(par['b'] - par['d'] - par['c']*x[2] - u) - lambda_[1]*(par['c']*x[2]) - lambda_[3]*u,
+        -lambda_[0]*b + lambda_[1]*(par['e'] + par['d']) - lambda_[2]*par['e'], 
+        par['A'] - lambda_[0]*(par['b'] - par['c']*x[0]) - lambda_[1]*(par['c']*x[0]) + \
+                lambda_[2]*(par['g'] + par['a'] + par['d']) - lambda_[3]*par['g'], 
+        -lambda_[0]*par['b'] + lambda_[3]*par['d'] 
+    ])
+
+    update_u = lambda t, x, lambda_, par: np.maximum(0, np.minimum(0.5*x[0]*(lambda_[3] - lambda_[0]), 0.9))
+    
+    problem = OptimalControl(diff_state, diff_lambda, update_u, 
+                         n_controls = 1, n_states = 4, 
+                         diff_phi = lambda x, par: np.zeros(shape = (1, 4)))
+
+    x0 = np.array([1000, 100, 50, 12]) # S0, E0, I0, R0 
+    T = 20
+    parameters['A'] = 0.1
+    parameters['a'] = 0.2
+    parameters['b'] = 0.525
+    parameters['c'] = 0.0001
+    parameters['d'] = 0.5
+    parameters['e'] = 0.5
+    parameters['g'] = 0.1
+
+    t,x,u,lambda_ = problem.solve(x0, T, parameters)
