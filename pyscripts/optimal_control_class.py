@@ -145,37 +145,4 @@ class OptimalControl:
         
 if __name__ == "__main__":
 
-    parameters = {'a': None, 'b': None, 'c': None, 'd': None, 'e': None, 'g': None, 'A': None}
-
-    diff_state = lambda t, x, u, par: np.array([
-        par['b']*sum(x) - (par['d'] + par['c']*x[2] + u)*x[0], 
-        par['c']*x[0]*x[2] - (par['e'] + par['d'])*x[1],
-        par['e']*x[1] - (par['g'] + par['a'] + par['d'])*x[2],
-        par['g']*x[2] - par['d']*x[3] + u*x[0]
-    ])
-
-    diff_lambda = lambda t, x, u, lambda_, par: np.array([
-        -lambda_[0]*(par['b'] - par['d'] - par['c']*x[2] - u) - lambda_[1]*(par['c']*x[2]) - lambda_[3]*u,
-        -lambda_[0]*b + lambda_[1]*(par['e'] + par['d']) - lambda_[2]*par['e'], 
-        par['A'] - lambda_[0]*(par['b'] - par['c']*x[0]) - lambda_[1]*(par['c']*x[0]) + \
-                lambda_[2]*(par['g'] + par['a'] + par['d']) - lambda_[3]*par['g'], 
-        -lambda_[0]*par['b'] + lambda_[3]*par['d'] 
-    ])
-
-    update_u = lambda t, x, lambda_, par: np.maximum(0, np.minimum(0.5*x[0]*(lambda_[3] - lambda_[0]), 0.9))
-    
-    problem = OptimalControl(diff_state, diff_lambda, update_u, 
-                         n_controls = 1, n_states = 4, 
-                         diff_phi = lambda x, par: np.zeros(shape = (1, 4)))
-
-    x0 = np.array([1000, 100, 50, 12]) # S0, E0, I0, R0 
-    T = 20
-    parameters['A'] = 0.1
-    parameters['a'] = 0.2
-    parameters['b'] = 0.525
-    parameters['c'] = 0.0001
-    parameters['d'] = 0.5
-    parameters['e'] = 0.5
-    parameters['g'] = 0.1
-
-    t,x,u,lambda_ = problem.solve(x0, T, parameters)
+        pass
