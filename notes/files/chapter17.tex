@@ -1,48 +1,243 @@
-Vamos considerar problemas especiais em que o problema é linear 
-no controle $u(t)$. 
+Nesse capítulo vamos considerar problemas em que o Hamiltoniano é linear em
+$u$ e, portanto $H_u = 0$ não poderá ser resolvido para $u$. A solução ótima
+envolve em geral descontinuidades em $u^*$.  
 
-\section{Controle Bang-Bang}
+\section{Controles Bang-Bang}
 
 Considere o problema de controle ótimo.
 
-$$max_u \int_{t_0}^{t_1} f_1(t,x) + u(t)f_2(t,x) dt$$
-$$s.a.~~x'(t) = g_1(t,x) + u(t)g_2(t,x), x(0) = x_0$$
-$$ a \leq u(t) \leq b$$
+\begin{gather*}
+    \max_u \int_{t_0}^{t_1} f_1(t,x) + u(t)f_2(t,x) dt \\ 
+    \text{sujeito a  }x'(t) = g_1(t,x) + u(t)g_2(t,x), x(0) = x_0 \\
+    a \leq u(t) \leq b 
+\end{gather*}
 
-Assim $H(t,x,u,\la) = f_1(t,x) + \la g_1(t,x) + u(t)(f_2(t,x) + \la g_2(t,x))$, 
-linear em $u(t)$. Observe a derivada parcial em relação a $u$ não
-carrega informação sobre $u(t)$. Assim definimos $\psi(t) := f_2(t,x(t)) + \la(t)g_2(t,x(t))$,
-muitas vezes chamada de função de troca. Se $\psi = 0$ não pode ser obtido 
-em um intervalo de tempo, mas ocorre apenas em pontos finitos, o controle
-é dito "Bing Bang", porque só varia entre os valores mínimo e máximo de $u(t)$. 
-Os valores de $u(t)$ nesses pontos não são de interesse, portanto. 
+Podemos escrever o Hamiltoniano como 
 
-Em contrapartida, se $\psi(t) \equiv 0$ em um intervalo de tempo, dizemos que $u^*$ é 
-singular nesse intervalo. Esse caso será explorado na próxima sessão. 
+$$H(t,x,u,\la) = f_1(t,x) + \la g_1(t,x) + u(t)(f_2(t,x) + \la g_2(t,x)).$$
 
-Para resolver esse tipo de problema, primeiro precisamos verificar se de fato 
-o problema é Bang-Bang. Numericamente, o problema é apenas em verificar a positividade
-ou negatividade da função de troca. 
+A condição de otimalidade dada por
+$$
+\frac{\partial H}{\partial u} = f_2(t,x) + \la(t)g_2(t,x), 
+$$
+não carrega informação sobre $u(t)$. Assim definimos $\psi(t) := f_2(t,x(t)) +
+\la(t)g_2(t,x(t))$, muitas vezes chamada de função de troca.  A caracterização
+de $u^*$ é 
+$$
+u^*(t) = \begin{cases} 
+    a &\text{se } \psi(t) < 0, \\
+    ? &\text{se } \psi(t) = 0, \\
+    b &\text{se } \psi(t) > 0. 
+\end{cases}
+$$
+Se $\psi = 0$ não pode ser mantido em um intervalo de tempo, mas ocorre apenas
+em pontos finitos, o controle é dito \textbf{Bang Bang}, porque só varia entre
+os valores mínimo e máximo de $u(t)$. Os valores de $u(t)$ nesses pontos não
+são de interesse, portanto. Se $\psi(t) \equiv 0$ em um intervalo de tempo,
+dizemos que $u^*$ é \textbf{singular} nesse intervalo. Esse caso será explorado na próxima sessão. 
 
-\subsection{Controles Singulares}
+O método \textit{forward-backward sweep} pode ser empregado nesse caso.
+Primeiro precisamos provar que o problema é de fato bang-bang, isto é $\phi =
+0$ não ocorre em um intervalo.  Caso isso seja verdadeiro, basta
+fazermos, em código \textit{Python}, 
 
-O livro explora um exemplo inicial:
+\begin{verbatim}
+    u = lambda t,x,adjoint: a if psi(t, x, adjoint) < 0 else b
+\end{verbatim}
 
-$$max_u \int_0^2 (x(t) - t^2)^2 dt $$
-$$s.a. ~~ x'(t) = u(t), x(0) = 1$$
-$$0 \leq u(t) \leq 4$$
+\begin{example}
+    \begin{gather*}
+        \max_u \int_0^2 e^t(1 - u(t))dt \\ 
+        \text{sujeito a  }x'(t) = u(t)x(t), x(0) = 1 \\
+        0 \le u(t) \le 1.
+    \end{gather*}
 
-Calculamos o Hamiltoniano e encontramos $u^*(t)$ em função da adjunta. 
-Para sair dessa hipótese, precisamos fazer uma análise mais minunciosa. 
-Ela começa em provar que $x(t) \geq t^2 \rightarrow \lambda'(t) \leq 0 \wedge \la(t) \geq 0$. 
-Então, basta encontrar os valores de $t$ em que essa função é positiva 
-ou igual a $0$. Dessa forma, teremos descrito o controle e estado ótimos.
+    Esperamos que $u \equiv 0$ para maximizar a expressão. 
+\end{example}
 
-No caso numérico, podemos ter que analisar quando nossa função de troca vai ser 
-maior, igual ou menor que zero. Porém, a igualdade a $0$ é complicada computacionalmente. 
-Nesse sentido, estabelecemos um intervalo. No exemplo 17.4 do livro, quando o controle é 
-Bang-Bang, houve convergência. Já o contrário não ocorreu. Como a função de troca é 
-identicamente zero, problemas singulares são frequentemente instáveis. 
+O Hamiltoniano é 
+$$
+H = e^t(1 - u) + \la u x
+$$
+A equação adjunta e a condição de transversalidade são 
+$$
+\la '(t) = - H_x = - \la(t)u(t), \la(2) = 0,
+$$
+e
+$$
+\psi(t) = H_u = -e^t + \la(t)x(t)
+$$
 
-Pesquisa tem sido feita nesse sentido. A condição de Legendre-Clebsch é um exemplo. É uma
-condição de segunda ordem, porque envolve ordem de derivadas mais altas.
+Suponha que $\phi \equiv 0$ em um intervalo $I \subset (0,2)$. Portanto,
+diferenciando, 
+$$
+e^t = \la x \implies e^t = \la '(t)x(t) + \la(t) x'(t) = -\la(t)u(t)x(t) + \la(t)u(t)x(t) = 0,
+$$
+o que é impossível. Portanto provamos que o problema é bang-bang. 
+$$
+u^* = 0 \implies x' = \la ' = 0 \implies x, \la \text{ constantes.}
+$$
+$$
+u^* = 1\implies \la' = -\la \implies \la(t) = Ce^{-t}
+$$
+Agora temos que determinar os intervalos. Como $\la(2) = 0$, qualquer um dos
+casos acima implicaria $\la(t) \equiv 0$ em algum intervalo que inclua $t=2$. 
+Se $u^* = 1$ nesse intervalo, teremos que $C = 0$ e, para garantir a
+continuidade de $\la$ em $[0,2]$, teremos que $\la \equiv 0$. Se $u^* = 0$
+nesse intervalo, seja $I = (a,b) \subset [0,2)$ o maior intervalo tal que $u^* =
+1$. Como $\la(b) = 0 \implies C = 0$ a única possibilidade que garante
+continuidade. Concluímos que $\la \equiv 0$. Nesse sentido 
+$$
+\psi(t) = -e^t < 0 \implies u^* \equiv 0 \text{ e }x^* \equiv 1
+$$
+
+\section{Controles Singulares}
+
+Consideremos dois exemplos simples para motivar o tópico. 
+
+\begin{example}
+    \begin{gather*}
+        \max_u \int_0^2 (x(t) - t^2)^2 dt
+        \text{sujeito a  }x'(t) = u(t), x(0) = 1
+        0 \leq u(t) \leq 4
+    \end{gather*}
+\end{example}
+
+Primeiro vamos calcular as condições necessárias, 
+$$
+H = (x - t^2)^2 + \la u 
+$$
+$$
+\la '(t) = -H_x = -2(x - t^2), \la(2) = 0
+$$
+$$
+\phi(t) = H_u = \la(t)
+$$
+Se $\phi \equiv 0$ em algum intervalo, então 
+$$
+0 \equiv \la '(t) = -2(x - t^2) \equiv x(t) =  t^2,
+$$
+então nesse intervalo $u = x' = 2t$.
+Consequentemente, 
+$$
+u^*(t) = \begin{cases}
+    0 &\text{quando }\la > 0, \\
+    2t &\text{quando }\la = 0, \\
+    4 &\text{quando }\la < 0.
+\end{cases}
+$$
+
+Vamos provar que $x^*(t) \ge t^2$ no intervalo $[0,2]$ na Proposição
+\ref{prop1}. Com isso demonstrado, temos que $\la ' \le 0$ em $[0,2]$. Como
+$\la(2) = 0$, devemos ter que $\la \ge 0$ em $[0,2]$. Portanto existe $k \in
+[0,2]$ tal que $\la > 0$ em $[0,k)$ e $\la = 0$ em $[k,2]$. 
+
+Suponha que $k = 0$. Então $\la \equiv \la ' \equiv 0$. Mas $x^*(0) > 0^2$,
+então $\la '(0) < 0$, contradição. 
+
+Suponha que $k = 2$. Então $u^* \equiv 0 \implies x^* \equiv 1$. Isso
+contradiz $x^*(2) \ge 2^2$. Portanto $0 < k < 2$ e 
+\begin{equation}
+    \label{eq1:u-star}
+    u^*(t) = \begin{cases}
+        0 &\text{se }0 \le t < k, \\
+        2t &\text{se }k < t \le 2, 
+    \end{cases}\text{  }x^*(t) = \begin{cases}
+        1 &\text{se }0 \le t < k, \\
+        t^2 + (1 - k^2) &\text{se }k \le t < 2,
+    \end{cases}    
+\end{equation}
+dado que $x^*$ é contínua. Precisamos encontrar $k$. 
+
+Note que $\la \equiv 0$ em $[k,2]$. Assim, nesse intervalo, 
+$$
+0 = \la '(t) = - 2(1 - k^2) \implies k = 1.
+$$
+
+\begin{proposition}
+    \label{prop1}
+    $$x^*(t) \ge t^2, \forall t \in [0,2]$$
+\end{proposition}
+
+\begin{proof}
+    Suponha que $x(t) < t^2$ para algum $t$. Como $x(t) > t^2$ em $t=0$,
+    existe $t_0 \in (0,2)$ tal que $x(t_0) \le t_0^2$ e $u(t_0) = x'(t_0) <
+    2t_0$. Portanto $u(t_0) = 0$ e $\la(t_0) > 0$. 
+
+    Seja $t_1 := \inf\{t: \la(t) = 0, t \in (t_0, 2]\}$. Como esse conjunto é
+    fechado (tome uma sequência nele e veja que o limite dela precisa estar
+    nala), o valor de $t_1$ pertence a ele, isto é, $\la(t_1) = 0, t_1 > t_0$.
+    Portanto $\la(t) > 0$ em $[t_0, t_1)$. Portanto $u^*(t) = 0, t \in [t_0,
+    t_1)$. Assim $x^(t) = x^*(t_0), t \in [t_0, t_1)$. Como $x^*(t_0) \le
+    t_0^2$, então $x^*(t) \le t^2$. Pela equação adjunta, $\la '(t) \ge 0$ em
+    $[t_0, t_1)$. Mas se $\la(t_0) > 0$, $\la(t_1) = 0$ é impossível. Com essa
+    contradição concluímos que $x^*(t) \ge t^2, t \in [0,2]$.   
+\end{proof}
+
+Se não fôssemos capazes de encontrar os intervalos onde $u$ é definido,
+precisaríamos utilizar um método numérico sobre \refeq{eq1:u-star}. Porém,
+numericamente, não é possível obter $\la = 0$. Para isso, poderíamos
+considerar que $u^*(t) = 2t$ quanto $|\la| < \e = 0.00001$, por exemplo.
+Entretanto, problemas singulares tendem a ser instáveis de forma geral. 
+
+Pesquisadores a partir de comportamentos de controles ótimos singulares,
+desenvolveram condições necessárias adicionais. A mais notável é a condição
+generalizada de Legendre-Clebsh (\cite{Tsypkin1970AppliedOC}, \cite{Grossmann1984}, \cite{krener1977}). É uma condição de \textit{segunda ordem} e
+envolve derivadas de ordem mais alta do Hamiltoniano. 
+
+\begin{example}
+    Reservar marinhas proibidas são tema de discussão entre aqueles que
+    enfatizam os benefícios de conservação e aqueles que enfatizam a redução
+    da produção pesqueira. Neubert investigou o papel dessas reservas para
+    maximar o rendimento segundo uma estratégia de caça. 
+
+    A equação diferencial parcial da densidade de estoque relativa a
+    capacidade de carga $w(x,t)$ é 
+    $$ 
+    w_t(x,t) = w_{xx}(x,t) + w(x,t)(1 - w(x,t)) - u(x)w(x,t),
+    $$
+    Suponha que a densidade é estável no tempo. Assim, 
+    $$
+    0 = w''(x) + w(x)(1 - w(x)) - u(x)w(x),
+    $$
+    tal que $w(0) = w(l) = 0$, isto é, as regiões de fronteira são inabitadas.
+    Assumimos que $0 \le u(x) \le 1$ é o controle de colheita. 
+
+    Primeiro convertemos a equação em um sistema de primeira ordem:
+    \begin{gather*}
+        w'(x) = v(x), w(0) = w(l) = 0, \\
+        v'(x) = u(x)w(x) - w(x)(1 - w(x)), 
+    \end{gather*}
+    Queremos maximizar o retorno em $[0,l]$.
+    $$
+    J(u) = \int_0^l u(x)w(x) dx
+    $$
+    Vamos ter a restrição adicional que $w(x) > 0$ no interior do domínio. 
+\end{example}
+
+Primeiro vamos encontrar as condições necessárias do problema. 
+\begin{gather*}
+    H = uw + \la_1 v + \la_2(uw - w(1 - w)), \\
+    \la_1 ' = -H_w = -u - \la_2(u - 1 + 2w), \\
+    \la_2 ' = -H_v = - \la_1, \la_2(0) = \la_2(l) = 0, \\
+    \psi = H_u = w(1 + \la_2)
+\end{gather*}
+
+Se $\psi \equiv 0$ em algum intervalo, temos que $\la_2 \equiv -1 \implies
+\la_2' = 0 \implies \la_1 = 0$ nesse intervalo. Assim 
+$$
+-u + u - 1 + 2w = 0 \implies w^* = \frac{1}{2}
+$$
+Assim $w' = v = v' = 0 = u^* - (1 - w^*)$ e $u^* = \frac{1}{2}$. Concluímos
+que 
+\begin{equation}
+    u^*(t) = \begin{cases}
+        1 &\text{se }\la_2 > -1, \\
+        1/2 &\text{se }\la_2 = -1, \\
+        0 &\text{se }\la_2 < -1
+    \end{cases}
+\end{equation}
+
+As condições necessárias devem ser resolvidas numericamente. A partir de
+resultados numéricos, existe pelo menos um intervalo onde o controle ótimo é
+zero, o que significa uma região marítima proibida. 
