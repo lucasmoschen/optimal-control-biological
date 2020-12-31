@@ -1,0 +1,126 @@
+Em alguns problemas reais, não temos um tempo fixo para procurar um controle
+ótimo, mas também queremos encontrar o tempo ótimo que devemos permanecer com
+o tratamento. Precisamos refazer as condições necessárias, dada que temos mais
+variáveis desconhecidas.  
+
+\section{Condições Necessárias}
+
+Sejam $f$ e $g$ funções continuamente diferenciáveis e considere o problema 
+
+$$
+\max_{u,T} J(u,T) = \max_{u,T} \int_{t_0}^T f(t, x(t), u(t))dt + \phi(T, x(T))
+$$
+$$
+\text{sujeito a   }x'(t) = g(t, x(t), u(t)), x(t_0) = x_0.
+$$
+
+Seja $(u^*, T*)$ um par ótimo, de forma que $u^*$ esteja definida em $[t_0,
+T^*]$ e $J(u, T) \le J(u^*, T^*) < \infty$, para todos os controles $u$ e
+tempos $T$. Seja $x^*$ o estado correspondente. Seja $h$ uma função contínua
+por partes e $\e \in \mathbb{R}$, de forma que $u^{\e}(t) = u^*(t) + \e h(t)$
+é um controle. Assim 
+\begin{equation*}
+    0 = \lim_{\e \to 0} \frac{J(u^*, T^*) - J(u^{\e}, T^*)}{\e}.
+\end{equation*}
+Pelo mesmo argumento dos Capítulo \ref{ch:1} e \ref{ch:3}, temos que 
+\begin{gather*}
+    0 = H_u \text{ em } u^* \\
+    \la ' = - H_x = -f_x - \la g_x \\
+    \la(T^*) - \phi_x(T^*, x(T^*)),
+\end{gather*}
+Mas isso não nos dá informação sobre $T^*$. Por isso, seja $\delta \le t_0 -
+T^*$, tal que $T^* + \delta$ seja um tempo admissível. Primeiro, assuma que
+$u^*$ é contínua à esquerda em $T^*$. Se não o for, mude seu valor nesse ponto
+se necessário. Então, seja $u^*(t) = u^*(T), t > T^*$. Portanto, 
+\begin{equation*}
+    0 = \lim_{\e \to 0} \frac{J(u^*, T^* + \delta) - J(u^*, T^*)}{\delta}.
+\end{equation*}
+equivalentemente, dado que $u^*$ é contínua em $T^*$ e $x^*$ é diferenciável,
+usando o Teorema Fundamental do Cálculo e a regra do produto, temos que, 
+\begin{equation*}
+    \begin{split}
+        0 &= \lim_{\delta \to 0} \frac{1}{\delta}\int_{T^*}^{T^* + \delta} f(t, x^*, u^*) dt \\ 
+        &~~~~~~~~+ \frac{\phi(T^* + \delta, x^*(T^* + \delta)) - \phi(T^*, x^*(T^*))}{\delta} \\
+        &= f(T^*, x^*(T^*), u^*(T^*)) + \phi_t(T^*, x^*(T^*)) + \phi_x(T^*, x^*(T^*))\frac{dx^*}{dt}(T^*) \\
+        &=  f(T^*, x^*(T^*), u^*(T^*)) + \phi_t(T^*, x^*(T^*)) + \la(T^*)g(T^*, x^*(T^*), u^*(T^*)) \\
+        &= H(T^*, x^*(T^*), u^*(T^*), \la(T^*)) + \phi_t(T^*, x^*(T^*))
+    \end{split}
+\end{equation*}
+
+Deveria ficar claro que as mesmas condições necessárias vem com a presença de
+limites nos controles, ou quando existem mais de uma variável de estado e
+controle. O que não fica claro, observando as contas já feitas no Capítulo
+\ref{ch:3}, é como esse problema é afetado quando os pontos inicial e final
+são fixados. De fato, as mesmas condições necessárias aparecem. 
+
+\section{Controle Ótimo Temporal}
+
+A ideia é a seguinte: mover as variáveis de estado de uma posição inicial para
+uma posição final específica em um período mínimo de tempo. Como isso parece
+se relacionar com nosso problema? Note que $T = \int_0^T 1 dt$. Então, podemos
+reformular como 
+\begin{gather*}
+    \min_{u,T} \int_0^T 1 dt, \\ 
+    \text{sujeito a   }x'(t) = g(t, x(t), u(t)), x(0) = x_0, x(T) = x_1, \\
+    a \le u(t) \le b, 
+\end{gather*}
+
+\section{Exemplos}
+
+\begin{example}
+    \begin{gather*}
+        \min_{u,T} x(T) + \int_0^T u(t)^2 dt \\
+        \text{sujeito a   }x'(t) = \alpha x(t) -u(t), x(0) = x_0, \alpha > 0.
+    \end{gather*}
+\end{example}
+
+Podemos formar as condições necessárias 
+\begin{gather*}
+    H = u^2 + \alpha x \la - u \la, \\
+    0 = H_u = 2u - \la \implies u^* = \la/2, \\
+    \la ' = -H_x = -\alpha \la \implies \la(t) = Ke^{-\alpha t}
+    \la(T^*) = \phi_x(x^*(T^*)) = 1, 
+\end{gather*}
+
+Usando essas condições, concluímos que 
+\begin{gather*}
+    \la(t) = e^{\alpha(T^* - t)} \\
+    u^*(t) = \frac{1}{2}e^{\alpha(T^* - t)} \\
+    x^*(t) = x_0e^{\alpha t} + e^{\alpha T^*}\frac{e^{-\alpha t} - e^{\alpha t}}{4\alpha}
+\end{gather*}
+
+Por fim, a condição sobre $T^*$, dado que $\phi_t = 0$,
+\begin{equation*}
+    \begin{split}
+        0 &= H(T^*, x^*(T^*), u^*(T^*), \la(T^*)) \\
+        &= \frac{1}{4} + \alpha x_0e^{\alpha T^*} + \frac{1 -e^{2\alpha T^*}}{4} - \frac{1}{2} \\
+        &= \alpha x_0e^{\alpha T^*} - \frac{e^{2\alpha T^*}}{4}
+    \end{split}
+\end{equation*}
+Assim $\log(4\alpha x_0) + \alpha T^*= 2 \alpha T^* \implies  T^* =
+\frac{1}{\alpha}\log{4\alpha x_0}$. Isso faz sentido se $\alpha x_0 > 1/4$. 
+
+\begin{example}
+    \begin{gather*}
+        \min_{u,T} \int_0^T 1 dt \\ 
+        \text{sujeito a   }x'(t) = x(t)u(t)  - \frac{1}{2}u(t)^2, x(0) = x_0 \in (0,1), x(T) = 1.
+    \end{gather*}
+\end{example}
+
+Escrevemos o Hamiltoniano $H = 1 + xu\lambda - \frac{1}{2}u^2\lambda$. Assim,
+escrevemos as condições necessárias, 
+
+$$
+\la ' = -H_x = - \la u \implies \la(t)\exp\left(-\int_0^t u(s)ds \right), 
+$$
+para alguma constante $C$. Se $C = 0 \implies H \equiv 1$ o que contradiz o
+Hamiltoniano ser $0$ em $T^*$. Portanto $C \neq 0$. A condição de otimalidade
+nos dá que 
+$$
+0 = H_u = \la(x - u) \implies u^* = x^*
+$$
+Fazendo a substituição na equação de estado, obtemos que 
+$$
+x' = \frac{1}{2}x^2 \implies x^*(t) = \frac{2x_0}{2 - x_0 t} = u^*(t)
+$$
+A condição $x(T^*) = 1 \implies T^* = 2/x_0 - 2$.  
