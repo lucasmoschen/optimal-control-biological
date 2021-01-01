@@ -10,7 +10,7 @@ class OptimalControl:
     def __init__(self, diff_state, diff_lambda, update_u, conv_comb_u = 0.5, 
                  n_controls = 1, n_states = 1, **kwargs):
         '''Resolve o problema de controle ótimo simples, com condição inicial
-           do estado e termo payoff. 
+           do estado e termo payoff linear. 
            - diff_state: função com argumentos (t,x,u,params) que representa a
            derivada do estado x. 
            - diff_lambda: função com argumentos (t,x,u,lambda, params) que representa a

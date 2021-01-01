@@ -1,13 +1,146 @@
-Esse método pode lidar com problemas mais complicados de controle ótimo. 
+Esse método pode lidar com problemas mais complicados de controle ótimo. Esse
+capítulo tem associado o notebook \texttt{Chapter21-examples.ipynb}. 
 
 \section{Método da Secante}
 
+Um algoritmo de análise numérica para encontrar as raízes de uma função
+contínua $f$ em $[a,b]$ de forma que exista uma raíz no intervalo. Sejam os
+pontos $x_0, x_1 \in [a,b]$ de forma que $f(x_0)f(x_1) < 0$. Considere a reta
+que passa pelos pontos $(x_0, f(x_0))$ e $(x_1, f(x_1))$. A sua equação é dada
+por 
+$$
+y = \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x - x_1) + f(x_1).
+$$
+Ela cruza o eixo x quando $y = 0$ e, portanto, 
+$$
+x = x_1 - f(x_1)\frac{x_1 - x_0}{f(x_1) - f(x_0)}
+$$
+Essa expressão determina nossa iteração para o método, isto é, 
+$$
+x_{n+1} = x_n - f(x_n)\frac{x_n - x_{n-1}}{f(x_n) - f(x_{n-1})}
+$$
+A convergência é dada quando $x_0$ e $x_1$ são suficientemente próximas da
+raíz, $f$ seja de classe $C^2$ e a raíz seja simples. 
+
 \section{Um Estado com Pontos Finais Fixos}
+
+Considere o problema de controle ótimo 
+
+\begin{gather*}
+    \max_{\vec{u}} \int_{t_0}^{t_1} f(t, \vec{x}(t), \vec{u}(t)) dt \\ 
+    \text{sujeito a   }\vec{x}'(t) = \vec{g}(t, \vec{x}(t), \vec{u}(t)),  
+    \vec{x}(t_0) = \vec{x}_0, x_n(t_1) = x_{n1}, \\
+    a_j \le u_j(t) \le b_j \text{ para }j = 1,2,...,m.
+\end{gather*}
+
+Observe que $x_n$ é o único estado com os pontos inicial e final fixos. Nossos
+métodos numéricos não podem lidar com esse problema e por isso, precisamos
+desenvolver uma maneira. Suponha que fazemos um chute $\la_n(t_1) = \theta$.
+resolvemos o problema com essa condição. Assumindo convergência, vamos obter
+uma aproximação $\tilde{x}_{n1}$. Podemos considerar $\theta \mapsto
+\tilde{x}_{n1}$ e, assim, nosso problema se torna em encontrar $\theta$ que
+nos leve a $x_{n1}$. Assim, defina 
+$$
+V(\theta) = \tilde{x}_{n1} - x_{n1} 
+$$
+Estamos procurando os zeros de $V$. Assim, adaptaremos o código
+\textit{forward-backward sweep} com o código do método da secante. 
+
+Esse método é baseado é baseado em duas hipóteses críticas: \textit{forward
+backward sweep} converge para os valores de $\theta$ e $V$ é uma função bem
+definida. Para problemas bem comportados, em geral, ambos são verdadeiros. A
+escolha de $x_0$ e $x_1$ também podem ser mais ou menos importantes dependendo
+do problema. 
 
 \section{Termos de Payoff não Lineares}
 
+Uma alteração sutil do método acima pode ser usado para resolver problemas de
+controle ótimo com termos \textit{payoff} não lineares. Considere o problema 
+\begin{gather*}
+    \max_{\vec{u}} \phi(x_n(t_1)) \int_{t_0}^{t_1} f(t, \vec{x}(t), \vec{u}(t)) dt \\ 
+    \text{sujeito a   }\vec{x}'(t) = \vec{g}(t, \vec{x}(t), \vec{u}(t)),  
+    \vec{x}(t_0) = \vec{x}_0,  \\
+    a_j \le u_j(t) \le b_j \text{ para }j = 1,2,...,m.
+\end{gather*}
+Se $\phi$ é linear, isto é, $\phi ' \equiv c$, o método anterior pode ser
+usado. Entretanto, para outras funções $\phi$, $\la_n(t_1)$ dependerá de
+$x_n^*(t_1)$. Nesses casos, o método \textit{forward-backward sweep} não pode
+ser usado, mas a versão adaptada pode.  
+
+Como antes, fazemos um chute para $\lambda_n(t_1) = \theta$. Então usamos o
+método padrão para resolver o problema. Isso nos dará o valor para o n-ésimo
+estado em $t_1$, escrito $\tilde{x}_{n1}$. Queremos que $\phi
+'(\tilde{x}_{n1}) = \theta$. Então definimos 
+$$
+V(\theta) = \phi '(\tilde{x}_{n1}) - \theta
+$$
+Então o problema se torna encontrar as raízes da função $V$. 
+
 \section{Tempo Final Livre}
+
+Por fim, vamos aplicar o método para problemas não autônomos que tem tempo
+final livre. Considere o problema 
+
+\begin{gather*}
+    \max_{\vec{u}} \int_{t_0}^{t_1} f(t, \vec{x}(t), \vec{u}(t)) dt \\ 
+    \text{sujeito a }\vec{x}'(t) = \vec{g}(t, \vec{x}(t), \vec{u}(t)) ,  
+    \vec{x}(t_0) = \vec{x}_0, \\
+    a_j \le u_j(t) \le b_j \text{ para }j = 1,2,...,m.
+\end{gather*}
+
+Agora, façamos um chute para $T^* = \theta > t_0$. Resolvemos novamente o
+problema com esse valor de $T*$ e calculamos a estimativa do Hamiltoniano no
+tempo final, que podemos denotar por $\tilde{H}(\theta)$. Se considerarmos a
+função $V(\theta) = \tilde{H}(\theta)$. Como queremos que $H(T^*) = 0$,
+podemos usar o método secante para procurar os zeros de $V$. Note que o
+problema deve ser não autônomo, pois, se não o fosse, o Hamiltoniano seria 0
+para todo $t$. 
 
 \section{Shots Múltiplos}
 
-\section{Exemplos}
+Até o momento, utilizamos o método adaptado para problemas com
+particularidades individuais, mas não expandimos para combinações delas. Isso
+pode ser feito empregando o método várias vezes, ou fazendo o que chamamos de
+\textit{shots múltiplos}. 
+
+Quando temos um problema com duas dessas restrições até então
+mencionadas, nós colocamos de lado uma delas e faz um chute apropriado. Assim,
+reduzimos o problema para apenas uma restrição e resolvemos como fizemos até
+então. Assim conseguimos, utilizando duas vezes o método, resolver o problema.
+Tendo três elementos, podemos reduzir para dois elementos e assim por diante.
+Dessa forma, conseguimos resolver problemas desse tipo. Como forma de exemplo,
+vamos analisar um problema com dois estados, ambos com pontos finais fixados.
+Considere 
+
+\begin{gather*}
+    \max_u \int_{t_0}^{t_1} f(t, x_1(t), x_2(t), u(t)) dt \\
+    \text{sujeito a }x_1'(t) = g_1(t, x_1(t), x_2(t), u(t)), x_1(t_0) = x_{10}, x_1(t_1) = x_{11}, \\
+    x_2 '(t) = g_2(t, x_1(t), x_2(t), u(t)), x_2(t_0) = x_{20}, x_2(t_1) = x_{21}
+\end{gather*}
+
+Suponha que cheguemos no seguinte sistema 
+
+\begin{align*}
+    &x_1 '(t) = g_1(t, x_1(t), x_2(t), u(t)), x_1(t_0) = x_{10}, x_1(t_1) = x_{11}, \\
+    &x_2 '(t) = g_2(t, x_1(t), x_2(t), u(t)), x_2(t_0) = x_{20}, x_2(t_1) = x_{21}, \\
+    &\la_1 '(t) = h_1(t, x_1(t), x_2(t), \la_1(t), \la_2(t), u(t)), \\
+    &\la_2 '(t) = h_2(t, x_1(t), x_2(t), \la_1(t), \la_2(t), u(t)), \\
+    &u(t) = k(t, x_1(t), x_2(t), \la_1(t), \la_2(t)).
+\end{align*}
+
+Ponha $\la_1(t_1) = \theta_1$ e ignore $x_1(t_1) = x_{11}$. Então teremos 
+
+\begin{align*}
+    &x_1 '(t) = g_1(t, x_1(t), x_2(t), u(t)), x_1(t_0) = x_{10}, \\
+    &x_2 '(t) = g_2(t, x_1(t), x_2(t), u(t)), x_2(t_0) = x_{20}, x_2(t_1) = x_{21}, \\
+    &\la_1 '(t) = h_1(t, x_1(t), x_2(t), \la_1(t), \la_2(t), u(t)), \la_1(t_1) = \theta_1 \\
+    &\la_2 '(t) = h_2(t, x_1(t), x_2(t), \la_1(t), \la_2(t), u(t)), \\
+    &u(t) = k(t, x_1(t), x_2(t), \la_1(t), \la_2(t)).
+\end{align*}
+
+Com o sistema acima, podemos resolver o problema com o método estudado no
+capítulo. Até encontrarmos $\theta_2$ de forma que $x_2(t_1) = x_{21}$.
+Fazemos isso para vários valores de $\theta_1$. Para cada valor de $\theta_1$,
+obtemos uma estimativa para $x_1(t_1)$. Assim, encontramos, através de um
+método para encontrar raízes, encontramos $\theta_1$ de forma que $x_1(t_1) =
+x_{11}$. 
