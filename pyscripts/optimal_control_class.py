@@ -22,6 +22,8 @@ class OptimalControl:
            - kwargs: parâmetros adicionais 
                 - diff_phi: função que determina a condição de transversalidade.
                 - bounds: limites sobre o controle.  
+                - free_adj_final: estados com condições necessárias adicionais,
+                  em que o lambda final deve ser estimado. 
         '''
         self.dx = diff_state 
         self.dadj = diff_lambda 
@@ -36,6 +38,7 @@ class OptimalControl:
         for b in self.bounds: 
             if b[0] >= b[1]: 
                 raise Exception('O formato dos bounds deve ser (a,b), a < b') 
+        self.free_adj_final = kwargs.get('free_adj_final', [])
 
     def forward(self,t,x,u,params,h): 
         '''A função realiza o processo forward que integra a equação de x' = g
@@ -67,8 +70,7 @@ class OptimalControl:
             lambda_[i-1] = lambda_[i] - (h/6)*(k1 + 2*k2 + 2*k3 + k4)
         return lambda_
 
-
-    def solve(self, x0, T, params, h = 1e-3, tol = 1e-4, bounds = None): 
+    def solve(self, x0, T, params, h = 1e-3, tol = 1e-4, bounds = None, theta_list = []): 
         '''
         Retorna o controle ótimo, o estado associado e a função adjunta. 
         x0: valor inicial do estado 
@@ -76,12 +78,13 @@ class OptimalControl:
         params: dicionário com os parâmetros do modelo e seus valores. 
         h: passo no Runge-Kutta
         tol: tolerância para o erro relativo. 
+        theta_list: valores finais da adjunta a ser estimados. 
         '''
         if bounds: 
             self.bounds = bounds
         if len(self.bounds) != self.n_controls: 
             raise Exception('O número de controles deve concordar com o tamanho da lista dos bounds.')
-
+        
         condition = -1 
 
         N = int(np.round(T/h)) 
@@ -110,9 +113,10 @@ class OptimalControl:
             x_old = x.copy()
             lambda_old = lambda_.copy()
 
-            x = self.forward(t, x, u, params, h)
-            # Condição de transversalidade.
+            x = self.forward(t, x, u, params, h)    
+            # Condição de transversalidade.None
             lambda_[-1] = self.dphi(x, params)
+            lambda_[-1][self.free_adj_final] = theta_list
             lambda_ = self.backward(t, x, u, lambda_, params, h)
 
             # Update u 
