@@ -1,33 +1,35 @@
-Procura-se nesse texto estudar o livro de \cite{lenhart2007} que estuda os
-problemas de controle ótimo. O texto terá a mesma estrutura do livro e servirá
-de guia em português de estudos sobre o tema. 
+Nesse texto, estudam-se alguns problemas que envolvam encontrar um controle
+ótimo, e toma como referência o livro de \cite{lenhart2007}. O texto terá
+formato de notas com a mesma estrutura do livro e servirá
+de guia introdutório sobre o tema na lingua portuguesa. Essa área da
+matemática aplicada envolve estudos de otimização e de equações diferenciais e
+pode ser ilustrada através de diversos exemplos e aplicações da ciência. 
 
-    Apresenta-se inicialmente um problema motivador que considera duas equações: uma
-    representa a variação do peso da parte vegetativa, enquanto a outra representa
-    o peso da parte reprodutiva. O crescimento das plantas é modelado pelo modelo
-    de \cite{cohen1971299}. Nesse caso, o \textit{controle} sobre o sistema é a fração
-    da fotossíntese destinada para a parte vegetativa. Queremos \textit{maximizar} o 
-    crescimento da parte reprodutiva, que garante o mantimento da espécie. 
+Inicialmente, será apresentado um problema motivador que considera duas
+equações diferenciais: uma representa a variação do peso da parte vegetativa
+de uma planta, enquanto a outra representa o peso da parte reprodutiva. O
+crescimento das plantas é modelado segundo o modelo de \cite{cohen1971299}.
+Nesse caso, o \textit{controle} sobre o sistema é a fração da fotossíntese destinada para a parte vegetativa. Queremos \textit{maximizar} o 
+crescimento da parte reprodutiva, que garante o mantimento da espécie. 
 
-    Sejam $x(t)$ a parte vegetativa e $y(t)$ a parte reprodutiva no
-    tempo $t$. Nosso objetivo será maximizar o funcional \refeq{funcional-maximize}
-    segundo a função $u(t)$ que representa a fração de fotossíntese para
-    o crescimento vegetativo: 
+Sejam $x(t)$ a parte vegetativa e $y(t)$ a parte reprodutiva no
+tempo $t$. Nosso objetivo será maximizar o funcional \refeq{funcional-maximize}
+segundo a função $u(t)$ que representa a fração de fotossíntese para
+o crescimento vegetativo: 
 
-    \begin{equation}
-        \label{funcional-maximize}
-        F(x,u,t) := \int_0^T \ln(y(t))dt, 
-    \end{equation}
-
-    onde $T$ é o limite superior do intervalo de tempo considerado e tal que o
-    modelo é um sistema de equações diferenciais com restrições: 
-    \begin{align*}
-        x'(t) &= u(t)x(t) \\
-        y'(t) &= (1 - u(t))y(t) \\
-        0 \leq &u(t) \leq 1 \\
-        x(0) &> 0, \\
-        y(0) &\geq 0
-    \end{align*}    
+\begin{equation}
+    \label{funcional-maximize}
+    F(x,u,t) := \int_0^T \ln(y(t))dt, 
+\end{equation}
+onde $T$ é o limite superior do intervalo de tempo considerado e tal que o
+modelo é um sistema de equações diferenciais com restrições: 
+\begin{gather*}
+    x'(t) = u(t)x(t) \\
+    y'(t) = (1 - u(t))y(t) \\
+    0 \leq u(t) \leq 1 \\
+    x(0) > 0, \\
+    y(0) \geq 0
+\end{gather*}    
 
 Um problema como esse é chamado de \textbf{problema de controle ótimo}, pois
 queremos encontrar uma função $u$, denominada controle, ótima, segundo um
@@ -48,3 +50,11 @@ Em um problemas como esse, encontramos:
     controle de forma que esse funcional seja minimizado (ou maximizado). Ele
     representa o custo (ou ganho) ao se tomar uma atitude no sistema. 
 \end{enumerate}
+
+O texto terá como foco problemas que envolvam sistemas de equações
+diferenciais ordinárias. Além disso, ao longo do texto, treze laboratórios são
+desenvolvidos. Nesses laboratórios, uma aplicação biológica é estudada a fim
+de apresentar conceitos dos capítulos que a precedem. Todos os laboratórios
+estão em formato \texttt{jupyter-notebook} e escritos na linguagem de
+programação \textit{Python}. A escolha dessa linguagem se deu a sua fácil
+interpretação humana e interesse particular.  
