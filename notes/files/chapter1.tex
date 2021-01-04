@@ -1,31 +1,35 @@
 \section{Preliminares}
 
-Alguns conceitos e teoremas básicos de análise que serão utilizados durante o texto e
-podem ser encontrados em diversos livros: 
+
+Nessa seção alguns conceitos e teoremas básicos importantes para o decorrer
+do texto serão apresentados. Eles podem ser encontrados em diversos livros
+além dessas notas. 
 
 \begin{enumerate}
-    \item \label{piecewise-continuous} \textbf{Continuidade por partes:} Função contínua em cada
-    ponto em que é definida, exceto em uma quantidade finita deles, e igual a
+    \item \label{piecewise-continuous} \textbf{Continuidade por partes:} Uma
+    função é contínua por partes quando é contínua em cada
+    ponto em que é definida, exceto em uma quantidade finita, e é igual a
     seu limite à esquerda ou à direita em cada ponto. Logo, podemos ter
     finitos saltos, mas não podemos ter pontos isolados. 
-    \item \textbf{Diferenciável por partes:} Função contínua que é
-    diferenciável em cada ponto em que é definida, exceto em uma quantidade
-    finita deles. Além disso, sua derivada é contínua sempre que definida. 
-    \item \textbf{Convexidade:} A função $k$ é convexa se $\forall 0 \leq
-    \alpha \leq 1$ e para qualquer $a \leq t_1,t_2 \leq b$, $\alpha k(t_1) + (1 -
-    \alpha)k(t_2) \geq k(\alpha t_1 + (1 - \alpha)t_2)$. A definição é
+    \item \textbf{Diferenciável por partes:} Uma função é diferenciável por
+    partes quando ela é contínua em toda parte e diferenciável em cada ponto
+    em que é definida, exceto em uma quantidade finita. Além disso, sua derivada é contínua sempre que definida. 
+    \item \textbf{Convexidade:} A função $f$ é convexa se $\forall \alpha \in
+    [0,1]$ e para quaisquer $a \leq t_1,t_2 \leq b$, tem-se que $\alpha f(t_1)
+    + (1 - \alpha)f(t_2) \geq f(\alpha t_1 + (1 - \alpha)t_2)$. A definição é
     equivalente para funções de duas ou mais variáveis. Ela será côncava se
-    $-k$ for convexa. 
-    \item \textbf{Lipschitz:} Função $k$ em que existe $c$ constante tal que
-    $|k(t_1) - k(t_2)| \leq c|t_1 - t_2|$, para todos os pontos do domínio de
-    $k$. 
-    \item \textbf{Teorema do Valor Médio:} Seja $k$ contínua em $[a,b]$ e
-    diferenciável em $(a,b)$. Então existe $x_0 \in (a,b)$ tal que $k(b) -
-    k(a) = k'(x_0)(b - a)$. 
-    \item \label{dominated-convergence} \textbf{Teorema da Convergência Dominada:} Considere uma sequência
+    $-f$ for convexa. 
+    \item \textbf{Lipschitz:} A função $f$ é $L$-Lipschitz se existe uma
+    constante $L$ tal que, para todos os pontos de seu domínio, $|f(t_1) - f(t_2)| \leq L|t_1 - t_2|$.
+    \item \textbf{Teorema do Valor Médio:} Seja $f$ uma função contínua em
+    $[a,b]$ e diferenciável em $(a,b)$. Então existe $x_0 \in (a,b)$ tal que
+    $$f(b) - f(a) = f'(x_0)(b - a)$$. 
+    \item \label{dominated-convergence} \textbf{Teorema da Convergência
+    Dominada:} Considere uma sequência de funções 
     $\{f_n\}$ dominada por uma função Lebesgue integrável $g$. Suponha que
     essa sequência converge ponto a ponto para uma função $f$. Então $f$ é
-    integrável e $\lim_{n \to \infty} \int_S f_n d\mu = \int_S f d\mu$.
+    Lebesgue integrável e 
+    $$\lim_{n \to \infty} \int_S f_n d\mu = \int_S f d\mu.$$
 \end{enumerate}
 
 \begin{remark}
@@ -36,24 +40,21 @@ podem ser encontrados em diversos livros:
 \end{remark}
 
 \begin{exercise}
-    Se $k: I \subset \mathbb{R} \to \mathbb{R}$ é diferenciável por partes em
-    um intervalo $I$ limitado, $k$ é Lipschitz. 
+    Se $f: I \subset \mathbb{R} \to \mathbb{R}$ é diferenciável por partes em
+    um intervalo $I$ limitado, $f$ é Lipschitz em $I$.  
 \end{exercise}
 
 \section{Condições necessárias para o problema básico} 
 
 Considere $u(t)$ uma variável de controle e $x(t)$ variável de estado que
 satisfaz 
-
 \begin{equation}
     \label{initial-system}
     x'(t) = g(t,x(t),u(t)). 
 \end{equation}
-
-Podemos ver a relação entre essas variáveis
-como $u(t) \mapsto x = x(u)$.  O problema básico do controle ótimo é encontrar
-uma função de controle contínua por partes \ref{piecewise-continuous} $u(t)$ que
-maximize um dado funcional objetivo 
+A relação entre essas variáveis pode ser vista como uma função $u(t) \mapsto x = x(u)$.  O problema básico do controle ótimo é encontrar
+uma função de controle contínua por partes (3.1.\ref{piecewise-continuous})
+$u(t)$ que maximize o funcional objetivo 
 
 \begin{equation}
     \label{objetivo}
@@ -62,18 +63,20 @@ maximize um dado funcional objetivo
 
 Nos problemas encontrados nesse texto, $f$ e $g$ são sempre continuamente
 diferenciáveis. Para isso, se $u^{*}(t)$ e $x^*(t) = x(u^*(t))$ são
-argumentos ótimos, podemos extrair condições necessárias para o problema. No
-capítulo \ref{ch:2}, são discutidas as condições suficientes. 
+argumentos ótimos e, assumindo sua existência, podemos extrair condições
+necessárias para o problema. No capítulo \ref{ch:2}, são discutidas as condições suficientes. 
 
-\label{adjoint-function}
-\textbf{Função Adjunta:} proposta similar aos multiplicadores de Lagrange para
-o cálculo multivariado. $\lambda : [t_0,t_1] \to \mathbb{R}$ é diferenciável
-por partes e deve satisfazer algumas condições que serão derivadas
-posteriormente. 
+\begin{definition}[Função Adjunta]
+    \label{adjoint-function}
+    Uma proposta similar aos multiplicadores de Lagrange para
+    o cálculo multivariado. Uma função $\lambda : [t_0,t_1] \to \mathbb{R}$
+    diferenciável por partes que deve satisfazer algumas condições que serão
+    derivadas posteriormente. 
+\end{definition}
 
-Assuma a existência de $u^*$ e $x^*$ em um problema de maximização. Nesse caso, $J(u) \leq J(u^*)
-< \infty$, para todo controle $u$. Seja $h(t)$ uma função contínua por partes
-e $\e \in \mathbb{R}$.  Então:
+Assuma a existência de $u^*$ e $x^*$ em um problema de maximização, isto é, 
+$J(u) \leq J(u^*) < \infty$ para todo controle $u$. Seja $h(t)$ uma função
+contínua por partes e $\e \in \mathbb{R}$.  Então:
 \begin{equation*}
     u^{\e}(t) = u^*(t) + \e h(t), u^{\e} \mapsto x^{\e}, 
 \end{equation*}
@@ -91,11 +94,11 @@ $t$ fixo,
         \frac{\partial}{\partial \e}x^{\e}(t)\bigg\rvert_{\e = 0} \text{ existe.}
 \end{equation*}
 \begin{remark}
-    Se for difícil enxergar isso, pense que 
+    Se for difícil enxergar isso, note que 
     $$x^{\e}(t) = x_0 + \int_{t_0}^t
     g(s, x^{\e}(s), u^{\e}(s))ds$$
 \end{remark}
-Seja $\la(t)$ a função adjunta (\ref{adjoint-function}) no intervalo $[t_0, t_1]$. Pelo Teorema Fundamental do Cálculo, 
+Seja $\la(t)$ função adjunta (\ref{adjoint-function}) no intervalo $[t_0, t_1]$. Pelo Teorema Fundamental do Cálculo, 
 \begin{equation*}
     \int_{t_0}^{t_1} \frac{d}{dt}[\la(t)x^{\e}(t)]dt = \la(t_1)x^{\e}(t_1) - \la(t_0)x^{\e}(t_0),
 \end{equation*}
@@ -115,10 +118,10 @@ Sabemos que
 \end{equation*}
 pois $J(u^*)$ é máximo. Desta maneira, como o integrando é diferenciável por
 partes e o intervalo é compacto, pelo Teorema da Convergência Dominada
-(\ref{dominated-convergence}), podemos mover o limite para dentro da integral.
-Em especial, podemos mover a própria derivada. 
+(3.1.\ref{dominated-convergence}), podemos mover o limite para dentro da
+integral. Em especial, podemos mover a própria derivada. 
 
-\begin{equation*}
+\begin{equation}
     \label{eq1}
     \begin{split}
         0 &= \frac{d}{d\epsilon} J(u^{\epsilon})\bigg\rvert_{\e = 0} \\ 
@@ -127,9 +130,10 @@ Em especial, podemos mover a própria derivada.
         &= \int_{t_0}^{t_1} \left[(f_x + \la(t)g_x + \la '(t))\frac{\partial x^{\e}}{\partial\e}(t)\bigg\rvert_{\e = 0} + (f_u + \la(t)g_u)h(t)\right]dt \\
         &- \la(t_1)\frac{\partial x^{\e}}{\e}(t_1)\bigg\rvert_{\e = 0},
     \end{split}
-\end{equation*}
-onde os termos de $f_x, f_u, g_x, \text{e} g_u$ são $(t, x^*(t), u^*(t))$. 
-Para garantir que ocorra a igualdade citada acima, definimos 
+\end{equation}
+onde os termos de $f_x, f_u, g_x, \text{ e } g_u$ são $(t, x^*(t), u^*(t))$. 
+Para garantir que ocorra a igualdade citada acima para qualquer função $h$,
+definimos  
 
 \begin{definition}[Hamiltoniano]
     \label{hamiltonian}
@@ -138,24 +142,24 @@ Para garantir que ocorra a igualdade citada acima, definimos
     \end{equation*}
 \end{definition}
 
-Para obter a igualdade acima para qualquer função $h$, precisamos que as condições abaixo sejam
-satisfeitas e, em particular estamos maximizando $H$ com respeito a $u$ em $u^*$ e, então: 
+Assim precisamos que as condições abaixo sejam satisfeitas e, em particular estamos maximizando $H$ com respeito a $u$ em $u^*$ e, então: 
 
 \begin{equation}
     \begin{cases}
         \dfrac{\partial H}{\partial u} \bigg\rvert_{u = u^{*}} = f_u + \la g_u = 0, &\text{(condição de otimalidade)}\\ \\
         \dfrac{\partial H}{\partial x} \bigg\rvert_{x = x^*} = - \la ' = -(f_x + \la g_x), &\text{(equação adjunta)} \\ \\
-        \dfrac{\partial H}{\partial \la} = x' \\ \\
-        \la(t_1) = 0, &\text{(condição de transversalidade)}
+        \dfrac{\partial H}{\partial \la} = x', 
+        &\text{(equação diferencial)}  \\ \\
+        \la(t_1) = 0. &\text{(condição de transversalidade)}
     \end{cases}    
 \end{equation}
 
-\section{Princípio Máximo de Pontryagin}
+\section{Princípio máximo de Pontryagin}
 \label{pontryagin}
 
 \begin{theorem}
-    Se $u^*(t)$ e $x^*(t)$ são ótimos para o problema de controle ótimo, então
-    existe $\la(t)$ adjunta diferenciável por partes tal que 
+    Se $u^*(t)$ e $x^*(t)$ são funções ótimas para o problema de controle
+    ótimo, então existe a adjunta $\la(t)$ diferenciável por partes tal que 
     \begin{equation}
         \label{inequality-hamiltonian}
         H(t, x^*(t), u(t), \la(t)) \le H(t, x^*(t), u^*(t), \la(t))
@@ -179,10 +183,10 @@ crítico em $u^*$ e faltaria provar que ele é máximo. A demonstração para is
 
 \begin{theorem}
     \label{theorem-inequality}
-    Suponha que $f$ e $g$ sejam continuamente diferenciáveis nos três
-    argumentos e côncava em $u$. Suponha que $u^*$ seja o controle ótimo
+    Sejam $f$ e $g$ sejam continuamente diferenciáveis nos três
+    argumentos e côncavas em $u$. Suponha que $u^*$ seja o controle ótimo
     associado ao estado $x^*$ e que $\la$ seja uma função diferenciável por
-    partes não negativa. Suponha que $\forall t_0 \le t \le t_1$
+    partes não negativa. Se $\forall t \in [t_0, t_1]$
     $$
     0 = H_u(t, x^*(t), u^*(t), \la(t))
     $$
@@ -224,19 +228,19 @@ crítico em $u^*$ e faltaria provar que ele é máximo. A demonstração para is
         \min_u \int_1^2 tu(t)^2 + t^2x(t) dt
     \end{equation*}
     \begin{equation*}
-        \text{sujeito a} x'(t) = -u(t), x(1) = 1
+        \text{sujeito a } x'(t) = -u(t), x(1) = 1
     \end{equation*}
 \end{example}
 
 Primeiro definimos o Hamiltoniano 
 $$
-H = [tu(t)^2 + t^2 x(t)] + \lambda(- u(t))
+H = [tu(t)^2 + t^2 x(t)] + \lambda(t)(- u(t))
 $$
 Agora vamos observar as condições sobre o Hamiltoniano:
 
 \begin{enumerate}
     \item \textit{Otimalidade}: $H_u = 0 \implies 2tu^*(t) - \la \implies
-    u^*(t) = \dfrac{\la}{2t}$
+    u^*(t) = \dfrac{\la(t)}{2t}$
     \item \textit{Equação adjunta}: $H_x = t^2 = - \la ' \implies \la(t) = -
     \frac{1}{3}t^3 + C$
     \item \textit{Transversalidade}: $\la(2) = 0 \implies C = \frac{8}{3}
@@ -253,16 +257,11 @@ Note que não provamos a existência de tal controle, o que está sendo feito é
 supondo a existência de um controle ótimo, usamos os teoremas da seção
 \ref{pontryagin} para encontrar a função adjunta e, assim, encontrar as
 funções ótimas que resolvem o problema. Além disso, podemos observar que as
-condições do Teorema \ref{theorem-inequality} são satisfeitas. 
-
-Para encontrar o estado, resolvemos $x'(t) = - u(t)$ e temos:
-
+condições do Teorema \ref{theorem-inequality} são satisfeitas. Para encontrar o estado, resolvemos $x'(t) = - u(t)$ e obtemos:
 $$
 x^*(t) = \frac{1}{18}t^3 - \frac{8}{6}\ln(t) + D,
 $$
-
 tal que $x^*(1) = 1 = \frac{1}{18} + D$ e, portanto 
-
 $$
 x^*(t) = \frac{1}{18}t^3 - \frac{8}{6}\ln(t) + \frac{17}{18}
 $$
@@ -286,8 +285,8 @@ $x_{max}$. Se $x(0) > x_{min}$, a solução $x(t)$ se aproxima de $x_{max}$. Se 
 abaixo, ela decairá para 0. Como o crescimento líquido é negativo em níveis
 populacionais baixos, a população não consegue se manter e morre. O
 crescimento per capita também não é monotonicamente decrescente e mostra o
-efeito que chamamos de Allee, figura \ref{Fig1:allee-effect}. Para entender mais sobre o efeito Allee, 
-sugere-se \cite{kot2001elements}. 
+efeito que chamamos de Allee, figura \ref{Fig1:allee-effect}. Para entender
+mais sobre o esse efeito, sugere-se \cite{kot2001elements}. 
 
 \begin{figure}[!ht]
     \center
@@ -296,7 +295,7 @@ sugere-se \cite{kot2001elements}.
     \label{Fig1:allee-effect}
 \end{figure}
 
-Existe uma certa liberdade em como fazer essa modelagem. Mas uma possível
+Existe uma certa liberdade em como fazer modelar o problema. Uma possível
 proposta é a seguinte: Se $x(t)$ é o tamanho da população no tempo $t$ e
 $u(t)$ é a proporção da população caçada, a variação da população é dada por
 
