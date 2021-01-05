@@ -1,17 +1,17 @@
-\section{Termos Payoff}
+\section{Termos payoff}
 
-Em muitos problemas, também queremos maximizar o valor de uma função em um
-determinado ponto no tempo, como, por exemplo, no final do intervalo. Assim, o
-problema é do tipo: 
+Em muitos problemas também queremos maximizar o valor de uma função em um
+determinado ponto no tempo, como, por exemplo, no final do intervalo.
+Reformulamos o problema de controle ótimo da seguinte forma:
 
 \begin{equation*}
     \max_u \left[\phi(x(t_1)) + \int_{t_0}^{t_1} f(t, x(t),u(t))dt\right] 
 \end{equation*}
 \begin{equation*}
-    x' = g(t,x(t),u(t)), x(t_0) = x_0
+    \text{sujeito a } x' = g(t,x(t),u(t)), x(t_0) = x_0
 \end{equation*}
 
-O termo $\phi(x(t_1))$ é conhecido como termo \textit{payoff}. Assim o
+O termo $\phi(x(t_1))$ é chamado de termo \textit{payoff}. Assim o
 funcional objetivo se torna 
 $$
 J(u) = \int_{t_0}^{t_1} f(t,x(t),u(t))dt + \phi(x(t_1))
@@ -19,7 +19,7 @@ $$
 A única mudança em relação ao cálculos do Capítulo \ref{ch:1} é a condição de transversalidade. 
 $$\la(t_1) = \phi '(x^*(t_1)).$$ 
 
-\section{Estados com Pontos Finais Fixos}
+\section{Estados com pontos de fronteira fixos}
 
 Considere o problema  
 $$
@@ -34,15 +34,14 @@ final. Entretanto, o argumento utilizado no Capítulo \ref{ch:1} pode ser
 replicado aqui. As condições necessárias serão as mesmas, exceto pela
 condição de transversalidade. Especificamente, 
 $$
-\la(t_0) = \phi '(x(t_0))
+\la(t_0) = \phi '(x^*(t_0))
 $$
 Isso sugere que exista uma dualidade entre as condições de fronteira do estado
-e da adjunta. A maximização é sobre os controles \textit{admissíveis}, no
-sentido que respeite todas as restrições definidas. 
+e da adjunta. Importante observar que a maximização é realizada sobre os
+controles \textit{admissíveis}, no sentido que respeite todas as restrições
+definidas, inclusive as variáveis de estado. 
 
-Também podemos fixar os pontos inicial e final de estado. Notamos que estamos
-considerando a maximização sobre o conjunto de controles admissíveis, que
-respeitem as condições, inclusive sobre a variável de estado. Porém, nesse
+Também podemos fixar os pontos inicial e final de estado. Porém, nesse
 caso, uma mudança nas condições necessárias é realizada no seguinte teorema. 
 
 \begin{theorem}
@@ -57,9 +56,11 @@ caso, uma mudança nas condições necessárias é realizada no seguinte teorema
     $$\la '(t) = - \dfrac{\partial H(t,x^*(t), u^*(t))}{\partial x}.$$ 
 \end{theorem}
 
-A diferença das condições apresentadas no capítulo \ref{ch:1} é que a função adjunta não tem restrições. A demonstração utiliza
-uma técnica diferente da utilizada até então \cite[147-153]{kamien2012dynamic}. A constante $\la_0$ ajusta para
-problemas degenerados ou problemas onde o funcional objetivo é imaterial.
+A diferença das condições apresentadas no capítulo \ref{ch:1} é que a função
+adjunta não tem restrições de fronteira. Note que essa liberdade ganhada será
+preenchida com as condições sobre o estado. A demonstração para esse teorema
+utiliza uma técnica diferente da utilizada até então e pode ser obtida em \cite[147-153]{kamien2012dynamic}. A constante $\la_0$ ajusta para
+problemas degenerados ou problemas onde o funcional objetivo é imaterial. 
 
 \begin{definition}
     O funcional objetivo ser imaterial significa que não depende da condição final do estado. 
@@ -89,9 +90,9 @@ A equação adjunta,
 $$
 \la '(t) = - H_x = - \la \implies \la(t) = Ce^{-t}
 $$
-A condição de transversalidade é 
+A condição de transversalidade,
 $$
-\la(1) = \phi '(x(1)) = 10x(1)
+\la(1) = \phi '(x^*(1)) = 10x^*(1)
 $$
 Sabemos que $u^*(t) = -Ce^{-t}$. Usando a equação do estado, 
 $$
@@ -148,10 +149,10 @@ então que o Teorema é satisfeito com $\la_0 = 0$ e $u^* \equiv 0$, como já er
 esperado. 
 
 \begin{example}
-    Seja $x(t)$ o número de célular de tumor no tempo $t$ com crescimento
-    exponencial $\alpha$ e $u(t)$ a concentração de drogas. Queremos minimizar
-    o número de células tumorais ao final do tratamento e os efeitos negativos
-    acumulados do tratamento no corpo. Assim, o problema é resumido em 
+    Seja $x(t)$ o número de células de câncer no tempo $t$ que apresenta
+    crescimento exponencial $\alpha$, e eja $u(t)$ a concentração de drogas
+    aplicada para o tratamento. Queremos minimizar o número de células
+    tumorais ao final do tratamento e os efeitos negativos acumulados do tratamento no corpo. Assim, o problema é resumido em 
     $$
     \min_u x(T) + \int_0^T u(t)^2 dt
     $$
@@ -161,7 +162,7 @@ esperado.
 \end{example}
 
 Esse é um simples modelo, não realístico, com objetivo ilustrativo apenas. O
-termo \textit{payoff} é $X(T)$ e, portanto, $\phi(x) = x$. Podemos calcular as
+termo \textit{payoff} é $x(T)$ e, portanto, $\phi(x) = x$. Podemos calcular as
 condições necessárias. 
 $$
 H = u^2 + \la(\alpha x - u)
@@ -170,10 +171,10 @@ $$
 0 = H_u = 2u - \la \implies u^* = \frac{\la}{2}
 $$
 $$
-\la ' = \dfrac{\partial H}{\partial x} = - \alpha \la \implies \la(t) = Ce^{-\alpha t}
+\la ' = -\dfrac{\partial H}{\partial x} = - \alpha \la \implies \la(t) = Ce^{-\alpha t}
 $$
 $$
-\la(T) = \phi '(x(T)) = 1 \implies \la(t) = e^{\alpha(T - t)}
+\la(T) = \phi '(x^*(T)) = 1 \implies \la(t) = e^{\alpha(T - t)}
 $$
 Portanto o controle ótimo é $$u^{*}(t) = \frac{1}{2}e^{\alpha(T - t)},$$
 Observando a equação do estado, temos que 
