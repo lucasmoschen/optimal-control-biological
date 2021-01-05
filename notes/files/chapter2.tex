@@ -1,9 +1,9 @@
 Após desenvolver as condições necessárias para resolver o problema de controle
 ótimo inicial, alguns problemas podem surgir. Como assumimos a existência de
-controle ótimo, podemos encontrar uma função de controle pelas condições mesmo
-quando não haja. Também pode ser obtido um funcional que tem valor infinito, algo que não
-desejado. Portanto, se o funcional objetivo tiver valor mais ou menos
-infinito, o problema não tem solução. 
+controle ótimo, podemos encontrar uma função de controle mesmo quando não
+haja. Também pode ser obtido um uma função que possua funcional com valor
+infinito, algo que não é desejado. Portanto, se o funcional objetivo tiver
+valor mais ou menos infinito, fizemos que o problema não tem solução. 
 
 \section{Existência e Unicidade}
 
@@ -12,7 +12,7 @@ infinito, o problema não tem solução.
     $$\text{sujeito a } x'(t) = g(t,x(t),u(t)), x(t_0) = x_0.$$ 
     Suponha que $f(t,x,u)$ e $g(t,x,u)$ sejam continuamente diferenciáveis nos
     três argumentos e côncavos no segundo e terceiro argumentos. Suponha que
-    $u^*$ é um controle, com estado associado a $x^*$, a $\la$ uma função
+    $u^*$ é um controle, com estado associado $x^*$, e $\la$ uma função
     diferenciável por partes, tal que $t_0 \le t \le t_1$: 
     \begin{subequations}
         \label{eq:conditions}
@@ -37,7 +37,7 @@ infinito, o problema não tem solução.
         \end{split}
     \end{equation}
     Aplicando \refeq{rel1} e \refeq{rel2} ao último termo de
-    \refeq{eq:first-result}, ele será 
+    \refeq{eq:first-result}, 
     \begin{equation*}
         \begin{split}
             \int_{t_0}^{t_1} &(x^{*}(t) - x(t))(-\la(t)g_x(t,x^*, u^*) - \la '(t)) \\ 
@@ -66,9 +66,8 @@ Falta garantir que $J(u^*)$ seja finito. Para isso, algumas restrições sobre
 $f$ e/ou $g$ são necessárias. O próximo teorema é um exemplo sobre isso. 
 
 \begin{theorem}
-    Seja $u \in L([t_0,t_1];\mathbb{R})$, $f$ é convexa em $u$, e existam
-    constantes $C_4$ e $C_1$,$C_2$,$C_3 >0$ e $\beta > 1$, tal que, $\forall t
-    \in [t_0, t_1], x, x_1, u \in \mathbb{R}$. 
+    Seja $u \in L([t_0,t_1];\mathbb{R})$. Suponha que $f$ é uma função convexa em $u$, e existam constantes $C_4$ e $C_1$,$C_2$,$C_3 >0$ e $\beta > 1$, tal
+    que, $\forall t \in [t_0, t_1], x, x_1, u \in \mathbb{R}$. 
     \begin{equation*}
         \begin{cases}
             g(t,x,u) = \alpha (t,x) + \beta (t,x)u \\
@@ -88,15 +87,15 @@ existência de controle ótimo podem ser encontrados em \cite{filippov1962}.
 
 \Space
 
-\textbf{Unicidade:} Unicidade de soluções do sistema de otimalidade implica unicidade
-do controle ótimo, se existir. Em geral, podemos provar a unicidade de
-soluções do sistema de otimalidade em intervalos de tempo curtos. A volta nem
-sempre é verdadeira, isto é, unicidade do controle ótimo não garante a
+\textbf{Unicidade:} Unicidade de soluções do sistema de otimalidade implica
+unicidade do controle ótimo, quando ele existir. Em geral, podemos provar a
+unicidade de soluções do sistema de otimalidade em intervalos de tempo curtos.
+A volta nem sempre é verdadeira, isto é, unicidade do controle ótimo não garante a
 unicidade do sistema. 
 
 Os exemplos e laboratórios satisfazem as condições de existência e unicidade
 para intervalos de tempo pequenos. Portanto, resolver através das condições
-necessárias já se torna suficiente. 
+necessárias já é suficiente. 
 
 \section{Interpretação da Adjunta}
 
@@ -112,19 +111,18 @@ $$\frac{\partial V}{\partial x}(x_0, t_0) = \lim_{\e \to 0} \frac{V(x_0 + \e,
 t_0) - V(x_0,t_0)}{\e} = \la(t_0).$$
 
 Podemos relacionar, então, a função adjunta à variação marginal da função
-custo/lucro com respeito ao estado. É o valor adicional associado com um 
-incremento adicional da variável de estado. Na verdade, essa aproximação é
+custo/lucro com respeito ao estado. Na verdade, essa aproximação é
 válida para todo tempo $t$ \cite[136-139]{kamien2012dynamic}. Podemos aproximar: 
-
 \begin{equation*}
     V(x_0 + \e,t_0) \approx V(x_0,t_0) + \e\la(t_0). 
 \end{equation*}
-Se $\e = 1$, podemos ver que ao adicionar um unidade à condição inicial,
-$\la(t_0)$ será adicionado ao lucro resultante. 
+Com $\e = 1$, podemos ver que ao adicionar uma unidade à condição inicial,
+$\la(t_0)$ será adicionado ao lucro resultante. portanto é o valor adicional
+associado ao incremento unitário no estado. 
 
 \section{Princípio da Otimalidade}
 
-É um resultado importante sobre otimizar um sistema sobre um subintervalo do
+É um resultado importante sobre otimização de um sistema sobre um subintervalo do
 intervalo original e, em particular, como o controle ótimo nesse subintervalo
 se relaciona com o controle no intervalo inteiro. 
 
@@ -137,10 +135,10 @@ se relaciona com o controle no intervalo inteiro.
     \text{sujeito a  }x'(t) = g(t, x(t), u(t)), x(t_0) = x_0.
     $$
     Seja $\hat{t} \in (t_0, t_1)$ fixo. Então as
-    funções $\hat{u}^*$ e $\hat{x}^*$ restritas ao intervalo $[\hat{t},t_1]$ 
-    formam uma solução ótima para o problema 
+    funções $u^*$ e $x^*$ restritas ao intervalo $[\hat{t},t_1]$, indicadas
+    por $\hat{u}^*$ e $\hat{x}^*$, formam uma solução ótima para o problema 
     $$
-    \max_u \hat{J}(u) = \max_u \int_{t_0}^{t_1} f(t, x(t), u(t)) dt 
+    \max_u \hat{J}(u) = \max_u \int_{\hat{t}}^{t_1} f(t, x(t), u(t)) dt 
     $$
     $$
     \text{sujeito a  }x'(t) = g(t, x(t), u(t)), x(\hat{t}) = x^*(\hat{t}).
@@ -168,18 +166,20 @@ se relaciona com o controle no intervalo inteiro.
             &= \hat{J}(\hat{u}_1) - \hat{J}(\hat{u}^*) > 0 
         \end{split}        
     \end{equation*}
-    Isso contradiz a hipótese inicial de que $u^*$ é controle ótimo. 
+    dado que os controles são iguais no intervalo $[t_0, \hat{t}]$. Isso contradiz a hipótese inicial de que $u^*$ é controle ótimo. 
 \end{proof}
 
 \begin{remark}
-    Note que nada pode ser dito sobre o intervalo $[t_0, \hat{t}]$, pois podemos construir contra-exemplos. 
+    Nada pode ser dito sobre o intervalo $[t_0, \hat{t}]$. Em particular sabemos que o controle ótimo não será, necessariamente, o controle do problema restrito a esse intervalo, como veremos nos Exemplos. 
 \end{remark}
 
 \section{Os Problemas Autônomo e Hamiltoniano}
 
+Os seguintes teoremas são menos utilizados, mas são importantes de ser notadas. A demonstração não é descrita no texto. 
+
 \begin{theorem}
     O Hamiltoniano é uma função contínua Lipschitz do tempo $t$ no caminho
-    ótimo. 
+    ótimo $(u^*, x^*)$. 
 \end{theorem}
 
 \begin{definition}[Autônomo]
