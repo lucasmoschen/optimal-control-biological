@@ -1,28 +1,30 @@
-Queremos agora resolver os problemas de controle ótimo até agora apresentados
-numericamente, de forma que a solução seja uma aproximação a função $u^*$.
-Para isso tomamos uma partição $\{t_0 = b_1, b_2, ..., b_{N+1} = t_1\}$,
+Após desenvolvermos as condições necessárias, o problema se torna em resolver duas equações diferenciais, $x'$ e $\la '$, e encontrar a
+caracterização de $u$. Nem sempre podemos calcular analiticamente o resultado
+e, por isso, precisamos de métodos numéricos que aproximem, com o grau de
+precisão que desejarmos, o controle ótimo $u^*$ e o estado associado $x^*$. 
+Para isso tomamos uma partição $P = \{t_0 = b_1, b_2, ..., b_{N+1} = t_1\}$,
 usualmente com pontos igualmente espaçados, tal que a aproximação será dara
 por $u_i \approx u(b_i)$. Sabemos que a solução deve satisfazer as condições
 necessárias apresentadas no capítulo \ref{ch:1}. 
 
 Em geral, a equação $\frac{\partial H}{\partial u} = 0$ pode ser manipulada
-para encontrarmos $u$ em função de $x$ e de $\la$, para então termos a
-expressão de $u^*$. A partir disso, podemos utilizar um método como
-Runge-Kutta para resolver o sistema ótimo. Ele vai encontrar o controle ótimo
-se esse existir. 
+de forma a encontrar $u$ em função de $x$ e de $\la$, para então termos a
+expressão de $u^*$. A partir disso, podemos utilizar um método de integração
+de equações diferenciais, como o Runge-Kutta para resolver o sistema ótimo.
+Ele vai encontrar o controle ótimo quando esse existir. 
 
 \section{Algoritmo}
 
 O método apresentado a seguir é bem intuitivo e é conhecido como
-\textit{Forward-Backward Sweep}. Seja $\vec{x} = (x_1,...,x_{N+1})$ e
-$\vec{\la} = (\la_1, ..., \la_{N+1})$ vetores que aproximação nos pontos da
-partição as funções estado e adjunta. \hl{Informa\c{c}\~oes sobre converg\^encia e
-estabilidade podem ser encontradas em} \cite{wolfgang1978}. 
+\textit{Forward-Backward Sweep}. Sejam $\vec{x} = (x_1,...,x_{N+1})$ e
+$\vec{\la} = (\la_1, ..., \la_{N+1})$ vetores que aproximam as funções estado
+e adjunta, respectivamente, nos pontos da partição $P$. Informa\c{c}\~oes
+sobre converg\^encia e estabilidade podem ser encontradas em \cite{wolfgang1978}. 
 
-\begin{enumerate}
+\begin{enumerate}[label=\textbf{Passo \arabic*:}]
     \item Chute inicial para $\vec{u}$. 
     \item Usando a condição inicial $x(t_0)$ e os valores de $\vec{u}$,
-    encontre $\vec{x}$ passo a frente através da equação diferencial. 
+    encontra-se $\vec{x}$ passo a frente através da equação diferencial. 
     \item Usando a condição de transversalidade $\la(t_1) = 0$ e os valores
     $\vec{u}$ e $\vec{x}$, resolva $\vec{\la}$ para trás de acordo com a
     equação adjunta. 
@@ -32,12 +34,15 @@ estabilidade podem ser encontradas em} \cite{wolfgang1978}.
     suficientemente próximos, repita a partir do segundo passo. 
 \end{enumerate}
 
-Frequentemente é necessário usar uma combinação convexa \footnote{\textbf{Combinação Convexa:} Combinação linear de pontos, tal que os
+O chute inicial em geral não repercute diferença no resultado do algoritmo.
+Chutes mais próximos do controle ótimo resultam em convergência mais rápida.
+Para os passos 2 e 3, o método de integração Runge-Kutta é suficiente. Para o
+passo 4, frequentemente é necessário usar uma combinação convexa 
+\footnote{\textbf{Combinação Convexa:} Combinação linear de pontos, tal que os
 coeficientes são não negativos e somam $1$.} entre dois controles
-sequenciais para acelerar a convergência do algoritmo. Para os passos 2 e 3, o
-método de Runge-Kutta é suficiente. 
+sequenciais para acelerar a convergência do algoritmo.
 
-Muitos tipos de teste de convergência existem. Frequentemente, considerar 
+Muitos tipos de teste de convergência existem. O exemplo mais comum é
 $$
 ||\vec{u} - \text{old }\vec{u}||_1 = \sum_{i=1}^{N+1} |u_i - \text{old }u_i| < \e   
 $$
@@ -57,7 +62,11 @@ através dos Laboratórios escritos em formato notebook.
 
 \section{Runge-Kutta}
 
-Seja $x'(t) = f(t,x)$. O método pode ser resumido pelas seguintes equações, dado um passo $h$. 
+Esse método é suficiente para muitos problemas comuns, com exceção de
+problemas mais complicados, como os \textit{problemas stiff}. Seja a equação
+diferencial 
+$$x'(t) = f(t,x), x(0) = x_0.$$ 
+O método pode ser resumido pelas seguintes equações, dado um passo $h$. 
 \begin{equation*}
     x(t + h) \approx x(t) + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4) 
 \end{equation*}
@@ -69,4 +78,8 @@ Seja $x'(t) = f(t,x)$. O método pode ser resumido pelas seguintes equações, d
     k4 = f(t + h, x(t) + hk_3) \\
     \end{cases}
 \end{equation*}
-O erro é da ordem de $h^4$. 
+
+Quando temos o valor $x(T) = x_T$, isto é, o valor final, e queremos integrar
+até o valor inicial, trocamos o sinal de $h$ e, assim, podemos resolver o
+passo Backward. O erro é da ordem de $h^4$. Para uma descrição mais precisa,
+recomendam-se livros de Análise Numérica. 
