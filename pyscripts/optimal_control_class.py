@@ -10,18 +10,22 @@ class OptimalControl:
     def __init__(self, diff_state, diff_lambda, update_u, conv_comb_u = 0.5, 
                  n_controls = 1, n_states = 1, **kwargs):
         '''Resolve o problema de controle ótimo simples, com condição inicial
-           do estado e termo payoff linear. 
+           do estado e termo payoff linear. Os parâmetros do modelo devem ser
+           escritos como params['nome_do_parametro'], pois params deve ser um dicionário.
            - diff_state: função com argumentos (t,x,u,params) que representa a
            derivada do estado x. 
            - diff_lambda: função com argumentos (t,x,u,lambda, params) que representa a
            derivada da função adjunta lambda.
-           - update_u: função que atualiza u através de H_u = 0 
-           - conv_comb_u: valor da combinação convexa para atualização de u
+           - update_u: função com argumentos (t,x,lambda,params) que atualiza u através de H_u = 0.
+           - conv_comb_u: valor da combinação convexa para atualização de u,
+             0.5 por padrão. 
            - n_controls: número de controles, 1 por padrão. 
            - n_states: número de estados, 1 por padrão. 
            - kwargs: parâmetros adicionais 
                 - diff_phi: função que determina a condição de transversalidade.
-                - bounds: limites sobre o controle.  
+                - bounds: limites sobre o controle.  Deve ser uma lista de
+                  tuplas, cada tupla para cada controle. Se são
+                  parametrizados, devem ser passados na função solve. 
                 - free_adj_final: estados com condições necessárias adicionais,
                   em que o lambda final deve ser estimado. 
         '''
@@ -40,7 +44,7 @@ class OptimalControl:
                 raise Exception('O formato dos bounds deve ser (a,b), a < b') 
         self.free_adj_final = kwargs.get('free_adj_final', [])
 
-    def forward(self,t,x,u,params,h): 
+    def _forward(self,t,x,u,params,h): 
         '''A função realiza o processo forward que integra a equação de x' = g
         g: função (t,x,u) 
         u: controle do último passo. vetor de tamanho N + 1
@@ -54,7 +58,7 @@ class OptimalControl:
             x[i+1] = x[i] + (h/6)*(k1 + 2*k2 + 2*k3 + k4)
         return x 
 
-    def backward(self, t, x, u, lambda_, params,h): 
+    def _backward(self, t, x, u, lambda_, params,h): 
         '''A função realiza o processo backward que integra a equação de lambda' = -H_x
         dadj: função (t,x,u) com a derivada de lambda. 
         x: estado calculado. Vetor de tamanho N + 1.
@@ -73,12 +77,15 @@ class OptimalControl:
     def solve(self, x0, T, params, h = 1e-3, tol = 1e-4, bounds = None, theta_list = []): 
         '''
         Retorna o controle ótimo, o estado associado e a função adjunta. 
-        x0: valor inicial do estado 
-        T: tempo final da integração 
-        params: dicionário com os parâmetros do modelo e seus valores. 
-        h: passo no Runge-Kutta
-        tol: tolerância para o erro relativo. 
-        theta_list: valores finais da adjunta a ser estimados. 
+        - x0: valor inicial do estado 
+        - T: tempo final da integração 
+        - params: dicionário com os parâmetros do modelo e seus valores. 
+        - h: passo no Runge-Kutta
+        - tol: tolerância para o erro relativo. 
+        - bounds: se os limites são parametrizados, então devem ser passados
+          aqui. 
+        - theta_list: valores finais da adjunta a ser estimados. O seu uso deve
+            ser combinado com um algoritmo de encontrar raízes.  
         '''
         if bounds: 
             self.bounds = bounds
@@ -113,11 +120,11 @@ class OptimalControl:
             x_old = x.copy()
             lambda_old = lambda_.copy()
 
-            x = self.forward(t, x, u, params, h)    
+            x = self._forward(t, x, u, params, h)    
             # Condição de transversalidade.None
             lambda_[-1] = self.dphi(x, params)
             lambda_[-1][self.free_adj_final] = theta_list
-            lambda_ = self.backward(t, x, u, lambda_, params, h)
+            lambda_ = self._backward(t, x, u, lambda_, params, h)
 
             # Update u 
             for i, _ in enumerate(t): 
@@ -133,11 +140,11 @@ class OptimalControl:
         return t,x,u,lambda_
 
     def plotting(self,t,x,u,lambda_):
-        '''Função simples desenvolvida para plot. '''
+        '''Função simples desenvolvida para plot. É um procedimento padrão.'''
         variables = {'x': x, 'u': u, 'lambda': lambda_}
         names = {'x': 'Estado', 'u': 'Controle Ótimo', 'lambda': 'Função Adjunta'}
 
-        _, ax = plt.subplots(3,1,figsize = (15,15)) 
+        _, ax = plt.subplots(3,1,figsize = (10,12)) 
 
         for i, key in enumerate(variables):
             for k in range(np.shape(variables[key])[1]): 
