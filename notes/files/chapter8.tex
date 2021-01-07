@@ -1,10 +1,10 @@
 Muitos problemas reais de controle ótimo apresentam um controle limitado, dado
-que em geral o controle indica uma medida a ser tomada. Por exemplo, se o
-controle for a quantidade de um químico, no Laboratório 3 do Capítulo
-\ref{labs123}, não podemos adicionar uma quantidade negativa desse químico, o
-que nos leva a ter $u(t) \ge 0$ e também não temos componente infinito para o
-químico. Se tivermos pouco, por exemplo, talvez seja importante determinar que
-$u(t) \le C$. 
+que em geral o controle indica uma medida a ser tomada e ela possui limitações
+práticas. Por exemplo, se o controle for a quantidade de um químico, no
+Laboratório 3 do Capítulo \ref{labs123}, não podemos adicionar uma quantidade
+negativa desse químico, o que nos leva a restringir $u(t) \ge 0$ e também não
+temos uma quantidade infinita do químico disponível e talvez seja tão limitada
+que devemos impor $u(t) \le C$. 
 
 \section{Condições Necessárias} 
 
@@ -22,7 +22,6 @@ o funcional pode não ser zero no controle ótimo, dado que esse pode estar nos
 limites. Seja $x^{\e}(t)$ a variável do estado correspondente. Da mesma forma
 que fizemos no capítulo \ref{ch:1}, seja $\la(t)$ uma função diferenciável por
 partes e, assim 
-
 \begin{multline}
     \label{eq:8-1}
     J(u^{\e}) = \int_{t_0}^{t_1} \left[f(t,x^{\e}, u^{\e}) + \la(t)g(t,x^{\e}, u^{\e}) + x^{\e}\la '(t)\right]dt \\
@@ -43,12 +42,12 @@ Então \refeq{eq:8-1} e \refeq{eq:8-2} se reduzem a
 $$
 0 \ge \int_{t_0}^{t_1} (f_u + \la g_u)h dt,
 $$
-E essa desigualdade vale para todo $h$. Seja $s$ um ponto de continuidade tal
-que $a \le u^*(s) < b$. Suponha que $f_u + \la g_u > 0$ em $s$. Pela
-continuidade de $u^*$ em $s$, vale que $f_u + \la g_u$ é contínua em $s$ e,
-portanto, deve ser positiva em uma vizinhança do ponto. Podemos tomar esse
-intervalo menor para que tenhamos $u^* < b$. Seja $I$ esse o maior intervalo
-fechado com essas características e defina 
+E essa desigualdade vale para toda função $h$. Seja $s$ um ponto de
+continuidade tal que $a \le u^*(s) < b$. Suponha que $f_u + \la g_u > 0$ em
+$s$. Pela continuidade de $u^*$ em $s$, vale que $f_u + \la g_u$ é contínua em
+$s$ e, portanto, deve ser positiva em uma vizinhança do ponto. Podemos tomar esse
+intervalo menor para que tenhamos $u^* < b$. Seja $I$ o maior intervalo
+fechado com essas características e defina  
 $$
 M = \max\{u^*(t): t \in I\}
 $$
@@ -59,9 +58,9 @@ h(t) = \begin{cases}
     0,     &\text{se }t \not\in I
 \end{cases}
 $$
-Portanto $a \le u^* + \e h \ge b$ quando $\e \in [0,1]$. Mas
+Portanto $a \le u^* + \e h \le b$ quando $\e \in [0,1]$. Mas
 $$
-\int_{t_0}^{t_1} (f_u + \la g_u)h dt = \int_I (f_u + \la g_u)h dt > 0,
+\int_{t_0}^{t_1} (f_u + \la g_u)h dt = \int_I (f_u + \la g_u)(b-M) dt > 0,
 $$
 uma contradição. Portanto $f_u + \la g_u \le 0$. 
 
@@ -88,7 +87,7 @@ u^*(t) = b$. De \refeq{eq:8-4} e \refeq{eq:8-5}, vemos que $f_u + \la g_u < 0
 \implies u^*(t) = a$. E, por fim, se $f_u + \la g_u = 0 \implies a \le u^*(t)
 \le b$. Para os pontos em que $u^*$ não é contínua, não precisamos nos
 preocupar, pois não afetam o funcional objetivo. Portanto, temos que, dado o
-Hamiltoniano, 
+Hamiltoniano $H$, 
 \begin{gather*}
     x'(t) = \frac{\partial H}{\partial \la}, x(t_0) = x_0 \\ 
     \la '(t) = - \frac{\partial H}{\partial x}, \la(t_1) = \phi '(x(t_1)) \\
@@ -101,15 +100,14 @@ Hamiltoniano,
 
 Em um problema de minimização, as desigualdades da primeira e terceira linhas
 são revertidas. A condições de transversalidade são todas equivalentes ao caso
-não limitado. 
+não limitado, isto é, a dualidade do estado e adjunta é a mesma. 
 
 \section{Soluções Numéricas}
 
 Uma mudança no algoritmo é necessária para calcular a solução numérica.  As
 equações estado e adjunta não são alteradas, pois não dependem dos limites de
-$u^*$. Apenas a caracterização do controle é alterada.  Além disso, o chute
-inicial deve ser entre os limites do controle. As mudanças necessárias podem
-ser visualizadas na seção de exemplos. 
+$u^*$ e apenas a sua caracterização.  Além disso, o chute inicial deve ser
+entre os limites do controle. As mudanças necessárias podem ser visualizadas na seção de exemplos. 
 
 \section{Exemplos}
 
@@ -124,7 +122,7 @@ ser visualizadas na seção de exemplos.
 O Hamiltoniano é dado por $H = -u^2 + \la x + \la u$. A equação adjunta é
 dada por 
 $$
-\la '(t) = -H_x = - la \implies \la(t) = Ke^{-t}
+\la '(t) = -H_x = -\la \implies \la(t) = Ke^{-t}
 $$
 Como $\la(4) = \phi '(x^*(4)) = 1$, temos que $Ke^{-4} = 1 \implies K =
 e^4$. Assim $$\la(t) = e^{4 - t}.$$
@@ -180,7 +178,7 @@ $$
 $$
 H_u > 0 \implies u^*(t) = 0 \implies 0 < \la = k - t \implies t < k,
 $$
-Suponha $\la_0 = 1$.
+Considere $\la_0 = 1$.
 $$
 H_u = 0 \implies 0 \le u^*(t) = -\frac{\la}{2} = \frac{t-k}{2} \implies t \ge k
 $$
@@ -191,7 +189,7 @@ u^*(t) = \begin{cases}
     \frac{t-k}{2} &\text{ quando } k \le t \le 4
 \end{cases}
 $$
-Agora precisamos encontrar o valor de $k$. Para isso, precisamos utilizar as condições de estado inicial e de fronteira. Para isso, vou separar em três casos. 
+Agora precisamos encontrar o valor de $k$. Para isso, precisamos utilizar as condições de estado inicial e de fronteira. Considere os casos: 
 
 \begin{enumerate}[label=\textbf{Caso \arabic*:}]
     \item $k \le 0$. Assim $x'(t) = u = \frac{t - k}{2} \implies x(t) = \frac{t^2}{4} - \frac{kt}{2} + c$, tal que $c=0$ e $x(4) = 4 - 2k = 1 \implies k = 3/2$, um absurdo. 
