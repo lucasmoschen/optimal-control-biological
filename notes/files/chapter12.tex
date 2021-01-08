@@ -1,15 +1,15 @@
 Até agora nos preocupamos apenas com problemas com uma variável de estado e
 uma variável de controle. Nesse capítulo vamos estudar as condições
-necessárias para um problema com mais de uma variável de cada tipo. 
+necessárias para um problema com mais de uma variável de cada tipo, dado que
+em problemas reais, vários objetos interagem entre si. 
 
-\section{Condições Necessárias}
+\section{Condições necessárias}
 
 Faremos uma extensão natural dos problemas desenvolvidos até então. Seja o
 problema com $n$ variáveis de estado, $m$ variáveis de controle e uma função
 \textit{payoff} $\phi$. 
-
 $$
-max_{u_1,...,u_m} \int_{t_0}^{t_1} f(t,x_1(t),...,x_n(t),u_1(t),...,u_m(t)) dt + \phi(x_1(t_1),...,x_n(t_1))
+\max_{u_1,...,u_m} \int_{t_0}^{t_1} f(t,x_1(t),...,x_n(t),u_1(t),...,u_m(t)) dt + \phi(x_1(t_1),...,x_n(t_1))
 $$
 $$
 \text{sujeito a   }x_i'(t) = g_i(t,x_1(t),...,x_n(t),u_1(t),...,u_m(t))
@@ -17,13 +17,13 @@ $$
 $$
 x_i(t_0) = x_{i0} \text{ para }i=1,2,...,n
 $$
-onde as função $f$ e $g_i$ são continuamente diferenciáveis em cada variável.
+onde as funções $f$ e $g_i$ são continuamente diferenciáveis em cada variável.
 Em notação vetorial, seja $\vec{x}(t), \vec{u}(t), \vec{g}(t,\vec{x},\vec{u})
-\text{ e } \vec{x_0}$ os vetores, respectivamente, do estado, do controle, das
-funções derivada do estado e da condição inicial. Podemos escrever o problema,
+\text{ e } \vec{x}_0$ os vetores, respectivamente, do estado, do controle, das
+funções derivada dos estados e da condição inicial. Podemos escrever o problema,
 portanto, como 
 $$
-max_{\vec{u}} \int_{t_0}^{t_1} f(t,\vec{x}(t),\vec{u}(t)) dt + \phi(\vec{x}(t_1))
+\max_{\vec{u}} \int_{t_0}^{t_1} f(t,\vec{x}(t),\vec{u}(t)) dt + \phi(\vec{x}(t_1))
 $$
 $$
 \text{sujeito a   }\vec{x}'(t) = \vec{g}(t,\vec{x}(t), \vec{u}(t)), \vec{x}(t_0) = \vec{x}_{0} 
@@ -36,8 +36,7 @@ com funções diferenciáveis por partes, que serão as funções adjuntas. Defi
 Hamiltoniano
 $$H(t,\vec{x},\vec{u},\vec{\la}) = f(t,\vec{x},\vec{u}) + \vec{\la}(t)\cdot
 \vec{g}(t,\vec{x},\vec{u}),$$
-
-onde $\cdot$ é o produto escalar de vetores. Pelo mesmo argumento apresentado
+onde $(\cdot)$ é o produto escalar de vetores. Pelo mesmo argumento apresentado
 no capítulo \ref{ch:1}, encontramos que $\vec{u}^*$ maximiza a função $\vec{u}
 \mapsto H(t, \vec{x}^*, \vec{u}, \vec{\lambda})$ e satisfaz 
 $$
@@ -50,10 +49,11 @@ $$
 0 = \frac{\partial H}{\partial u_k} \text{ em }u^*_k \text{ para }k=1,...,m
 $$
 
-Modificações nesse problema repercutem no caso multivariado, com extensões
-similares. A dualidade entre $x_i$ e $\lambda_i \text{ para }i=1,...,n$ é
-ainda observada e quando impomos limites sobre os controles, para cada
-controle, as condições de otimalidade são idênticas ao caso unidimensional. 
+Modificações nesse problema, como, por exemplo, imposição de limites inferior
+e superior no controle, ou imposição do valor final para o estado, repercutem
+no caso multivariado, com extensões similares. A dualidade entre $x_i$ e
+$\lambda_i \text{ para }i=1,...,n$ ainda é observada. Nesse caso, as condições
+unidimensionais são calculadas para cada componente dos vetores. 
 
 \begin{example}
     \begin{gather*}
@@ -71,21 +71,26 @@ $$
 As equações adjuntas são dadas por 
 \begin{align*}
     &\la_1 '(t) = -\frac{\partial H}{\partial x_1} = 0 \implies \la_1(t) \equiv C \\
-    &\la_2 '(t) = -\frac{\partial H}{\partial x_2} = - 1 - \la_1 \implies \la_2(t) = -(1 + C)t + D,  \\ 
-    &\text{como } \la_2(1) = 0 \implies D = 1 + C \implies \la_2(t) = -(1 + C)(t-1)
+    &\la_2 '(t) = -\frac{\partial H}{\partial x_2} = - 1 - \la_1 \implies \la_2(t) = -(1 + C)t + D.
 \end{align*}
+
+As condições de transversalidade serão as seguintes: para a primeira variável,
+elas serão livres, enquanto para a segunda variável, teremos 
+$$\la_2(1) = 0 \implies D = 1 + C \implies \la_2(t) = -(1 + C)(t-1).$$ 
 
 Usando as condições de otimalidade, obtemos 
 $$
 H_u = 2u + \la_2 
 $$
+
+Lembrando que o problema é de minimização,
 \begin{gather*}
     H_u > 0 \implies u^*(t) = a \implies -\frac{1}{2}\la_2 < a \\
     H_u < 0 \implies u^*(t) = b \implies -\frac{1}{2}\la_2 > b \\
     H_u = 0  \implies a \le u^*(t) =  -\frac{1}{2}\la_2(t) \le b 
 \end{gather*}
 
-Portanto, 
+Usando o fato de que $-\frac{1}{2}\la_2(t) = \frac{1+C}{2}(t-1)$
 
 $$
 u^*(t) = \begin{cases}
@@ -95,14 +100,17 @@ u^*(t) = \begin{cases}
 \end{cases}
 $$
 
-Para encontrar o calor de $C$, algumas contas complicadas precisam ser feitas
-e não o são não no texto. Precisa-se integrar a equação $x_2 ' = u$,
-assegurando a continuidade de $x_2$ e considerando a sua condição inicial.
-Após integramos a equação $x_1 ' = x_2$ e usamos as condições de continuidade
-em $x_1$, inicial e final. 
+Para encontrar o valor da constante $C$, algumas complicações com a relação às
+contas são necessárias e, por esse motivo, não constam no texto. O que precisa
+ser feito é o seguinte: primeiro integramos a equação $x_2 ' = u$, 
+assegurando a continuidade de $x_2$ nos pontos $t = \frac{2}{1 + C} a + 1
+\text{ e } t = \frac{2}{1 + C} b + 1$ e considerando a sua condição inicial
+$x_2(0) = 0$; depois integramos a equação $x_1 ' = x_2$ e usamos as condições
+de continuidade nos mesmos pontos em $x_1$ e, por fim, as condições de
+contorno $x_1(0) = 0, x_1(1) = 1$.
 
 
-\section{Problemas de Regulador Linear Quadrático}
+\section{Problemas de regulador linear quadrático}
 
 Nessa seção será desenvolvido um caso especial de sistemas de controle ótimo,
 em que as equações diferenciais são lineares em $x$ e $u$ e o funcional
@@ -111,19 +119,21 @@ $$
 J(u) := \frac{1}{2}[x^T(T)Mx(t) + \int_0^T x^T(t)Q(t)x(t) + u^TR(t)u(t) dt]
 $$
 $$
-x'(t) = A(t)x(t) + B(t)u(t)
+x'(t) = A(t)x(t) + B(t)u(t), x(0) = x_0
 $$
-
-onde $x \in \mathbb{R}n, u \in \mathbb{R}^m, A(t) \in \mathbb{R}^{n \times n}$
+onde $x \in \mathbb{R}^n, u \in \mathbb{R}^m, A(t) \in \mathbb{R}^{n \times n}$
 e $B(t) \in \mathbb{R}^{n\times m}$. Além disso $M, Q(t)$ são positivas
 semidefinidas e $R(t)$ é positiva definida para garantir invertibilidade, para
-todo $t$ em $[0,T]$. As três matrizes são simétricas. Observe que isso garante a
+todo $t$ em $[0,T]$. As três matrizes são simétricas, a fim de garantir a 
 diagonalização. O Hamiltoniano é, portanto, 
 $$H = \frac{1}{2}x^TQx + \frac{1}{2}u^TRu + \la^T(Ax + Bu).$$
 
-Derivação de expressões matriciais é uma ferramenta poderosa, pois simplifica
-a notação, mas é importante que se conheça o processo. A simetria das matrizes
-é utilizada nesse passo. A equação de otimalidade é dada por 
+A operação de derivação de expressões matriciais é uma ferramenta poderosa,
+pois simplifica a notação do problema e, por isso será utilizada aqui.
+Todavia, é importante que se conheça o processo da diferenciação. A simetria
+das matrizes é utilizada nesse passo. 
+
+A equação de otimalidade é dada por 
 $$
 H_u = Ru + B^T\lambda = 0 \implies u^* = - R^{-1}B^T\la,
 $$
@@ -136,10 +146,9 @@ Para resolvermos esse problema, utilizaremos o método \textit{sweep}. Para
 isso, vamos encontrar uma matriz $S(t)$ de forma que $\la(t) = S(t)x(t)$.
 Assim 
 $$
-\la '(t) = S'(t)x(t) + S(t)(Ax + Bu) = -Qx -A^T(Sx)
+\la ' = S'x + Sx' = S'x + S(Ax + Bu) = -Qx -A^T(Sx)
 $$
-Obtemos, portanto, utilizando a condição de otimalidade, 
-
+Utilizando a condição de otimalidade, 
 \begin{equation*}
     \begin{split}
         -S'x &= Qx + A^TSx + SAx - SBR^{-1}B^TSx \\
@@ -173,19 +182,34 @@ $$
 S(t) = \frac{1 - e^{2(t-T)}}{1 + e^{2(t-T)}}
 $$
 
-Temos que $u^*(t) = - R^{-1}B^TSx = -Sx$ e $x'(t) = -Sx$, e 
-$$x^*(t) = x_0e^{-\int S dt}$$
+Temos que $u^*(t) = - R^{-1}B^TSx = -Sx$ e precisamos, portanto, encontrar o
+valor de $x$ primeiro. Através da equação diferencial $x'(t) = -Sx$, 
+$$x^*(t) = e^{-\int S dt}$$
 
-\hl{Exemplo carece de revis\~ao.}
+$$
+\int  \frac{1 - e^{2(t-T)}}{1 + e^{2(t-T)}}dt = t - \log(e^{2(t-T)} + 1) + K'
+$$
+tal que $x_0 = x^*(0) = e^{\log(e^{-2T} + 1)}K, K = e^{-K'} \implies K =
+\frac{x_0}{e^{-2T} + 1}$. 
 
-\section{Equações Diferenciais de Ordem mais Alta}
+Portanto, 
+$$
+x^*(t) = \frac{x_0}{e^{-2T} + 1}e^{\log(e^{2(t-T)} + 1) - t}
+$$
+$$
+u^*(t) = -\frac{1 - e^{2(t-T)}}{1 + e^{2(t-T)}}\frac{x_0}{e^{-2T} + 1}e^{\log(e^{2(t-T)} + 1) - t}
+$$
 
-Quando temos uma equação diferencial de ordem mais alta relacionada ao estado,
+
+\section{Equações diferenciais de ordem mais alta}
+
+Quando temos uma equação diferencial de ordem mais alta - quando aparecem
+$x^{(k)}, k > 1$ - relacionada ao estado,
 podemos definir um sistema de equações diferenciais, de forma que $x_1(t) = x(t), x_2(t) = x'(t), ...,
 x_{n+1}(t) = x^{(n)}(t)$. A partir dessa transformação, podemos resolver o
-problem com o Princípio Máximo de Pontryagin. 
+problema com o Princípio Máximo de Pontryagin. 
 
-\section{Restrições Isoperimétricas}
+\section{Restrições isoperimétricas}
 
 Ao invés de tomar limites inferior e superior com relação ao controle, podemos
 restringir a integral sobre uma função do controle, assim, podemos ter o
@@ -214,11 +238,7 @@ e, portanto,
 
 A partir disso, podemos resolver através do método estudado até então. 
 
-\begin{example}
-    \hl{Inserir exemplo.}
-\end{example}
-
-\section{Soluções Numéricas}
+\section{Soluções numéricas}
 
 O método para resolver esses sistemas numericamente é basicamente o mesmo.
 Primeiro, fazemos um chute inicial para cada controle. Depois resolvemos
