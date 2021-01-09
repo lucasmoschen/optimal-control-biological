@@ -1,9 +1,9 @@
 Em alguns problemas reais, não temos um tempo fixo para procurar um controle
 ótimo, mas também queremos encontrar o tempo ótimo que devemos permanecer com
-o tratamento. Precisamos refazer as condições necessárias, dada que temos mais
-variáveis desconhecidas.  
+ele, como, por exemplo, o tempo para um tratamento. Precisamos refazer as
+condições necessárias, dada que temos mais variáveis desconhecidas.  
 
-\section{Condições Necessárias}
+\section{Condições necessárias}
 
 Sejam $f$ e $g$ funções continuamente diferenciáveis e considere o problema 
 
@@ -14,9 +14,9 @@ $$
 \text{sujeito a   }x'(t) = g(t, x(t), u(t)), x(t_0) = x_0.
 $$
 
-Seja $(u^*, T*)$ um par ótimo, de forma que $u^*$ esteja definida em $[t_0,
+Seja $(u^*, T^*)$ um par ótimo, de forma que $u^*$ esteja definida em $[t_0,
 T^*]$ e $J(u, T) \le J(u^*, T^*) < \infty$, para todos os controles $u$ e
-tempos $T$. Seja $x^*$ o estado correspondente. Seja $h$ uma função contínua
+tempos $T$. Seja $x^*$ o estado correspondente. Tome $h$ uma função contínua
 por partes e $\e \in \mathbb{R}$, de forma que $u^{\e}(t) = u^*(t) + \e h(t)$
 é um controle. Assim 
 \begin{equation*}
@@ -26,7 +26,7 @@ Pelo mesmo argumento dos Capítulo \ref{ch:1} e \ref{ch:3}, temos que
 \begin{gather*}
     0 = H_u \text{ em } u^* \\
     \la ' = - H_x = -f_x - \la g_x \\
-    \la(T^*) - \phi_x(T^*, x(T^*)),
+    \la(T^*) = \phi_x(T^*, x(T^*)),
 \end{gather*}
 Mas isso não nos dá informação sobre $T^*$. Por isso, seja $\delta \le t_0 -
 T^*$, tal que $T^* + \delta$ seja um tempo admissível. Primeiro, assuma que
@@ -35,8 +35,8 @@ se necessário. Então, seja $u^*(t) = u^*(T), t > T^*$. Portanto,
 \begin{equation*}
     0 = \lim_{\e \to 0} \frac{J(u^*, T^* + \delta) - J(u^*, T^*)}{\delta}.
 \end{equation*}
-equivalentemente, dado que $u^*$ é contínua em $T^*$ e $x^*$ é diferenciável,
-usando o Teorema Fundamental do Cálculo e a regra do produto, temos que, 
+Equivalentemente, dado que $u^*$ é contínua em $T^*$ e $x^*$ é diferenciável,
+usamos o Teorema Fundamental do Cálculo e a regra do produto para obter
 \begin{equation*}
     \begin{split}
         0 &= \lim_{\delta \to 0} \frac{1}{\delta}\int_{T^*}^{T^* + \delta} f(t, x^*, u^*) dt \\ 
@@ -53,12 +53,13 @@ controle. O que não fica claro, observando as contas já feitas no Capítulo
 \ref{ch:3}, é como esse problema é afetado quando os pontos inicial e final
 são fixados. De fato, as mesmas condições necessárias aparecem. 
 
-\section{Controle Ótimo Temporal}
+\section{Controle ótimo temporal}
 
 A ideia é a seguinte: mover as variáveis de estado de uma posição inicial para
 uma posição final específica em um período mínimo de tempo. Como isso parece
-se relacionar com nosso problema? Note que $T = \int_0^T 1 dt$. Então, podemos
-reformular como 
+se relacionar com nosso problema? 
+
+Note que $T = \int_0^T 1 dt$. Então, podemos reformular o problema como 
 \begin{gather*}
     \min_{u,T} \int_0^T 1 dt, \\ 
     \text{sujeito a   }x'(t) = g(t, x(t), u(t)), x(0) = x_0, x(T) = x_1, \\

@@ -1,11 +1,10 @@
 Nesse capítulo vamos considerar problemas em que o Hamiltoniano é linear em
-$u$ e, portanto $H_u = 0$ não poderá ser resolvido para $u$. A solução ótima
-envolve em geral descontinuidades em $u^*$.  
+$u$ e, portanto, não podemos obter uma caracterização para $u$ através de $H_u
+= 0$. Em geral, a solução ótima envolve descontinuidades em $u^*$.  
 
 \section{Controles Bang-Bang}
 
 Considere o problema de controle ótimo.
-
 \begin{gather*}
     \max_u \int_{t_0}^{t_1} f_1(t,x) + u(t)f_2(t,x) dt \\ 
     \text{sujeito a  }x'(t) = g_1(t,x) + u(t)g_2(t,x), x(0) = x_0 \\
@@ -13,15 +12,14 @@ Considere o problema de controle ótimo.
 \end{gather*}
 
 Podemos escrever o Hamiltoniano como 
-
-$$H(t,x,u,\la) = f_1(t,x) + \la g_1(t,x) + u(t)(f_2(t,x) + \la g_2(t,x)).$$
+$$H(t,x,u,\la) = f_1(t,x) + \la(t) g_1(t,x) + u(t)(f_2(t,x) + \la(t) g_2(t,x)).$$
 
 A condição de otimalidade dada por
 $$
 \frac{\partial H}{\partial u} = f_2(t,x) + \la(t)g_2(t,x), 
 $$
-não carrega informação sobre $u(t)$. Assim definimos $\psi(t) := f_2(t,x(t)) +
-\la(t)g_2(t,x(t))$, muitas vezes chamada de função de troca.  A caracterização
+não carrega informação sobre $u(t)$. Assim definimos 
+$$\psi(t) := f_2(t,x(t)) + \la(t)g_2(t,x(t)),$$ muitas vezes chamada de \textit{função de troca}.  A caracterização
 de $u^*$ é 
 $$
 u^*(t) = \begin{cases} 
@@ -31,13 +29,13 @@ u^*(t) = \begin{cases}
 \end{cases}
 $$
 Se $\psi = 0$ não pode ser mantido em um intervalo de tempo, mas ocorre apenas
-em pontos finitos, o controle é dito \textbf{Bang Bang}, porque só varia entre
-os valores mínimo e máximo de $u(t)$. Os valores de $u(t)$ nesses pontos não
-são de interesse, portanto. Se $\psi(t) \equiv 0$ em um intervalo de tempo,
-dizemos que $u^*$ é \textbf{singular} nesse intervalo. Esse caso será explorado na próxima sessão. 
+em uma quantidade finita de pontos, o controle é dito \textbf{Bang Bang},
+porque só varia entre os valores mínimo e máximo de $u(t)$, bastando obter os
+pontos de troca. Os valores de $u(t)$ nesses pontos não são de interesse,
+portanto. Se $\psi(t) \equiv 0$ em um intervalo de tempo, dizemos que $u^*$ é \textbf{singular} nesse intervalo. Esse caso será explorado na próxima sessão. 
 
 O método \textit{forward-backward sweep} pode ser empregado nesse caso.
-Primeiro precisamos provar que o problema é de fato bang-bang, isto é $\phi =
+Primeiro precisamos provar que o problema é de fato bang-bang, isto é $\psi =
 0$ não ocorre em um intervalo.  Caso isso seja verdadeiro, basta
 fazermos, em código \textit{Python}, 
 
@@ -68,10 +66,10 @@ $$
 \psi(t) = H_u = -e^t + \la(t)x(t)
 $$
 
-Suponha que $\phi \equiv 0$ em um intervalo $I \subset (0,2)$. Portanto,
-diferenciando, 
+Suponha que $\psi \equiv 0$ em um intervalo $I \subset (0,2)$. Portanto,
+diferenciando a expressão $e^t = \la(t)x(t)$, 
 $$
-e^t = \la x \implies e^t = \la '(t)x(t) + \la(t) x'(t) = -\la(t)u(t)x(t) + \la(t)u(t)x(t) = 0,
+e^t = \la '(t)x(t) + \la(t) x'(t) = -\la(t)u(t)x(t) + \la(t)u(t)x(t) = 0,
 $$
 o que é impossível. Portanto provamos que o problema é bang-bang. 
 $$
@@ -91,14 +89,14 @@ $$
 \psi(t) = -e^t < 0 \implies u^* \equiv 0 \text{ e }x^* \equiv 1
 $$
 
-\section{Controles Singulares}
+\section{Controles singulares}
 
-Consideremos dois exemplos simples para motivar o tópico. 
+Consideramos dois exemplos simples para motivar o tópico. 
 
 \begin{example}
     \begin{gather*}
-        \max_u \int_0^2 (x(t) - t^2)^2 dt
-        \text{sujeito a  }x'(t) = u(t), x(0) = 1
+        \max_u \int_0^2 (x(t) - t^2)^2 dt \\
+        \text{sujeito a  }x'(t) = u(t), x(0) = 1 \\
         0 \leq u(t) \leq 4
     \end{gather*}
 \end{example}
@@ -111,9 +109,9 @@ $$
 \la '(t) = -H_x = -2(x - t^2), \la(2) = 0
 $$
 $$
-\phi(t) = H_u = \la(t)
+\psi(t) = H_u = \la(t)
 $$
-Se $\phi \equiv 0$ em algum intervalo, então 
+Se $\psi \equiv 0$ em algum intervalo, então 
 $$
 0 \equiv \la '(t) = -2(x - t^2) \equiv x(t) =  t^2,
 $$
@@ -129,8 +127,8 @@ $$
 
 Vamos provar que $x^*(t) \ge t^2$ no intervalo $[0,2]$ na Proposição
 \ref{prop1}. Com isso demonstrado, temos que $\la ' \le 0$ em $[0,2]$. Como
-$\la(2) = 0$, devemos ter que $\la \ge 0$ em $[0,2]$. Portanto existe $k \in
-[0,2]$ tal que $\la > 0$ em $[0,k)$ e $\la = 0$ em $[k,2]$. 
+$\la(2) = 0$, devemos ter que $\la \ge 0$ em $[0,2]$, pois a função decresce
+até $0$. Portanto existe $k \in [0,2]$ tal que $\la > 0$ em $[0,k)$ e $\la = 0$ em $[k,2]$. 
 
 Suponha que $k = 0$. Então $\la \equiv \la ' \equiv 0$. Mas $x^*(0) > 0^2$,
 então $\la '(0) < 0$, contradição. 
@@ -162,13 +160,13 @@ $$
 \begin{proof}
     Suponha que $x(t) < t^2$ para algum $t$. Como $x(t) > t^2$ em $t=0$,
     existe $t_0 \in (0,2)$ tal que $x(t_0) \le t_0^2$ e $u(t_0) = x'(t_0) <
-    2t_0$. Portanto $u(t_0) = 0$ e $\la(t_0) > 0$. 
+    2t_0 < 4$. Portanto $u(t_0) = 0$ e $\la(t_0) > 0$. 
 
     Seja $t_1 := \inf\{t: \la(t) = 0, t \in (t_0, 2]\}$. Como esse conjunto é
-    fechado (tome uma sequência nele e veja que o limite dela precisa estar
-    nala), o valor de $t_1$ pertence a ele, isto é, $\la(t_1) = 0, t_1 > t_0$.
-    Portanto $\la(t) > 0$ em $[t_0, t_1)$. Portanto $u^*(t) = 0, t \in [t_0,
-    t_1)$. Assim $x^(t) = x^*(t_0), t \in [t_0, t_1)$. Como $x^*(t_0) \le
+    fechado (tome uma sequência convergente nele e veja que o limite precisa estar
+    nele também), o valor de $t_1$ pertence a ele, isto é, $\la(t_1) = 0, t_1 > t_0$.
+    Portanto $\la(t) > 0$ e $u^*(t) = 0$ quando $t \in [t_0,
+    t_1)$. Assim $x^*(t) = x^*(t_0), t \in [t_0, t_1)$. Como $x^*(t_0) \le
     t_0^2$, então $x^*(t) \le t^2$. Pela equação adjunta, $\la '(t) \ge 0$ em
     $[t_0, t_1)$. Mas se $\la(t_0) > 0$, $\la(t_1) = 0$ é impossível. Com essa
     contradição concluímos que $x^*(t) \ge t^2, t \in [0,2]$.   
@@ -178,7 +176,7 @@ Se não fôssemos capazes de encontrar os intervalos onde $u$ é definido,
 precisaríamos utilizar um método numérico sobre \refeq{eq1:u-star}. Porém,
 numericamente, não é possível obter $\la = 0$. Para isso, poderíamos
 considerar que $u^*(t) = 2t$ quanto $|\la| < \e = 0.00001$, por exemplo.
-Entretanto, problemas singulares tendem a ser instáveis de forma geral. 
+Entretanto, problemas singulares tendem a ser instáveis. 
 
 Pesquisadores a partir de comportamentos de controles ótimos singulares,
 desenvolveram condições necessárias adicionais. A mais notável é a condição
@@ -186,9 +184,9 @@ generalizada de Legendre-Clebsh (\cite{Tsypkin1970AppliedOC}, \cite{Grossmann198
 envolve derivadas de ordem mais alta do Hamiltoniano. 
 
 \begin{example}
-    Reservar marinhas proibidas são tema de discussão entre aqueles que
+    Reservas marinhas proibidas são tema de discussão entre aqueles que
     enfatizam os benefícios de conservação e aqueles que enfatizam a redução
-    da produção pesqueira. Neubert investigou o papel dessas reservas para
+    da produção pesqueira. \cite{neubert2003} investigou o papel dessas reservas para
     maximar o rendimento segundo uma estratégia de caça. 
 
     A equação diferencial parcial da densidade de estoque relativa a
