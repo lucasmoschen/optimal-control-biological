@@ -1,11 +1,18 @@
-Esse método pode lidar com problemas mais complicados de controle ótimo. Esse
-capítulo tem associado o notebook \texttt{Chapter21-examples.ipynb}. 
+Até o momento estudamos o método numérico \textit{Forward-Backward Sweep} para
+lidar com os problemas e as aplicações. Entretanto, nem todos os problemas
+podem ser realizados utilizando esse algoritmo, como, por exemplo, problemas
+sem a condição final da função adjunta. Por esse motivo, o método apresentado
+nesse capítulo foi construído para lidar com problemas mais complicados de
+controle ótimo. Os exemplos são desenvolvidos no notebook associado com nome \texttt{Chapter21-examples.ipynb}. 
 
-\section{Método da Secante}
+\section{Método da secante}
 
-Um algoritmo de análise numérica para encontrar as raízes de uma função
-contínua $f$ em $[a,b]$ de forma que exista uma raíz no intervalo. Sejam os
-pontos $x_0, x_1 \in [a,b]$ de forma que $f(x_0)f(x_1) < 0$. Considere a reta
+Antes de desenvolver a adaptação, apresentamos um breve resumo de um algoritmo
+de análise numérica para encontrar as raízes de uma função 
+contínua $f$ em $[a,b]$ quando alguma existir. Sejam os
+pontos $x_0, x_1 \in [a,b]$ de forma que $f(x_0)\cdot f(x_1) < 0$ (essa
+condição associada ao Teorema do Valor Intermediário garante existência de
+raíz em $(x_0, x_1)$). Considere a reta
 que passa pelos pontos $(x_0, f(x_0))$ e $(x_1, f(x_1))$. A sua equação é dada
 por 
 $$
@@ -22,7 +29,7 @@ $$
 A convergência é dada quando $x_0$ e $x_1$ são suficientemente próximas da
 raíz, $f$ seja de classe $C^2$ e a raíz seja simples. 
 
-\section{Um Estado com Pontos Finais Fixos}
+\section{Um estado com pontos finais fixos}
 
 Considere o problema de controle ótimo 
 
@@ -33,37 +40,40 @@ Considere o problema de controle ótimo
     a_j \le u_j(t) \le b_j \text{ para }j = 1,2,...,m.
 \end{gather*}
 
-Observe que $x_n$ é o único estado com os pontos inicial e final fixos. Nossos
-métodos numéricos não podem lidar com esse problema e por isso, precisamos
-desenvolver uma maneira. Suponha que fazemos um chute $\la_n(t_1) = \theta$.
-resolvemos o problema com essa condição. Assumindo convergência, vamos obter
-uma aproximação $\tilde{x}_{n1}$. Podemos considerar $\theta \mapsto
-\tilde{x}_{n1}$ e, assim, nosso problema se torna em encontrar $\theta$ que
+Observe que $x_n$ (n-ésima coordenada de $\vec{x}$) é o único estado com os pontos inicial e final fixos. O
+método numérico não pode lidar com esse problema e por isso, precisamos
+desenvolver uma maneira alternativa. Fazemos um chute $\la_n(t_1) = \theta$ e
+resolvemos o problema com essa condição, descartando a condição final de $x_n$. Assumindo convergência, vamos obter
+uma aproximação para $x_n(t_1)$, escrita como $\tilde{x}_{n1}$. Podemos
+considerar, portanto, um mapa $\theta \mapsto \tilde{x}_{n1}$ e, assim, nosso problema se torna em encontrar $\theta$ que
 nos leve a $x_{n1}$. Assim, defina 
 $$
 V(\theta) = \tilde{x}_{n1} - x_{n1} 
 $$
-Estamos procurando os zeros de $V$. Assim, adaptaremos o código
+Estamos procurando os zeros de $V$. Então, adaptaremos o código
 \textit{forward-backward sweep} com o código do método da secante. 
 
-Esse método é baseado é baseado em duas hipóteses críticas: \textit{forward
+Esse método é baseado em duas hipóteses críticas: \textit{forward
 backward sweep} converge para os valores de $\theta$ e $V$ é uma função bem
 definida. Para problemas bem comportados, em geral, ambos são verdadeiros. A
-escolha de $x_0$ e $x_1$ também podem ser mais ou menos importantes dependendo
+escolha de $x_0$ e $x_1$ também podem ser mais ou menos importante dependendo
 do problema. 
 
-\section{Termos de Payoff não Lineares}
+Como dito anteriormente, o exemplo dessa seção pode ser encontrada no
+notebook. 
+
+\section{Termos de payoff não lineares}
 
 Uma alteração sutil do método acima pode ser usado para resolver problemas de
 controle ótimo com termos \textit{payoff} não lineares. Considere o problema 
 \begin{gather*}
-    \max_{\vec{u}} \phi(x_n(t_1)) \int_{t_0}^{t_1} f(t, \vec{x}(t), \vec{u}(t)) dt \\ 
+    \max_{\vec{u}} \phi(x_n(t_1)) + \int_{t_0}^{t_1} f(t, \vec{x}(t), \vec{u}(t)) dt \\ 
     \text{sujeito a   }\vec{x}'(t) = \vec{g}(t, \vec{x}(t), \vec{u}(t)),  
     \vec{x}(t_0) = \vec{x}_0,  \\
     a_j \le u_j(t) \le b_j \text{ para }j = 1,2,...,m.
 \end{gather*}
 Se $\phi$ é linear, isto é, $\phi ' \equiv c$, o método anterior pode ser
-usado. Entretanto, para outras funções $\phi$, $\la_n(t_1)$ dependerá de
+usado, como já vimos no Laboratório 3, Capítulo \ref{labs123}. Entretanto, para outras funções $\phi$, $\la_n(t_1)$ dependerá de
 $x_n^*(t_1)$. Nesses casos, o método \textit{forward-backward sweep} não pode
 ser usado, mas a versão adaptada pode.  
 
@@ -74,9 +84,9 @@ estado em $t_1$, escrito $\tilde{x}_{n1}$. Queremos que $\phi
 $$
 V(\theta) = \phi '(\tilde{x}_{n1}) - \theta
 $$
-Então o problema se torna encontrar as raízes da função $V$. 
+e o problema se torna encontrar as raízes da função $V$. 
 
-\section{Tempo Final Livre}
+\section{Tempo final livre}
 
 Por fim, vamos aplicar o método para problemas não autônomos que tem tempo
 final livre. Considere o problema 
@@ -89,14 +99,14 @@ final livre. Considere o problema
 \end{gather*}
 
 Agora, façamos um chute para $T^* = \theta > t_0$. Resolvemos novamente o
-problema com esse valor de $T*$ e calculamos a estimativa do Hamiltoniano no
-tempo final, que podemos denotar por $\tilde{H}(\theta)$. Se considerarmos a
-função $V(\theta) = \tilde{H}(\theta)$. Como queremos que $H(T^*) = 0$,
-podemos usar o método secante para procurar os zeros de $V$. Note que o
-problema deve ser não autônomo, pois, se não o fosse, o Hamiltoniano seria 0
-para todo $t$. 
+problema com esse valor de $T^*$ e calculamos a estimativa do Hamiltoniano no
+tempo final, que podemos denotar por $\tilde{H}(\theta)$. Como queremos que
+$H(T^*) = 0$, basta considerarmos a função $V(\theta) = \tilde{H}(\theta)$. 
+Podemos usar o método da secante para procurar os zeros de $V$. Se o problema
+for autônomo, lembre que o Hamiltoniano deve ser constante ao longo do caminho
+ótimo e como $H(T^*) = 0$, ele deverá ser $0$ em todo o percurso. 
 
-\section{Shots Múltiplos}
+\section{Shots múltiplos}
 
 Até o momento, utilizamos o método adaptado para problemas com
 particularidades individuais, mas não expandimos para combinações delas. Isso
@@ -104,11 +114,12 @@ pode ser feito empregando o método várias vezes, ou fazendo o que chamamos de
 \textit{shots múltiplos}. 
 
 Quando temos um problema com duas dessas restrições até então
-mencionadas, nós colocamos de lado uma delas e faz um chute apropriado. Assim,
+mencionadas, nós colocamos de lado uma delas e fazemos um chute apropriado. Assim,
 reduzimos o problema para apenas uma restrição e resolvemos como fizemos até
-então. Assim conseguimos, utilizando duas vezes o método, resolver o problema.
+então, isto é, utilizando duas vezes o método, conseguimos resolver o problema.
 Tendo três elementos, podemos reduzir para dois elementos e assim por diante.
-Dessa forma, conseguimos resolver problemas desse tipo. Como forma de exemplo,
+Dessa forma, conseguimos resolver problemas desse tipo, mas claramente esses
+problemas tornam-se cada vez mais custoso. Como forma de exemplo,
 vamos analisar um problema com dois estados, ambos com pontos finais fixados.
 Considere 
 
@@ -141,6 +152,6 @@ Ponha $\la_1(t_1) = \theta_1$ e ignore $x_1(t_1) = x_{11}$. Então teremos
 Com o sistema acima, podemos resolver o problema com o método estudado no
 capítulo. Até encontrarmos $\theta_2$ de forma que $x_2(t_1) = x_{21}$.
 Fazemos isso para vários valores de $\theta_1$. Para cada valor de $\theta_1$,
-obtemos uma estimativa para $x_1(t_1)$. Assim, encontramos, através de um
-método para encontrar raízes, encontramos $\theta_1$ de forma que $x_1(t_1) =
+obtemos uma estimativa para $x_1(t_1)$. Assim, através de um
+método para encontrar raízes, calculamos $\theta_1$ de forma que $x_1(t_1) =
 x_{11}$. 
