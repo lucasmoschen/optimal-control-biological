@@ -78,15 +78,15 @@ One will need these frameworks to use see the project.
 
 ### Notebooks 
 
-After having the frameworks and python packages, it's necessary to open `jupyter lab` or `jupyter notebook`. In the `notebooks` folder, one can look at the Laboratories. Each laboratory is self contained, if the theory is well kwown. The first notebook explains the algorithm forward-backward sweep. 
+After having the frameworks and python packages, it's necessary to open `jupyter lab` or `jupyter notebook`. In the `notebooks` folder, one can look at the Laboratories. Each laboratory is self contained, if the theory is well known. The first notebook explains the algorithm forward-backward sweep. 
 
-- Laboratoty 1: Introductory example; 
+- Laboratory 1: Introductory example; 
 - Laboratory 2: Mold and fungicide;
 - Laboratory 3: Bacteria; 
 - Laboratory 4: Limited case; 
 - Laboratory 5: Cancer and treatment; 
 - Laboratory 6: Fish harvesting; 
-- Laboratory 7: Epidemy model; 
+- Laboratory 7: Epidemic model; 
 - Laboratory 8: HIV treatment; 
 - Laboratory 9: Bear population; 
 - Laboratory 10: Glucose model; 
@@ -108,7 +108,7 @@ If one have a optimal control problem, it can be used the Python class developed
 
 After one calculate the Hamiltonian and the necessary conditions, it's necessary: 
 
-- Differential equations for the states (if more than one state or control, the fucntions must return an object `numpy.array`); 
+- Differential equations for the states (if more than one state or control, the functions must return an object `numpy.array`); 
 - Differential equations for the adjoint functions; 
 - A characterization of the control: it can handle simple Bang-Bang problems (chapter 11) and problems with bounds; 
 - Number of states and controls (optional); 
