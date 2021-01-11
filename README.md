@@ -78,7 +78,7 @@ One will need these frameworks to use see the project.
 
 ### Notebooks 
 
-After having the frameworks and python packages, it's necessary to open `jupyter lab` or `jupyter notebook`. In the `notebooks` folder, one can look at the Laboratories. Each laboratory is self contained, if the theory is well kwown. 
+After having the frameworks and python packages, it's necessary to open `jupyter lab` or `jupyter notebook`. In the `notebooks` folder, one can look at the Laboratories. Each laboratory is self contained, if the theory is well kwown. The first notebook explains the algorithm forward-backward sweep. 
 
 - Laboratoty 1: Introductory example; 
 - Laboratory 2: Mold and fungicide;
@@ -98,9 +98,36 @@ After opening each notebook, it's easy to follow the guide.
 
 ### Python class
 
+If one have a optimal control problem, it can be used the Python class developed for your case. This function can handle problems with: 
 
+- Initial condition of the states (obliged); 
+- A characterization of the control in order to update it each iteration, that is, write $u = f(t, x, \lambda)$ (obliged); 
+- Linear payoff terms (optional); 
+- Bounds in the control (optional); 
+- One or several states.
 
+After one calculate the Hamiltonian and the necessary conditions, it's necessary: 
 
+- Differential equations for the states (if more than one state or control, the fucntions must return an object `numpy.array`); 
+- Differential equations for the adjoint functions; 
+- A characterization of the control: it can handle simple Bang-Bang problems (chapter 11) and problems with bounds; 
+- Number of states and controls (optional); 
+
+For example, in the Laboratory 8, we first define these variables 
+
+![example1](images/example-1.png)
+
+Because we have more than one state, we specify `n_states = 3`. We also specify the bounds. It must be specified as a list of tuples indicating for each control, its bounds. `numpy.inf` is a possibility. However, the control characterization must be written inserting the bounds as specified in the example. If one have a linear payoff term, it can be specified as a function: `diff_phi = lambda x, params: np.array([C, D, E])`. Observe that the parameters must be passed as a dictionary, including in the functions. 
+
+![example2](images/example-2.png)
+
+At last, we define the final time and initial condition and use it in the `solve` method. 
+
+If one has a Bang-Bang problem, the characterization of u is given by 
+
+`u = lambda t, x, lambda, params: a if psi(t) < 0 else b` 
+
+Suppose we have a nonlinear payoff term or we define a final value for some state, in these cases, we do not have the final value for the adjoint corresponding to the state with that additional condition. In this case, the adapted forward-backward sweep must be used. It's not developed for so, but can be used in the following manner: one define the list `free_adj_final` with the adjoints with that characteristic. Associated with that, one make a guess passing it in `theta_list` parameter. For more details, consult the notebook `Chapter21-examples.ipynb`. 
 
 ## Contributing
 
