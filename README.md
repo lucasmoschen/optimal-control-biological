@@ -5,9 +5,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
-
-
-<!-- PROJECT LOGO -->
 <p align="center">
   <!-- <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
@@ -21,19 +18,10 @@
     Advisor: <a href="https://emap.fgv.br/corpo-docente/maria-soledad-aronna"> Maria Soledad Aronna</a>
     <!-- <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>-->
+    -->
   </p> 
 </p>
 
-
-
-<!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
@@ -64,10 +52,12 @@
 The objective of this project is to introduce the basic concepts of Optimum
 Control: existence of solution, Pontryagin Maximum Principle and Dynamic 
 Programming Principle. We intend to study different formulations of a control problem, 
-examples of problems in real life, specially with biologic applications and
-basic theoretical results. The main reference of the the project was the book
+examples of problems in real life, specially with biologic applications, and
+basic theoretical results. The main reference of the the project was the book written by Suzanne Lenhart and John T. Workman called
 [Optimal Control Applied to Biological
 Models](https://www.routledge.com/Optimal-Control-Applied-to-Biological-Models/Lenhart-Workman/p/book/9781584886402#:~:text=Optimal%20Control%20Applied%20to%20Biological%20Models%20thoroughly%20develops%20the%20mathematical,this%20theory%20to%20biological%20models.&text=In%20addition%2C%20the%20authors%20introduce,partial%20differential%20equations%20(PDEs).).
+
+It was produced notes based in the main reference in the form of a book.  
 
 ### Built With
 
