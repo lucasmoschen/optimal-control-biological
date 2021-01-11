@@ -76,6 +76,30 @@ One will need these frameworks to use see the project.
   
 ## Usage
 
+### Notebooks 
+
+After having the frameworks and python packages, it's necessary to open `jupyter lab` or `jupyter notebook`. In the `notebooks` folder, one can look at the Laboratories. Each laboratory is self contained, if the theory is well kwown. 
+
+- Laboratoty 1: Introductory example; 
+- Laboratory 2: Mold and fungicide;
+- Laboratory 3: Bacteria; 
+- Laboratory 4: Limited case; 
+- Laboratory 5: Cancer and treatment; 
+- Laboratory 6: Fish harvesting; 
+- Laboratory 7: Epidemy model; 
+- Laboratory 8: HIV treatment; 
+- Laboratory 9: Bear population; 
+- Laboratory 10: Glucose model; 
+- Laboratory 11: Timber harvesting; 
+- Laboratory 12: Bioreactor; 
+- Laboratory 13: Predator-Prey model. 
+
+After opening each notebook, it's easy to follow the guide. 
+
+### Python class
+
+
+
 
 
 ## Contributing
