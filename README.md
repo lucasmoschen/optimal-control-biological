@@ -62,15 +62,21 @@ It was also developed in notebooks all the laboratories studied in these notes. 
 
 ### Built With
 
-One will need these frameworks to 
+One will need these frameworks to use see the project. 
 
-* [Latex](https://getbootstrap.com)
-* [JQuery](https://jquery.com)
-* [Laravel](https://laravel.com)
+* [Latex](https://en.wikipedia.org/wiki/LaTeX)
+* [Python >= 3](https://www.python.org/)
+* [Jupyter Notebook](https://jupyter.org/) 
+
+### Python Packages 
+
+* [Scipy](https://www.scipy.org/)
+* [Sympy](https://www.sympy.org/en/index.html)
+* [Numpy](https://numpy.org/) 
   
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
 
 ## Contributing
 
@@ -93,4 +99,9 @@ Lucas Moschen - lucas.moschen@fgv.edu.br
 Project Link: [https://github.com/lucasmoschen/Optimal_Control_Biological](https://github.com/lucasmoschen/Optimal_Control_Biological)
 
 ## Acknowledgements
+
+* [Fundação Getulio Vargas (FGV)]()
+* [School of Applied Mathematics (EMAp)]()
+* [Conselho Nacional de Desenvolvimento Científico e Tecnológico (CNPq)](https://www.gov.br/cnpq/pt-br)
+* [Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES)](https://www.gov.br/capes/pt-br)
 
