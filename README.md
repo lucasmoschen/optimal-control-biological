@@ -22,6 +22,7 @@
   </p> 
 </p>
 
+<!--
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
@@ -39,13 +40,9 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
+-->
 
 ## About The Project
 
@@ -57,7 +54,11 @@ basic theoretical results. The main reference of the the project was the book wr
 [Optimal Control Applied to Biological
 Models](https://www.routledge.com/Optimal-Control-Applied-to-Biological-Models/Lenhart-Workman/p/book/9781584886402#:~:text=Optimal%20Control%20Applied%20to%20Biological%20Models%20thoroughly%20develops%20the%20mathematical,this%20theory%20to%20biological%20models.&text=In%20addition%2C%20the%20authors%20introduce,partial%20differential%20equations%20(PDEs).).
 
-It was produced notes based in the main reference in the form of a book.  
+Notes were produced on the subject in book form written in portuguese language, in order to serve as a reference in this language to start the studies in this topic. 
+
+[[Download the book here]](https://github.com/lucasmoschen/Optimal_Control_Biological/blob/master/notes/book.pdf)
+
+It was also developed in notebooks all the laboratories studied in these notes. For these simulation, *Python Programming Language* associated with *Jupyter Notebook* was used, because of its easy usage and aimple interpretation. A class in `optimal_control_class.py` file was developed to deal with all laboratories, no need to worry with the code, initially. This code contains the famous method in the area called forward-backward sweep.
 
 ### Built With
 
@@ -181,14 +182,3 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: images/screenshot.png
-
-This repository contais the studied topics in my Scientific Initiation in the topic. It's based on the book written by Suzanne Lenhart and John T. Workman called Optimal Control Applied to Biological Models. So it was written notes in notes using this reference in portuguese so as to be a initial reference in the language. It was also developed in notebooks all the laboratories studied in these notes.
-
-A class in optimal_control_class.py file was developed to deal with all laboratories, no need to worry with the code, initially. This code contains the famous method in the area called forward-backward sweep.
-
-In order to use this to your problem, you need to specify:
-
-Differential equations of the state variables.
-Differential equations of the adjoint functions, calculated by the necessary conditions.
-A characterization of the optimal control calculation.
-You can also specify bounds if necessary and when the payoff term is linear, one can pass it as a function. The parameters of the model are dealt as a dictionary, except the final time and initial condition of the states, that are separated. These last two parameters are necessary. The notebooks 2, 3, 7, 12 and 13 can be a good reference to start its usage.
